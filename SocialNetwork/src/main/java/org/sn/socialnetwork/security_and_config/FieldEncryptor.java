@@ -12,8 +12,8 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
 
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private static final String KEY = "Oz19Bc71h6BTs5b1QjPfGCG37wIY1Wt21eA6tOE8RM8=";
-    private static final String IV = "XxYdsKr26NBgqDdvcFrZZw==";
+    private static final String KEY = "";
+    private static final String IV = "";
 
     @Override
     public String convertToDatabaseColumn(String attribute) {
