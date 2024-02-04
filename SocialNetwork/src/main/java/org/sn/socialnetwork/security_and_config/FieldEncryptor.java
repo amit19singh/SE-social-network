@@ -19,8 +19,9 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
     public String convertToDatabaseColumn(String attribute) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(Cipher.ENCRYPT_MODE, createSecretKey(), new IvParameterSpec(IV.getBytes()));
-            return Base64.getEncoder().encodeToString(cipher.doFinal(attribute.getBytes()));
+            cipher.init(Cipher.ENCRYPT_MODE, createSecretKey(), new IvParameterSpec(Base64.getDecoder().decode(IV)));
+            byte[] encrypted = cipher.doFinal(attribute.getBytes());
+            return Base64.getEncoder().encodeToString(encrypted);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,14 +31,16 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
     public String convertToEntityAttribute(String dbData) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(Cipher.DECRYPT_MODE, createSecretKey(), new IvParameterSpec(IV.getBytes()));
-            return new String(cipher.doFinal(Base64.getDecoder().decode(dbData)));
+            cipher.init(Cipher.DECRYPT_MODE, createSecretKey(), new IvParameterSpec(Base64.getDecoder().decode(IV)));
+            byte[] original = cipher.doFinal(Base64.getDecoder().decode(dbData));
+            return new String(original);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     private Key createSecretKey() {
-        return new SecretKeySpec(KEY.getBytes(), ALGORITHM);
+        byte[] decodedKey = Base64.getDecoder().decode(KEY);
+        return new SecretKeySpec(decodedKey, ALGORITHM);
     }
 }

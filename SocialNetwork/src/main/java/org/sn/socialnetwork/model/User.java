@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.sn.socialnetwork.security_and_config.FieldEncryptor;
-
-//import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -17,8 +15,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", type = org.hibernate.id.uuid.UuidGenerator.class)
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name = "UUID", type = org.hibernate.id.uuid.UuidGenerator.class)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
@@ -44,11 +43,11 @@ public class User {
     private String gender;
 
     @Column(name = "security_question")
-    @Convert(converter = FieldEncryptor.class)
+//    @Convert(converter = FieldEncryptor.class)
     private String securityQuestion;
 
     @Column(name = "security_answer", nullable = false)
-    @Convert(converter = FieldEncryptor.class)
+//    @Convert(converter = FieldEncryptor.class)
     private String securityAnswer;
 
 }
