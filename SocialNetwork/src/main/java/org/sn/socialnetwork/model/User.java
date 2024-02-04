@@ -15,8 +15,6 @@ import java.util.UUID;
 public class User {
 
     @Id
-//    @GeneratedValue(generator = "UUID")
-//    @GenericGenerator(name = "UUID", type = org.hibernate.id.uuid.UuidGenerator.class)
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
@@ -31,7 +29,7 @@ public class User {
     private String email;
 
     @Column(unique = true, nullable = false)
-    private String username;   // take this from email (xyz@example.com, username: xyz)
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -49,5 +47,7 @@ public class User {
     @Column(name = "security_answer", nullable = false)
 //    @Convert(converter = FieldEncryptor.class)
     private String securityAnswer;
+
+    private boolean verified;
 
 }

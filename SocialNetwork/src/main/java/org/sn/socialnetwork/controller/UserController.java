@@ -17,6 +17,12 @@ public class UserController {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<?> loginUser(@RequestBody User user) throws Exception {
+//        User loginUser = userService.loginUser(user);
+//        return ResponseEntity.ok(loginUser);
+//    }
 }
 
 
