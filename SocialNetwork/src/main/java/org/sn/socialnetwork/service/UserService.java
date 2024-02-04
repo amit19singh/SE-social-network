@@ -25,20 +25,22 @@ public class UserService {
     final private VerificationTokenRepository tokenRepository;
     final private EmailService emailService;
 
-    public User registerUser(User user) throws Exception{
+    public User registerUser(User user){
 
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new DataIntegrityViolationException("Email already in use. Please use a different Email");
         }
+
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new DataIntegrityViolationException("Username already taken");
         }
-        try {
-            String username = new ArrayList<>(List.of(user.getEmail().split("@"))).get(0);
-            user.setUsername(username);
-        } catch (Exception e) {
-            throw new DataIntegrityViolationException("Invalid Email.");
+
+        if (user.getEmail().chars().filter(ch -> ch == '@').count() != 1) {
+            throw new DataIntegrityViolationException("Invalid Email");
         }
+
+        String username = new ArrayList<>(List.of(user.getEmail().split("@"))).get(0);
+        user.setUsername(username);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
