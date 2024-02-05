@@ -1,6 +1,5 @@
 package org.sn.socialnetwork.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.service.RegisterUserService;
@@ -47,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> registerUser(@RequestBody User user){
         User registeredUser = registerUserService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
