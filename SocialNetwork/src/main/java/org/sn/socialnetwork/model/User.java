@@ -41,11 +41,11 @@ public class User {
     private String gender;
 
     @Column(name = "security_question")
-//    @Convert(converter = FieldEncryptor.class)
+    @Convert(converter = FieldEncryptor.class)
     private String securityQuestion;
 
     @Column(name = "security_answer", nullable = false)
-//    @Convert(converter = FieldEncryptor.class)
+    @Convert(converter = FieldEncryptor.class)
     private String securityAnswer;
 
     private boolean verified;

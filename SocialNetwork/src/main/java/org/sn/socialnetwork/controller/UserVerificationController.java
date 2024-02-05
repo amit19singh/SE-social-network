@@ -1,7 +1,8 @@
 package org.sn.socialnetwork.controller;
 
 import lombok.AllArgsConstructor;
-import org.sn.socialnetwork.service.UserService;
+import org.sn.socialnetwork.service.RegisterUserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class UserVerificationController {
-    final UserService userService;
+    final RegisterUserService registerUserService;
 
     @GetMapping("/verify")
-    public String verifyAccount(@RequestParam("token") String token) {
-        String result = userService.validateVerificationToken(token);
+    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
+        String result = registerUserService.validateVerificationToken(token);
 
-        if(result.equals("valid")) {
-            return "Account verified successfully!";
+        if ("valid".equals(result)) {
+            return ResponseEntity.ok("Account verified successfully!");
         } else {
-            return "Invalid token.";
+            return ResponseEntity.badRequest().body("Invalid or expired token.");
         }
     }
 }

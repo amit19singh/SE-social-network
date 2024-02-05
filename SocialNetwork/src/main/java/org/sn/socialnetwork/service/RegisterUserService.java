@@ -18,12 +18,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class RegisterUserService {
 
     final private UserRepository userRepository ;
     final private PasswordEncoder passwordEncoder;
     final private VerificationTokenRepository tokenRepository;
-    final private EmailService emailService;
+    final private VerificationEmailService verificationEmailService;
 
     public User registerUser(User user){
 
@@ -43,41 +43,35 @@ public class UserService {
         user.setUsername(username);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+//        return userRepository.save(user);
 
-//        User registeredUser = userRepository.save(user);
-//
-//        // Generate verification token
-//        String token = UUID.randomUUID().toString();
-//        VerificationToken verificationToken = new VerificationToken(registeredUser, token);
-//        tokenRepository.save(verificationToken);
-//
-//        // Send verification email
-//        emailService.sendVerificationEmail(registeredUser, token);
-//
-//        return registeredUser;
+        User registeredUser = userRepository.save(user);
+
+        // Generate verification token
+        String token = UUID.randomUUID().toString();
+        VerificationToken verificationToken = new VerificationToken(registeredUser, token);
+        tokenRepository.save(verificationToken);
+
+        // Send verification email
+        verificationEmailService.sendVerificationEmail(registeredUser, token);
+
+        return registeredUser;
 
     }
 
     public String validateVerificationToken(String token) {
-        Optional<VerificationToken> verificationTokenOptional = tokenRepository.findByToken(token);
+        Optional<VerificationToken> verificationToken = tokenRepository.findByToken(token);
 
-        if (verificationTokenOptional.isEmpty() ||
-                verificationTokenOptional.get().getExpiryDate().isBefore(LocalDateTime.now())) {
+        if (verificationToken.isEmpty() ||
+                verificationToken.get().getExpiryDate().isBefore(LocalDateTime.now())) {
             return "invalid";
         }
 
-        User user = verificationTokenOptional.get().getUser();
+        User user = verificationToken.get().getUser();
         user.setVerified(true);
         userRepository.save(user);
 
         return "valid";
     }
 
-
-
-
-//    public User loginUser(User user) {
-//
-//    }
 }

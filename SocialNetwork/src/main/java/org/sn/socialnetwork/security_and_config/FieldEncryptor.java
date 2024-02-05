@@ -12,8 +12,8 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
 
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private static final String KEY = "";
-    private static final String IV = "";
+    private static final String KEY = "Oz19Bc71h6BTs5b1QjPfGCG37wIY1Wt21eA6tOE8RM8=";
+    private static final String IV = "XxYdsKr26NBgqDdvcFrZZw==";
 
     @Override
     public String convertToDatabaseColumn(String attribute) {
@@ -33,6 +33,7 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, createSecretKey(), new IvParameterSpec(Base64.getDecoder().decode(IV)));
             byte[] original = cipher.doFinal(Base64.getDecoder().decode(dbData));
+            System.out.println(new String(original));
             return new String(original);
         } catch (Exception e) {
             throw new RuntimeException(e);

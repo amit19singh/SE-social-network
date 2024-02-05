@@ -2,14 +2,13 @@ package org.sn.socialnetwork.service;
 
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class EmailService {
+public class VerificationEmailService {
     final private JavaMailSender mailSender;
 
     public void sendVerificationEmail(User user, String token) {
