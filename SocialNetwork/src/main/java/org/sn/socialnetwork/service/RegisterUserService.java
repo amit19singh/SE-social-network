@@ -41,9 +41,7 @@ public class RegisterUserService {
 
         String username = new ArrayList<>(List.of(user.getEmail().split("@"))).get(0);
         user.setUsername(username);
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        return userRepository.save(user);
 
         User registeredUser = userRepository.save(user);
 

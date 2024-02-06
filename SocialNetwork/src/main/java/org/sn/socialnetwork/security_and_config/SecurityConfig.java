@@ -25,14 +25,14 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        // Permit all for register, login, and verify endpoints
                         .requestMatchers("/register", "/login", "/verify").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
-                        .permitAll())
-                .logout(LogoutConfigurer::permitAll);
+                .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/home", true)
+//                        .permitAll())
+//                .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
 

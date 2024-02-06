@@ -33,7 +33,6 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, createSecretKey(), new IvParameterSpec(Base64.getDecoder().decode(IV)));
             byte[] original = cipher.doFinal(Base64.getDecoder().decode(dbData));
-            System.out.println(new String(original));
             return new String(original);
         } catch (Exception e) {
             throw new RuntimeException(e);
