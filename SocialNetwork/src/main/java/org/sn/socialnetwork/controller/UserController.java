@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -20,14 +21,20 @@ public class UserController {
     final private RegisterUserService registerUserService;
     final private AuthenticationManager authenticationManager;
 
-    @GetMapping("/login")
-    public String login() {
-        return "login.html";
-    }
+
+//    @GetMapping("/home")
+//    public String home() {
+//        return "forward:/home.html";
+//    }
+//
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> authenticateUser(@RequestParam String usernameOrEmail, @RequestParam String password) {
-        try {
+
             UsernamePasswordAuthenticationToken authReq
                     = new UsernamePasswordAuthenticationToken(usernameOrEmail, password);
             Authentication auth = authenticationManager.authenticate(authReq);
@@ -37,12 +44,8 @@ public class UserController {
             // Redirect to a default page after successful login
             String token = "test_token"; // This is just a placeholder
 
-            System.out.println("LOGIN SUCCESSFUL");
-            return ResponseEntity.ok().body(Map.of("message", "Login successful", "token", token));
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
-                    body(Map.of("error", "Invalid username/email or password"));
-        }
+            return ResponseEntity.ok().body(Map.of("message", "Login successful",
+                                                    "token", token)); //, "redirectUrl", "/home"));
     }
 
     @PostMapping("/register")
