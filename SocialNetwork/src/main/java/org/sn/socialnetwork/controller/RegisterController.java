@@ -3,21 +3,18 @@ package org.sn.socialnetwork.controller;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.service.RegisterUserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class RegisterController {
     final private RegisterUserService registerUserService;
     final private AuthenticationManager authenticationManager;
 

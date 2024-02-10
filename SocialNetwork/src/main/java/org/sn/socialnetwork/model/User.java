@@ -48,6 +48,14 @@ public class User {
     @Convert(converter = FieldEncryptor.class)
     private String securityAnswer;
 
-    private boolean verified;
+    private boolean verified;  // For email verification while Registration
+
+//  Following 2 are for 2FA
+    @Column(name = "two_factor_secret")
+    private String twoFactorSecret;
+
+    @Column(name = "is_two_factor_enabled")
+    private boolean isTwoFactorEnabled = false;
+
 
 }

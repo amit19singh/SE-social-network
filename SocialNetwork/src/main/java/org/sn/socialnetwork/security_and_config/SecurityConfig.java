@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify").permitAll()
                         .anyRequest().authenticated())
+                .addFilterBefore(new TwoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
 //                .formLogin(form -> form
 //                        .loginPage("/login")

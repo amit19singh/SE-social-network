@@ -72,6 +72,12 @@
             <version>6.4.2.Final</version>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>dev.samstevens.totp</groupId>
+            <artifactId>totp</artifactId>
+            <version>1.7</version>
+        </dependency>
+
 
     </dependencies>
 
