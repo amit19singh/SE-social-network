@@ -4,36 +4,51 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.sn.socialnetwork.service.CustomUserDetailsService;
+import org.sn.socialnetwork.service.TwoFactorAuthService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@AllArgsConstructor
 public class TwoFactorAuthenticationFilter extends OncePerRequestFilter {
+
+    private final CustomUserDetailsService userDetailsService;
+    private final TwoFactorAuthService twoFactorAuthService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        // Check if the request is for the 2FA verification endpoint
-        if ("/2fa".equals(path)) {
-            // Handle 2FA verification
-            // This part is highly dependent on how you've implemented the 2FA verification logic
-            // For example, you might check a request parameter or header for the 2FA code
+        if ("/2fa".equals(path) && "POST".equalsIgnoreCase(request.getMethod())) {
+            String username = request.getParameter("username");
             String otp = request.getParameter("otp");
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (authentication != null && otp != null) {
-                // Verify the OTP here. If verification is successful, proceed with the authentication
-                // This might involve setting a new authentication object in the SecurityContext
+            if (username != null && otp != null && twoFactorAuthService.verifyOtp(username, otp)) {
+                // Assuming the OTP is valid, authenticate the user
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                response.sendRedirect("/home"); // Redirect to home or another secured page
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("2FA verification failed");
+                return;
             }
-        } else {
-            // For all other requests, just proceed without doing anything special
-            filterChain.doFilter(request, response);
         }
 
+        filterChain.doFilter(request, response);
     }
 }
-
 

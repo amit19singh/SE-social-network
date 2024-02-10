@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class UserVerificationController {
+public class RegisterVerificationController {
     final RegisterUserService registerUserService;
 
     @GetMapping("/verify")

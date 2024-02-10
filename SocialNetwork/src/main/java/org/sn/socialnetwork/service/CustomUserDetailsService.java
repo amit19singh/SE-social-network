@@ -41,15 +41,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
     }
 
-    public boolean verifyTwoFactorAuthentication(String username, String otp) {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isPresent() && user.get().isTwoFactorEnabled()) {
-            CodeVerifier verifier = new DefaultCodeVerifier(new DefaultCodeGenerator(), new SystemTimeProvider());
-            return verifier.isValidCode(user.get().getTwoFactorSecret(), otp);
-        }
-        return true; // If 2FA is not enabled, proceed with normal authentication
-    }
-
 }
 
 

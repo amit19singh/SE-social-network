@@ -2,6 +2,7 @@ package org.sn.socialnetwork.security_and_config;
 
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.service.CustomUserDetailsService;
+import org.sn.socialnetwork.service.TwoFactorAuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfig {
 
+    private final CustomUserDetailsService userDetailsService;
+    private final TwoFactorAuthService twoFactorAuthService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -28,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new TwoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
 //                .formLogin(form -> form
 //                        .loginPage("/login")
@@ -36,6 +40,11 @@ public class SecurityConfig {
 //                        .permitAll())
 //                .logout(LogoutConfigurer::permitAll);
         return http.build();
+    }
+
+    @Bean
+    public TwoFactorAuthenticationFilter twoFactorAuthenticationFilter() {
+        return new TwoFactorAuthenticationFilter(userDetailsService, twoFactorAuthService);
     }
 
     @Bean
