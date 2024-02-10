@@ -9,6 +9,7 @@ import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import lombok.AllArgsConstructor;
+import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ import java.util.Base64;
 @AllArgsConstructor
 public class TwoFactorAuthService {
 
-    private final UserRepository userRepository;
+    final private UserRepository userRepository;
 
     public String setupTwoFactorAuth(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         String secret = new DefaultSecretGenerator().generate();
         user.setTwoFactorSecret(secret);
         userRepository.save(user);
@@ -33,7 +34,7 @@ public class TwoFactorAuthService {
                 .secret(secret)
                 .issuer("SocialNetwork")
                 .digits(6)
-                .period(60)
+                .period(1800) // QR will be valid for 30 minutes
                 .build();
 
         QrGenerator qrGenerator = new ZxingPngQrGenerator();

@@ -40,13 +40,21 @@ public class User {
     @Column(nullable = false)
     private String gender;
 
-    @Column(name = "security_question")
+    @Column(name = "security_question1")
     @Convert(converter = FieldEncryptor.class)
-    private String securityQuestion;
+    private String securityQuestion1;
 
-    @Column(name = "security_answer", nullable = false)
+    @Column(name = "security_answer1", nullable = false)
     @Convert(converter = FieldEncryptor.class)
-    private String securityAnswer;
+    private String securityAnswer1;
+
+    @Column(name = "security_question2")
+    @Convert(converter = FieldEncryptor.class)
+    private String securityQuestion2;
+
+    @Column(name = "security_answer2", nullable = false)
+    @Convert(converter = FieldEncryptor.class)
+    private String securityAnswer2;
 
     private boolean verified;  // For email verification while Registration
 
@@ -55,7 +63,7 @@ public class User {
     private String twoFactorSecret;
 
     @Column(name = "is_two_factor_enabled")
-    private boolean isTwoFactorEnabled = false;
+    private boolean isTwoFactorEnabled = true;
 
 
 }

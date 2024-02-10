@@ -1,8 +1,10 @@
 package org.sn.socialnetwork.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.service.RegisterUserService;
+import org.sn.socialnetwork.service.TwoFactorAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,6 +52,7 @@ public class RegisterController {
         User registeredUser = registerUserService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
+
 
 }
 

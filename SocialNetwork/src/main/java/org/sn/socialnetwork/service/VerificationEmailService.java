@@ -17,6 +17,7 @@ public class VerificationEmailService {
         String content = "Click the link to verify your account: " + verificationLink;
 
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@example.com");
         message.setTo(user.getEmail());
         message.setSubject(subject);
         message.setText(content);

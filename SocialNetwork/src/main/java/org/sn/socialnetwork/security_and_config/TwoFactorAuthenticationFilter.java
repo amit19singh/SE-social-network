@@ -20,8 +20,8 @@ import java.io.IOException;
 @AllArgsConstructor
 public class TwoFactorAuthenticationFilter extends OncePerRequestFilter {
 
-    private final CustomUserDetailsService userDetailsService;
-    private final TwoFactorAuthService twoFactorAuthService;
+    final private CustomUserDetailsService userDetailsService;
+    final private TwoFactorAuthService twoFactorAuthService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
