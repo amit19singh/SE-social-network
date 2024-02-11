@@ -23,11 +23,20 @@ public class VerificationToken {
     private User user;
 
     private LocalDateTime expiryDate;
-    public VerificationToken(User user, String token) {
+
+    public enum TokenType {
+        REGISTRATION_VERIFICATION,
+        PASSWORD_RESET
+    }
+    @Enumerated(EnumType.STRING)
+    private TokenType type;
+
+    public VerificationToken(User user, String token, TokenType type) {
         super();
         this.user = user;
         this.token = token;
         this.expiryDate = LocalDateTime.now().plusMinutes(1440); // Token expires in 24 hours
+        this.type = type;
     }
 
 }

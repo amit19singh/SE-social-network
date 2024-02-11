@@ -4,6 +4,7 @@ package org.sn.socialnetwork.service;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
+import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,7 +45,7 @@ public class RegisterUserService {
 
         // Generate verification token
         String token = UUID.randomUUID().toString();
-        VerificationToken verificationToken = new VerificationToken(registeredUser, token);
+        VerificationToken verificationToken = new VerificationToken(registeredUser, token, TokenType.REGISTRATION_VERIFICATION);
         tokenRepository.save(verificationToken);
 
         // Send verification email
@@ -53,17 +54,21 @@ public class RegisterUserService {
         return registeredUser;
     }
 
-    public String validateVerificationToken(String token) {
+    public String validateVerificationToken(String token, TokenType expectedType) {
         Optional<VerificationToken> verificationToken = tokenRepository.findByToken(token);
 
         if (verificationToken.isEmpty() ||
-                verificationToken.get().getExpiryDate().isBefore(LocalDateTime.now())) {
+                verificationToken.get().getExpiryDate().isBefore(LocalDateTime.now())||
+                verificationToken.get().getType() != expectedType) {
             return "invalid";
         }
 
         User user = verificationToken.get().getUser();
-        user.setVerified(true);
-        userRepository.save(user);
+        if (expectedType == TokenType.REGISTRATION_VERIFICATION) {
+            user.setVerified(true);
+            user.setCreatedAt(LocalDateTime.now());
+            userRepository.save(user);
+        }
 
         return "valid";
     }

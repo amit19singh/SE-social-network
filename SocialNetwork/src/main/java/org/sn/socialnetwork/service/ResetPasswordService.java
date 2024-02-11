@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
+import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,11 +28,23 @@ public class ResetPasswordService {
                 .orElseThrow(() -> new UserNotFoundException("No user found with email: " + email));
 
         String token = UUID.randomUUID().toString();
-        VerificationToken myToken = new VerificationToken(user, token);
-        tokenRepository.save(myToken);
+
+        // Check and delete or update existing token
+        Optional<VerificationToken> existingToken = tokenRepository.findByUserAndType(user, TokenType.REGISTRATION_VERIFICATION);
+        System.out.println(existingToken);
+        if (existingToken.isPresent()) {
+            VerificationToken myToken = existingToken.get();
+            myToken.setToken(token); // Update the token value
+            myToken.setExpiryDate(LocalDateTime.now().plusMinutes(1440)); // Reset the expiry time
+            tokenRepository.save(myToken);
+        } else {
+            VerificationToken newToken = new VerificationToken(user, token, TokenType.PASSWORD_RESET);
+            tokenRepository.save(newToken);
+        }
 
         emailService.sendPasswordResetEmail(user, token);
     }
+
 
     public String validatePasswordResetToken(String token) {
         Optional<VerificationToken> verificationToken = tokenRepository.findByToken(token);

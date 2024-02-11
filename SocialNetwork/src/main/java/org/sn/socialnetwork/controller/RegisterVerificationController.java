@@ -1,6 +1,7 @@
 package org.sn.socialnetwork.controller;
 
 import lombok.AllArgsConstructor;
+import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.service.RegisterUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,8 @@ public class RegisterVerificationController {
 
     @GetMapping("/verify")
     public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
-        String result = registerUserService.validateVerificationToken(token);
+        String result = registerUserService.validateVerificationToken(token,
+                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
 
         if ("valid".equals(result)) {
             return ResponseEntity.ok("Account verified successfully!");

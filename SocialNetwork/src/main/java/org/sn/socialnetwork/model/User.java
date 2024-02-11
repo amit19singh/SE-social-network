@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.sn.socialnetwork.security_and_config.FieldEncryptor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -55,6 +56,9 @@ public class User {
     @Column(name = "security_answer2", nullable = false)
     @Convert(converter = FieldEncryptor.class)
     private String securityAnswer2;
+
+    @Column
+    private LocalDateTime createdAt;
 
     private boolean verified;  // For email verification while Registration
 
