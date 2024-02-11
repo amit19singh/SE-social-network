@@ -1,12 +1,6 @@
 package org.sn.socialnetwork.service;
 
 
-import dev.samstevens.totp.exceptions.QrGenerationException;
-import dev.samstevens.totp.qr.QrData;
-import dev.samstevens.totp.qr.QrGenerator;
-import dev.samstevens.totp.qr.ZxingPngQrGenerator;
-import dev.samstevens.totp.secret.DefaultSecretGenerator;
-import dev.samstevens.totp.secret.SecretGenerator;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
@@ -26,7 +20,7 @@ public class RegisterUserService {
     final private UserRepository userRepository ;
     final private PasswordEncoder passwordEncoder;
     final private VerificationTokenRepository tokenRepository;
-    final private VerificationEmailService verificationEmailService;
+    final private EmailService emailService;
 
     public User registerUser(User user){
 
@@ -54,10 +48,9 @@ public class RegisterUserService {
         tokenRepository.save(verificationToken);
 
         // Send verification email
-        verificationEmailService.sendVerificationEmail(registeredUser, token);
+        emailService.sendRegisterVerificationEmail(registeredUser, token);
 
         return registeredUser;
-
     }
 
     public String validateVerificationToken(String token) {

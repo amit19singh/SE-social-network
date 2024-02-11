@@ -16,7 +16,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        // Return a meaningful error response
         return ResponseEntity
                 .badRequest()
                 .body(ex.getMessage());
