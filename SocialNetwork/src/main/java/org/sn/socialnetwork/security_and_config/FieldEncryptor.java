@@ -1,6 +1,8 @@
 package org.sn.socialnetwork.security_and_config;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.springframework.context.annotation.Bean;
+
 import java.security.Key;
 import java.util.Base64;
 import javax.crypto.Cipher;

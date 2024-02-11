@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
-                                "/password-reset-request", "/validate-password-reset-token", "/reset-password").permitAll()
+                                "/password-reset-request", "/validate-password-reset-token", "/reset-password",
+                                "password-reset-security-check").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
@@ -70,6 +71,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
+    public FieldEncryptor fieldEncryptor() {
+        return new FieldEncryptor();
     }
 
 }

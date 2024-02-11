@@ -7,10 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
     Optional<VerificationToken> findByToken(String token);
 
     Optional<VerificationToken> findByUserAndType(User user, VerificationToken.TokenType tokenType);
+
+    Optional<VerificationToken> findByTokenAndUserAndType(String verificationToken, User user, VerificationToken.TokenType tokenType);
+
+    @Query("SELECT u FROM User u WHERE u.id = ?1")
+    Optional<VerificationToken> findById(UUID id);
 }

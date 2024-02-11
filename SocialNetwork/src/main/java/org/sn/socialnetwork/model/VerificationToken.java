@@ -26,7 +26,8 @@ public class VerificationToken {
 
     public enum TokenType {
         REGISTRATION_VERIFICATION,
-        PASSWORD_RESET
+        PASSWORD_RESET,
+        TEMPORARY_VERIFICATION
     }
     @Enumerated(EnumType.STRING)
     private TokenType type;
