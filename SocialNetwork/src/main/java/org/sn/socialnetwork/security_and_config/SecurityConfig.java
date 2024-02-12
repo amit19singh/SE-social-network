@@ -31,6 +31,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
+                                "/password-reset-request", "/reset-password", "password-reset-security-check")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/home", true)
+//                        .permitAll())
+//                .logout(LogoutConfigurer::permitAll);
+
+        http.oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .failureUrl("/login?error=true")
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login")
+                );
+
+
         http.cors(cors -> cors
                 .configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
@@ -41,20 +65,7 @@ public class SecurityConfig {
                 })
         );
 
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
-                                "/password-reset-request", "/validate-password-reset-token", "/reset-password",
-                                "password-reset-security-check").permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/home", true)
-//                        .permitAll())
-//                .logout(LogoutConfigurer::permitAll);
+
         return http.build();
     }
 
