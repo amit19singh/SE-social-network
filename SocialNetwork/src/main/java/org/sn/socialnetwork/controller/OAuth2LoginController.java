@@ -12,6 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class OAuth2LoginController {
+
+    @GetMapping("/custom-login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
     @GetMapping("/custom-login-success")
     public ModelAndView customLoginSuccess(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -105,11 +105,6 @@ public class ResetPasswordService {
         return "valid";
     }
 
-    public void changeUserPassword(User user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-    }
-
     // Add a method to get User by token if needed
     public User getUserByPasswordResetToken(String token) {
         return tokenRepository.findByToken(token)
@@ -117,6 +112,10 @@ public class ResetPasswordService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
     }
 
+    public void changeUserPassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 
 
 }

@@ -34,7 +34,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
-                                "/password-reset-request", "/reset-password", "password-reset-security-check")
+                                "/password-reset-request", "/reset-password", "password-reset-security-check",
+                        "/custom-login", "/custom-login-success", "/custom-logout")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -46,12 +47,12 @@ public class SecurityConfig {
 //                .logout(LogoutConfigurer::permitAll);
 
         http.oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
+                        .loginPage("/custom-login")
                         .defaultSuccessUrl("/home", true)
-                        .failureUrl("/login?error=true")
+                        .failureUrl("/custom-login?error=true")
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/custom-login")
                 );
 
 
