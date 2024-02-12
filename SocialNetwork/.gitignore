@@ -33,4 +33,4 @@ build/
 .vscode/
 
 OAuth.json
-SocialNetwork/.env
+.env
