@@ -17,6 +17,5 @@ public interface VerificationTokenRepository extends JpaRepository<VerificationT
 
     Optional<VerificationToken> findByTokenAndUserAndType(String verificationToken, User user, VerificationToken.TokenType tokenType);
 
-    @Query("SELECT u FROM User u WHERE u.id = ?1")
-    Optional<VerificationToken> findById(UUID id);
+    Optional<VerificationToken> findByUserId(UUID id);
 }

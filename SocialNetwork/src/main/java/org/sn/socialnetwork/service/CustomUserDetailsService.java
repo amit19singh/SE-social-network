@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (!user.isVerified())
             throw new UserNotVerifiedException("User not verified. Please verify your account before logging in.");
 
-//      Implement a CHECK for checking if 2FA is enabled
+//      Todo: Implement a CHECK for checking if 2FA is enabled
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

@@ -2,7 +2,6 @@ package org.sn.socialnetwork.controller;
 
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.model.User;
-import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.service.ResetPasswordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,16 +43,6 @@ public class ResetPasswordController {
         // Proceed with creating and sending the password reset token
         resetPasswordService.createPasswordResetTokenForUser(email);
         return ResponseEntity.ok("Password reset link has been sent to your email.");
-    }
-
-
-    @PostMapping("/validate-password-reset-token")
-    public ResponseEntity<?> validateResetToken(@RequestParam("token") String token) {
-        String result = resetPasswordService.validatePasswordResetToken(token);
-        if (!result.equals("valid")) {
-            return ResponseEntity.badRequest().body("Invalid or expired password reset token");
-        }
-        return ResponseEntity.ok("Token valid");
     }
 
     @PostMapping("/reset-password")

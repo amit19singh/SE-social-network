@@ -42,7 +42,6 @@ public class FieldEncryptor implements AttributeConverter<String, String> {
     }
 
     private Key createSecretKey() {
-        byte[] decodedKey = Base64.getDecoder().decode(KEY);
-        return new SecretKeySpec(decodedKey, ALGORITHM);
+        return new SecretKeySpec(Base64.getDecoder().decode(KEY), ALGORITHM);
     }
 }

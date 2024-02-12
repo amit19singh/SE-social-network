@@ -1,10 +1,9 @@
 package org.sn.socialnetwork.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.model.User;
+import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.service.RegisterUserService;
-import org.sn.socialnetwork.service.TwoFactorAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,20 +15,9 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class RegisterController {
+public class LoginAndRegisterController {
     final private RegisterUserService registerUserService;
     final private AuthenticationManager authenticationManager;
-
-
-//    @GetMapping("/home")
-//    public String home() {
-//        return "forward:/home.html";
-//    }
-//
-//    @GetMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> authenticateUser(@RequestParam String usernameOrEmail, @RequestParam String password) {
@@ -51,6 +39,18 @@ public class RegisterController {
     public ResponseEntity<?> registerUser(@RequestBody User user){
         User registeredUser = registerUserService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
+        String result = registerUserService.validateVerificationToken(token,
+                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
+
+        if ("valid".equals(result)) {
+            return ResponseEntity.ok("Account verified successfully!");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid or expired token.");
+        }
     }
 
 

@@ -23,31 +23,15 @@ public class ResetPasswordService {
     private final VerificationTokenRepository tokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
-    private final FieldEncryptor fieldEncryptor;
 
     public boolean verifySecurityAnswers(String email, String answer1, String answer2) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        // Encrypt the provided answers to match against the stored encrypted values
-//        String encryptedAnswer1 = fieldEncryptor.convertToDatabaseColumn(answer1);
-//        String encryptedAnswer2 = fieldEncryptor.convertToDatabaseColumn(answer2);
-
         return user.getSecurityAnswer1().equals(answer1) &&
                 user.getSecurityAnswer2().equals(answer2);
     }
 
-//    public String generateTemporaryVerificationToken(String email) {
-//        User user = userRepository.findByEmail(email)
-//                .orElseThrow(() -> new UserNotFoundException("User not found"));
-//
-//        String temporaryToken = UUID.randomUUID().toString();
-//        VerificationToken verificationToken = new VerificationToken(user, temporaryToken, TokenType.TEMPORARY_VERIFICATION);
-//        verificationToken.setExpiryDate(LocalDateTime.now().plusHours(1)); // Set a suitable expiry time
-//        tokenRepository.save(verificationToken);
-//
-//        return temporaryToken;
-//    }
 
     public String generateTemporaryVerificationToken(String email) {
         User user = userRepository.findByEmail(email)
@@ -56,24 +40,37 @@ public class ResetPasswordService {
         String temporaryToken = UUID.randomUUID().toString();
 
         // Check for an existing TEMPORARY_VERIFICATION token for the user
-        Optional<VerificationToken> existingToken = tokenRepository.findById(user.getId());
+        Optional<VerificationToken> existingToken = tokenRepository.findByUserId(user.getId());
         if (existingToken.isPresent()) {
             // If an existing token is found, update it with the new token value and expiry time
             VerificationToken tokenToUpdate = existingToken.get();
             tokenToUpdate.setToken(temporaryToken);
-            tokenToUpdate.setExpiryDate(LocalDateTime.now().plusHours(1)); // Update expiry time for the new token
+            tokenToUpdate.setType(TokenType.TEMPORARY_VERIFICATION);
+            tokenToUpdate.setExpiryDate(LocalDateTime.now().plusMinutes(1)); // Update expiry time for the new token
             tokenRepository.save(tokenToUpdate);
         } else {
             // If no existing token is found, create a new one
             VerificationToken newToken = new VerificationToken(user, temporaryToken, TokenType.TEMPORARY_VERIFICATION);
-            newToken.setExpiryDate(LocalDateTime.now().plusHours(1)); // Set expiry time for the new token
+            newToken.setExpiryDate(LocalDateTime.now().plusMinutes(1)); // Set expiry time for the new token
             tokenRepository.save(newToken);
         }
 
         return temporaryToken;
     }
 
+    public boolean verifyUserEligibilityForPasswordReset(String email, String verificationToken) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
+        Optional<VerificationToken> tokenOpt = tokenRepository.
+                findByTokenAndUserAndType(verificationToken, user, TokenType.TEMPORARY_VERIFICATION);
+
+        if (tokenOpt.isPresent() && tokenOpt.get().getExpiryDate().isAfter(LocalDateTime.now())) {
+            tokenRepository.delete(tokenOpt.get());
+            return true;
+        }
+        return false;
+    }
 
     public void createPasswordResetTokenForUser(String email) {
         User user = userRepository.findByEmail(email)
@@ -87,7 +84,7 @@ public class ResetPasswordService {
         if (existingToken.isPresent()) {
             VerificationToken myToken = existingToken.get();
             myToken.setToken(token); // Update the token value
-            myToken.setExpiryDate(LocalDateTime.now().plusMinutes(1440)); // Reset the expiry time
+            myToken.setExpiryDate(LocalDateTime.now().plusMinutes(30)); // Reset the expiry time
             tokenRepository.save(myToken);
         } else {
             VerificationToken newToken = new VerificationToken(user, token, TokenType.PASSWORD_RESET);
@@ -121,17 +118,5 @@ public class ResetPasswordService {
     }
 
 
-    public boolean verifyUserEligibilityForPasswordReset(String email, String verificationToken) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        Optional<VerificationToken> tokenOpt = tokenRepository.
-                findByTokenAndUserAndType(verificationToken, user, TokenType.TEMPORARY_VERIFICATION);
-
-        if (tokenOpt.isPresent() && tokenOpt.get().getExpiryDate().isAfter(LocalDateTime.now())) {
-            tokenRepository.delete(tokenOpt.get());
-            return true;
-        }
-        return false;
-    }
 }

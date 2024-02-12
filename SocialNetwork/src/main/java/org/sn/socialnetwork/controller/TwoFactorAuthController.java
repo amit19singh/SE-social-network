@@ -18,8 +18,6 @@ public class TwoFactorAuthController {
 
     final private TwoFactorAuthService twoFactorAuthService;
 
-    private final UserRepository userRepository;
-
     @PostMapping("/setup2fa")
     public ResponseEntity<?> setupTwoFactorAuth(@RequestParam("username") String username) {
         String qrUrl = twoFactorAuthService.setupTwoFactorAuth(username);
