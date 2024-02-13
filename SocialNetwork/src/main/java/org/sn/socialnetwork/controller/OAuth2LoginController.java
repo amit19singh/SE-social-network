@@ -2,6 +2,8 @@ package org.sn.socialnetwork.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import org.sn.socialnetwork.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -9,9 +11,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.sn.socialnetwork.repository.UserRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
 public class OAuth2LoginController {
+
+    final private UserRepository userRepository;
 
     @GetMapping("/custom-login")
     public String login() {
@@ -20,35 +33,33 @@ public class OAuth2LoginController {
 
     @GetMapping("/home")
     public String home() {
-        return "home";
-    }
-    @GetMapping("/custom-login-success")
-    public ModelAndView customLoginSuccess(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication instanceof OAuth2AuthenticationToken) {
-            // Custom logic after successful OAuth2 login
-            // For example, redirecting based on the role or doing some logging
-            // Here, we're just redirecting to the home page as an example
-            return new ModelAndView("redirect:/home");
+        if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
+            Map<String, Object> attributes = oauthToken.getPrincipal().getAttributes();
+            String email = (String) attributes.get("email");
+            // Check if user exists
+            Optional<User> existingUser = userRepository.findByEmail(email);
+            if (existingUser.isEmpty()) {
+                // Create and save the new user
+                User newUser = new User();
+                newUser.setFirstname((String) attributes.get("given_name"));
+                newUser.setLastname((String) attributes.get("family_name"));
+                newUser.setEmail(email);
+                newUser.setUsername(new ArrayList<>(List.of(email.split("@"))).get(0));
+                newUser.setPassword("8df7g68sf4xcg6385sdf4g8");
+                newUser.setBirthday(LocalDate.now().minusYears(25));
+                newUser.setVerified(true);
+                newUser.setGender("Unspecified");
+                newUser.setCreatedAt(LocalDateTime.now());
+                newUser.setSecurityQuestion1("NULL");
+                newUser.setSecurityAnswer1("NULL");
+                newUser.setSecurityQuestion2("NULL");
+                newUser.setSecurityAnswer2("NULL");
+                userRepository.save(newUser);
+//              Redirect here to complete the profile
+            }
         }
-
-        // Fallback redirection if the authentication type is not OAuth2
-        return new ModelAndView("redirect:/login");
-    }
-
-    @PostMapping("/custom-logout")
-    public String customLogout(HttpServletRequest request, HttpServletResponse response) {
-        // Custom logic before logout
-        // For example, logging the logout event
-
-        // Invalidate the session and clear the security context
-        SecurityContextHolder.clearContext();
-        if (request.getSession() != null) {
-            request.getSession().invalidate();
-        }
-
-        // Redirect to a custom page after logout
-        return "redirect:/login?logout";
+        return "home";
     }
 }

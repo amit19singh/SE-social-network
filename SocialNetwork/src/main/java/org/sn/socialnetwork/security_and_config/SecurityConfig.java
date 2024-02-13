@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
                                 "/password-reset-request", "/reset-password", "password-reset-security-check",
-                        "/custom-login", "/custom-login-success", "/custom-logout")
+                        "/custom-login")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -69,5 +69,4 @@ public class User {
     @Column(name = "is_two_factor_enabled")
     private boolean isTwoFactorEnabled = true;
 
-
 }
