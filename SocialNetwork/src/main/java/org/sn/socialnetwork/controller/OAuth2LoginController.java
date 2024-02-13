@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.sn.socialnetwork.repository.UserRepository;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class OAuth2LoginController {
 
     final private UserRepository userRepository;
+    final private Random random = new SecureRandom();
 
     @GetMapping("/custom-login")
     public String login() {
@@ -47,19 +47,26 @@ public class OAuth2LoginController {
                 newUser.setLastname((String) attributes.get("family_name"));
                 newUser.setEmail(email);
                 newUser.setUsername(new ArrayList<>(List.of(email.split("@"))).get(0));
-                newUser.setPassword("8df7g68sf4xcg6385sdf4g8");
+                newUser.setPassword(crypt());
                 newUser.setBirthday(LocalDate.now().minusYears(25));
                 newUser.setVerified(true);
                 newUser.setGender("Unspecified");
                 newUser.setCreatedAt(LocalDateTime.now());
-                newUser.setSecurityQuestion1("NULL");
-                newUser.setSecurityAnswer1("NULL");
-                newUser.setSecurityQuestion2("NULL");
-                newUser.setSecurityAnswer2("NULL");
+                newUser.setSecurityQuestion1(crypt());
+                newUser.setSecurityAnswer1(crypt());
+                newUser.setSecurityQuestion2(crypt());
+                newUser.setSecurityAnswer2(crypt());
                 userRepository.save(newUser);
 //              Redirect here to complete the profile
             }
         }
         return "home";
     }
+
+    public String crypt() {
+        return random.ints(48, 33, 127)
+                .mapToObj(i -> String.valueOf((char)i))
+                .collect(Collectors.joining());
+    }
+
 }
