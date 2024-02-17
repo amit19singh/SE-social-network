@@ -17,13 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     private final CustomUserDetailsService userDetailsService;
     private final TwoFactorAuthService twoFactorAuthService;
@@ -33,7 +35,7 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/register", "/login", "/verify", "/setup2fa", "/verify2fa",
+                        .requestMatchers("/register", "/login", "/verify2fa","/verify", "/setup2fa",
                                 "/password-reset-request", "/reset-password", "password-reset-security-check",
                         "/custom-login")
                         .permitAll()
@@ -66,8 +68,17 @@ public class SecurityConfig {
                 })
         );
 
-
         return http.build();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000") // The URL of your React app
+//                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 
     @Bean

@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app:
+    image: social-network
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mailhog
+    environment:
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"

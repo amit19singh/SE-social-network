@@ -2,6 +2,8 @@ package org.sn.socialnetwork.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
+import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
@@ -25,19 +27,15 @@ public class RegisterUserService {
 
     public User registerUser(User user){
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new DataIntegrityViolationException("Email already in use. Please use a different Email");
-        }
-
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new DataIntegrityViolationException("Username already taken");
-        }
-
-        if (user.getEmail().chars().filter(ch -> ch == '@').count() != 1) {
-            throw new DataIntegrityViolationException("Invalid Email");
-        }
+        if (userRepository.findByEmail(user.getEmail()).isPresent())
+            throw new EmailAlreadyInUseException("Email already in use. Please use a different email.");
 
         String username = new ArrayList<>(List.of(user.getEmail().split("@"))).get(0);
+
+        if (userRepository.CheckUsernameExists(username))
+            throw new UsernameAlreadyInUseException("Username already taken. Please use different email.");
+
+
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

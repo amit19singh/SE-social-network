@@ -1,15 +1,19 @@
 package org.sn.socialnetwork.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
+import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.service.RegisterUserService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Map;
 
@@ -37,22 +41,41 @@ public class LoginAndRegisterController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
-        User registeredUser = registerUserService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
-    }
-
-    @GetMapping("/verify")
-    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
-        String result = registerUserService.validateVerificationToken(token,
-                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
-
-        if ("valid".equals(result)) {
-            return ResponseEntity.ok("Account verified successfully!");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid or expired token.");
+        try {
+            User registeredUser = registerUserService.registerUser(user);
+            return ResponseEntity.ok(registeredUser);
+        } catch (EmailAlreadyInUseException | UsernameAlreadyInUseException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @GetMapping("/verify")
+    public RedirectView verifyAccount(@RequestParam("token") String token) {
+        String result = registerUserService.validateVerificationToken(token,
+                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
+
+        String frontendUrl;
+        if ("valid".equals(result)) {
+            frontendUrl = "http://localhost:3000/home";
+        } else {
+            frontendUrl = "http://localhost:3000/verification-failure";
+        }
+        return new RedirectView(frontendUrl);
+    }
+
+//  The following is only for API Testing
+
+//    @GetMapping("/verify")
+//    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
+//        String result = registerUserService.validateVerificationToken(token,
+//                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
+//
+//        if ("valid".equals(result)) {
+//            return ResponseEntity.ok("Account verified successfully!");
+//        } else {
+//            return ResponseEntity.badRequest().body("Invalid or expired token.");
+//        }
+//    }
 
 }
 

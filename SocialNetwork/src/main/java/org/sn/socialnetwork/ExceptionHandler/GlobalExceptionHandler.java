@@ -44,5 +44,15 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", "Incorrect username/email or password"));
     }
 
+    @ExceptionHandler(EmailAlreadyInUseException.class)
+    public ResponseEntity<String> handleEmailAlreadyInUseException(EmailAlreadyInUseException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(UsernameAlreadyInUseException.class)
+    public ResponseEntity<String> handleUsernameAlreadyInUseException(UsernameAlreadyInUseException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
 }
 

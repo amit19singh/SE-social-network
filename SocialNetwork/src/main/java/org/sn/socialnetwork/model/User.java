@@ -70,3 +70,4 @@ public class User {
     private boolean isTwoFactorEnabled = true;
 
 }
+
