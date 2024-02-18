@@ -2,6 +2,7 @@ package org.sn.socialnetwork.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.sn.socialnetwork.dto.LoginRequest;
 import org.sn.socialnetwork.dto.PasswordResetRequestDTO;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.repository.UserRepository;
@@ -34,17 +35,31 @@ public class ResetPasswordController {
         return ResponseEntity.ok("Password reset link has been sent to your email.");
     }
 
-    @GetMapping("/reset-password")
-    public ResponseEntity<?> validateResetPasswordToken(@RequestParam("token") String token, HttpServletResponse response) {
-        String result = resetPasswordService.validatePasswordResetToken(token);
-        if (!result.equals("valid")) {
-            // Redirect to a frontend error page with an appropriate message
-            return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/password-reset-error?reason=invalidToken").build();
-        }
+//    @GetMapping("/reset-password")
+////    public ResponseEntity<?> validateResetPasswordToken(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
+//    public ResponseEntity<?> validateResetPasswordToken(@RequestParam("token") String token, HttpServletResponse response) {
+//        String result = resetPasswordService.validatePasswordResetToken(token);
+//        if (!result.equals("valid")) {
+//            // Redirect to a frontend error page with an appropriate message
+//            return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/password-reset-error?reason=invalidToken").build();
+//        }
+////        User user = resetPasswordService.getUserByPasswordResetToken(passwordResetRequestDTO.getToken());
+////        resetPasswordService.changeUserPassword(user, passwordResetRequestDTO.getNewPassword());
+//        // Redirect to the password reset page with the token as a query parameter
+//        return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/ResetPasswordPage?token=" + token).build();
+//    }
 
-        // Redirect to the password reset page with the token as a query parameter
-        return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/ResetPasswordPage?token=" + token).build();
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
+        String result = resetPasswordService.validatePasswordResetToken(passwordResetRequestDTO.getToken());
+        if (!result.equals("valid")) {
+            return ResponseEntity.badRequest().body("Invalid or expired password reset token");
+        }
+        User user = resetPasswordService.getUserByPasswordResetToken(passwordResetRequestDTO.getToken());
+        resetPasswordService.changeUserPassword(user, passwordResetRequestDTO.getNewPassword());
+        return ResponseEntity.ok("Password reset successfully");
     }
+
 
 
 

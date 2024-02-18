@@ -26,8 +26,8 @@ public class OAuth2LoginController {
     final private UserRepository userRepository;
     final private Random random = new SecureRandom();
 
-    @GetMapping("/custom-login")
-    public String login() {
+    @GetMapping("/login")
+    public String showLoginForm() {
         return "login";
     }
 

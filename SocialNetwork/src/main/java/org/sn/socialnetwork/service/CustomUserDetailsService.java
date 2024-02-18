@@ -1,21 +1,15 @@
 package org.sn.socialnetwork.service;
 
-import dev.samstevens.totp.code.CodeVerifier;
-import dev.samstevens.totp.code.DefaultCodeGenerator;
-import dev.samstevens.totp.code.DefaultCodeVerifier;
-import dev.samstevens.totp.exceptions.CodeGenerationException;
-import dev.samstevens.totp.time.SystemTimeProvider;
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotVerifiedException;
 import org.sn.socialnetwork.model.User;
+import org.sn.socialnetwork.model.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.sn.socialnetwork.repository.UserRepository;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -35,13 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 //      Todo: Implement a CHECK for checking if 2FA is enabled
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                true, true, true, true,
-                new ArrayList<>()
-        );
+        return new UserPrincipal(user);
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getUsername(),
+//                user.getPassword(),
+//                true, true, true, true,
+//                new ArrayList<>()
+//        );
     }
+
 
 }
 

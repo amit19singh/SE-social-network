@@ -1,17 +1,16 @@
 package org.sn.socialnetwork.security_and_config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.service.CustomUserDetailsService;
 import org.sn.socialnetwork.service.TwoFactorAuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,7 +28,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     private final CustomUserDetailsService userDetailsService;
     private final TwoFactorAuthService twoFactorAuthService;
-
+    final private JwtTokenProvider jwtTokenProvider;
+    final private CustomUserDetailsService customUserDetailsService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -43,10 +43,21 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
 //                .formLogin(form -> form
-//                        .loginPage("/login")
+////                        .loginPage("/temp_landing")
 //                        .defaultSuccessUrl("/home", true)
+//                        .failureUrl("http://localhost:3000/login")
 //                        .permitAll())
 //                .logout(LogoutConfigurer::permitAll);
+
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("{\"message\": \"Access Denied\"}");
+                });
+
 
         http.oauth2Login(oauth2 -> oauth2
                         .loginPage("/custom-login")
@@ -84,6 +95,11 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public TwoFactorAuthenticationFilter twoFactorAuthenticationFilter() {
         return new TwoFactorAuthenticationFilter(userDetailsService, twoFactorAuthService);
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService);
     }
 
     @Bean
