@@ -31,6 +31,11 @@ public class OAuth2LoginController {
         return "login";
     }
 
+    @GetMapping("/temp_landing")
+    public String temp_landing() {
+        return "temp_landing";
+    }
+
     @GetMapping("/home")
     public String home() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

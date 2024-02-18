@@ -37,7 +37,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/register", "/login", "/verify2fa","/verify", "/setup2fa",
                                 "/password-reset-request", "/reset-password", "password-reset-security-check",
-                        "/custom-login")
+                        "/custom-login", "/check-user")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -51,7 +51,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.oauth2Login(oauth2 -> oauth2
                         .loginPage("/custom-login")
                         .defaultSuccessUrl("/home", true)
-                        .failureUrl("/custom-login?error=true")
+                        .failureUrl("/temp_landing")
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/custom-login")
@@ -74,7 +74,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // The URL of your React app
+                .allowedOrigins("http://localhost:3000")
 //                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")

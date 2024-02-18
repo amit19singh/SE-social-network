@@ -116,6 +116,4 @@ public class ResetPasswordService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
-
-
 }
