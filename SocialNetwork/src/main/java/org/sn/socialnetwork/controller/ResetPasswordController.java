@@ -35,6 +35,18 @@ public class ResetPasswordController {
         return ResponseEntity.ok("Password reset link has been sent to your email.");
     }
 
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
+        String result = resetPasswordService.validatePasswordResetToken(passwordResetRequestDTO.getToken());
+        if (!result.equals("valid")) {
+            return ResponseEntity.badRequest().body("Invalid or expired password reset token");
+        }
+        User user = resetPasswordService.getUserByPasswordResetToken(passwordResetRequestDTO.getToken());
+        resetPasswordService.changeUserPassword(user, passwordResetRequestDTO.getNewPassword());
+        return ResponseEntity.ok("Password reset successfully");
+    }
+
+
 //    @GetMapping("/reset-password")
 ////    public ResponseEntity<?> validateResetPasswordToken(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
 //    public ResponseEntity<?> validateResetPasswordToken(@RequestParam("token") String token, HttpServletResponse response) {
@@ -49,16 +61,6 @@ public class ResetPasswordController {
 //        return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/ResetPasswordPage?token=" + token).build();
 //    }
 
-    @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
-        String result = resetPasswordService.validatePasswordResetToken(passwordResetRequestDTO.getToken());
-        if (!result.equals("valid")) {
-            return ResponseEntity.badRequest().body("Invalid or expired password reset token");
-        }
-        User user = resetPasswordService.getUserByPasswordResetToken(passwordResetRequestDTO.getToken());
-        resetPasswordService.changeUserPassword(user, passwordResetRequestDTO.getNewPassword());
-        return ResponseEntity.ok("Password reset successfully");
-    }
 
 
 
