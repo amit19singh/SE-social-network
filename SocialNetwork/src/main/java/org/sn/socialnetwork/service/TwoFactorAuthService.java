@@ -49,7 +49,7 @@ public class TwoFactorAuthService {
 
     public boolean verifyOtp(String username, String otp) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        if (user.getTwoFactorSecret() == null || !user.isTwoFactorEnabled()) {
+        if (user.getTwoFactorSecret() == null) {
             throw new IllegalStateException("2FA is not set up for this user");
         }
 

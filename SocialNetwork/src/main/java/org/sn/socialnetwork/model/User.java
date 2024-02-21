@@ -67,7 +67,7 @@ public class User {
     private String twoFactorSecret;
 
     @Column(name = "is_two_factor_enabled")
-    private boolean isTwoFactorEnabled = true;
+    private boolean isTwoFactorEnabled = false;
 
 }
 

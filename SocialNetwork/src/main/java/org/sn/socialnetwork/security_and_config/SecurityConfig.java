@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.service.CustomUserDetailsService;
 import org.sn.socialnetwork.service.TwoFactorAuthService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,43 +30,36 @@ public class SecurityConfig implements WebMvcConfigurer {
     private final CustomUserDetailsService userDetailsService;
     private final TwoFactorAuthService twoFactorAuthService;
     final private JwtTokenProvider jwtTokenProvider;
-    final private CustomUserDetailsService customUserDetailsService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register", "/login", "/verify2fa","/verify", "/setup2fa",
                                 "/password-reset-request", "/reset-password", "password-reset-security-check",
                         "/custom-login", "/check-user")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .formLogin().disable();  // Use this only for API Testing, Use the following lines for web page
-//                .formLogin(form -> form
-////                        .loginPage("/temp_landing")
-//                        .defaultSuccessUrl("/home", true)
-//                        .failureUrl("http://localhost:3000/login")
-//                        .permitAll())
-//                .logout(LogoutConfigurer::permitAll);
+                .formLogin(AbstractHttpConfigurer::disable);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.exceptionHandling()
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setContentType("application/json;charset=UTF-8");
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.getWriter().write("{\"message\": \"Access Denied\"}");
-                });
+                }));
 
 
         http.oauth2Login(oauth2 -> oauth2
-                        .loginPage("/custom-login")
-                        .defaultSuccessUrl("/home", true)
-                        .failureUrl("/temp_landing")
+                        .loginPage("http://localhost:3000/login")
+                        .defaultSuccessUrl("http://localhost:3000/home", true)
+                        .failureUrl("http://localhost:3000")
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/custom-login")
+                        .logoutSuccessUrl("http://localhost:3000")
                 );
 
 
@@ -99,7 +93,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService);
+        return new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService);
     }
 
     @Bean
