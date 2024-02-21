@@ -47,39 +47,6 @@ public class ResetPasswordController {
     }
 
 
-//    @GetMapping("/reset-password")
-////    public ResponseEntity<?> validateResetPasswordToken(@RequestBody PasswordResetRequestDTO passwordResetRequestDTO) {
-//    public ResponseEntity<?> validateResetPasswordToken(@RequestParam("token") String token, HttpServletResponse response) {
-//        String result = resetPasswordService.validatePasswordResetToken(token);
-//        if (!result.equals("valid")) {
-//            // Redirect to a frontend error page with an appropriate message
-//            return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/password-reset-error?reason=invalidToken").build();
-//        }
-////        User user = resetPasswordService.getUserByPasswordResetToken(passwordResetRequestDTO.getToken());
-////        resetPasswordService.changeUserPassword(user, passwordResetRequestDTO.getNewPassword());
-//        // Redirect to the password reset page with the token as a query parameter
-//        return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:3000/ResetPasswordPage?token=" + token).build();
-//    }
-
-
-
-
-
-
-//    @PostMapping("/reset-password")
-//    public ResponseEntity<?> resetPassword(@RequestParam("token") String token,
-//                                           @RequestParam("newPassword") String newPassword) {
-//        String result = resetPasswordService.validatePasswordResetToken(token);
-//        if (!result.equals("valid")) {
-//            return ResponseEntity.badRequest().body("Invalid or expired password reset token");
-//        }
-//
-//        User user = resetPasswordService.getUserByPasswordResetToken(token);
-//        resetPasswordService.changeUserPassword(user, newPassword);
-//        return ResponseEntity.ok("Password reset successfully");
-//    }
-
-//    This is to check if user exists. If so, then we proceed with the Security answers
     @GetMapping("/check-user")
     public ResponseEntity<?> checkUser(@RequestParam("username") String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);

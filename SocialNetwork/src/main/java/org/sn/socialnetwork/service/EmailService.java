@@ -35,7 +35,6 @@ public class EmailService {
 
     public void sendRegisterVerificationEmail(User user, String token) {
         String subject = "Please verify your email";
-//        String verificationLink = "http://localhost:8080/verify?token=" + token;
         String verificationLink = backendUrl + "/verify?token=" + token;
         String content = "Click the link to verify your account: " + verificationLink;
         sendEmail(user, subject, content);
@@ -43,8 +42,6 @@ public class EmailService {
 
     public void sendPasswordResetEmail(User user, String token) {
         String subject = "Reset your password";
-//        String passwordResetLink = "http://localhost:8080/reset-password?token=" + token;
-//        String passwordResetLink = "http://localhost:3000/ResetPasswordPage?token=" + token;
         String passwordResetLink = frontendUrl + "/ResetPasswordPage?token=" + token;
         String content = "You have requested to reset your password. Click the link to proceed: " + passwordResetLink +
                 "\nIf you did not request a password reset, please ignore this email or secure your account.";

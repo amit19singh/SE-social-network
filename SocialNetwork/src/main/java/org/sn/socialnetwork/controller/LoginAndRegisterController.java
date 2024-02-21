@@ -37,22 +37,6 @@ public class LoginAndRegisterController {
     @Value("${app.backend.url}")
     private String backendUrl;
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Map<String, String>> authenticateUser(@RequestParam String usernameOrEmail, @RequestParam String password) {
-//
-//            UsernamePasswordAuthenticationToken authReq
-//                    = new UsernamePasswordAuthenticationToken(usernameOrEmail, password);
-//            Authentication auth = authenticationManager.authenticate(authReq);
-//
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//
-//            // Redirect to a default page after successful login
-//            String token = "test_token"; // This is just a placeholder
-//
-//            return ResponseEntity.ok().body(Map.of("message", "Login successful",
-//                                                    "token", token)); //, "redirectUrl", "/home"));
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -68,8 +52,6 @@ public class LoginAndRegisterController {
         String jwt = jwtTokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
-
-
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
@@ -116,23 +98,6 @@ public class LoginAndRegisterController {
         System.out.println("HERE is 2FA thing: " + userPrincipal.isTwoFactorEnabled());
         return ResponseEntity.ok(userDetailsDto);
     }
-
-
-
-
-//  The following is only for API Testing
-
-//    @GetMapping("/verify")
-//    public ResponseEntity<String> verifyAccount(@RequestParam("token") String token) {
-//        String result = registerUserService.validateVerificationToken(token,
-//                VerificationToken.TokenType.REGISTRATION_VERIFICATION);
-//
-//        if ("valid".equals(result)) {
-//            return ResponseEntity.ok("Account verified successfully!");
-//        } else {
-//            return ResponseEntity.badRequest().body("Invalid or expired token.");
-//        }
-//    }
 
 }
 
