@@ -34,6 +34,3 @@ public class UserPost {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 }
-
-
-
