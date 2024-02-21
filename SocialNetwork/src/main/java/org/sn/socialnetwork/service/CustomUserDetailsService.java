@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotVerifiedException;
 import org.sn.socialnetwork.model.User;
-import org.sn.socialnetwork.model.UserPrincipal;
+import org.sn.socialnetwork.security_and_config.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

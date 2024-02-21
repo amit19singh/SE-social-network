@@ -1,4 +1,4 @@
-package org.sn.socialnetwork.model;
+package org.sn.socialnetwork.security_and_config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

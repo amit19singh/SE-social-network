@@ -34,3 +34,4 @@ build/
 
 OAuth.json
 .env
+social-network-blob-storage.json

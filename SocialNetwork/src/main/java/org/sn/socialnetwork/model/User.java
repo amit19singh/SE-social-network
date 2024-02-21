@@ -17,7 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "user_id", updatable = false, nullable = false)
     private UUID id;
 
     @Column(nullable = false)
@@ -68,6 +68,9 @@ public class User {
 
     @Column(name = "is_two_factor_enabled")
     private boolean isTwoFactorEnabled = false;
+
+//    If updating User --> also update UserPrincipal
+
 
 }
 

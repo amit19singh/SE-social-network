@@ -5,9 +5,9 @@ import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.LoginRequest;
 import org.sn.socialnetwork.dto.UserDTO;
-import org.sn.socialnetwork.model.JwtAuthenticationResponse;
+import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
 import org.sn.socialnetwork.model.User;
-import org.sn.socialnetwork.model.UserPrincipal;
+import org.sn.socialnetwork.security_and_config.UserPrincipal;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.security_and_config.JwtTokenProvider;
 import org.sn.socialnetwork.service.RegisterUserService;
@@ -22,8 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

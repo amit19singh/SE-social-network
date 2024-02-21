@@ -37,7 +37,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register", "/login", "/verify2fa","/verify", "/setup2fa",
                                 "/password-reset-request", "/reset-password", "password-reset-security-check",
-                        "/custom-login", "/check-user")
+                        "/custom-login", "/check-user", "/files/upload")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
