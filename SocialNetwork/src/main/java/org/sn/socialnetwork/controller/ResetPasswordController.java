@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
+//@RequestMapping("/api/forgot-password")
 public class ResetPasswordController {
     final private ResetPasswordService resetPasswordService;
     final private UserRepository userRepository;

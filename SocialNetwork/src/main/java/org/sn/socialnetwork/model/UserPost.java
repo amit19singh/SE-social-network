@@ -26,7 +26,13 @@ public class UserPost {
     private String caption;
 
     @Column
-    private String mediaUrl; // Consider splitting into imageUrl and videoUrl if needed
+    private String post;
+
+    @Column
+    private String imageUrl;
+
+    @Column
+    private String videoUrl;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

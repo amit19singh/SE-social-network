@@ -25,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequiredArgsConstructor
+//@RequestMapping("/api/admission-access")
 public class LoginAndRegisterController {
     final private RegisterUserService registerUserService;
     final private AuthenticationManager authenticationManager;

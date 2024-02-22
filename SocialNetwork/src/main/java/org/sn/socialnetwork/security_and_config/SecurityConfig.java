@@ -63,15 +63,15 @@ public class SecurityConfig implements WebMvcConfigurer {
                 );
 
 
-        http.cors(cors -> cors
-                .configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("*")); // For testing purposes only
-                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(List.of("*"));
-                    return config;
-                })
-        );
+//        http.cors(cors -> cors
+//                .configurationSource(request -> {
+//                    CorsConfiguration config = new CorsConfiguration();
+//                    config.setAllowedOrigins(List.of("http://localhost:3000"));
+//                    config.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
+//                    config.setAllowedHeaders(List.of("*"));
+//                    return config;
+//                })
+//        );
 
         return http.build();
     }
@@ -80,9 +80,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
-//                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+//                .allowedHeaders("*")
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
                 .allowCredentials(true);
     }
 

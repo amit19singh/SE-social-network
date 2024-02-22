@@ -69,8 +69,9 @@ public class User {
     @Column(name = "is_two_factor_enabled")
     private boolean isTwoFactorEnabled = false;
 
-//    If updating User --> also update UserPrincipal
+//    If updating User --> then also update UserPrincipal
 
 
 }
+
 

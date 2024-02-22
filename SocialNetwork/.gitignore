@@ -19,21 +19,13 @@ target/
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
 ### VS Code ###
 .vscode/
 
+
+C:\Users\amit1\Dropbox\Classes\Spring 2024\Project\SE-social-network\SocialNetwork\social-network-blob-storage.json
 OAuth.json
 .env
-social-network-blob-storage.json
+
 
 
