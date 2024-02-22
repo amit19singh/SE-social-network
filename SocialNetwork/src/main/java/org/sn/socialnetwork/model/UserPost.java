@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user_posts")
@@ -16,7 +17,7 @@ public class UserPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", updatable = false, nullable = false)
-    private Long postId;
+    private UUID postId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

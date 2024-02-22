@@ -35,9 +35,9 @@ public class SecurityConfig implements WebMvcConfigurer {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/verify2fa","/verify", "/setup2fa",
-                                "/password-reset-request", "/reset-password", "password-reset-security-check",
-                        "/custom-login", "/check-user", "/files/upload")
+                        .requestMatchers("/register", "/login", "/verify", "/setup2fa",
+                                "/reset-password", "password-reset-security-check",
+                        "/check-user", "/files/upload")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -61,17 +61,6 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .logout(logout -> logout
                         .logoutSuccessUrl("http://localhost:3000")
                 );
-
-
-//        http.cors(cors -> cors
-//                .configurationSource(request -> {
-//                    CorsConfiguration config = new CorsConfiguration();
-//                    config.setAllowedOrigins(List.of("http://localhost:3000"));
-//                    config.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
-//                    config.setAllowedHeaders(List.of("*"));
-//                    return config;
-//                })
-//        );
 
         return http.build();
     }

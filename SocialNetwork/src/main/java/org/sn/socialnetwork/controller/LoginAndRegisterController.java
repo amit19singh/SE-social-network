@@ -94,7 +94,6 @@ public class LoginAndRegisterController {
                 .isTwoFactorEnabled(userPrincipal.isTwoFactorEnabled())
                 .build();
 
-        System.out.println("HERE is 2FA thing: " + userPrincipal.isTwoFactorEnabled());
         return ResponseEntity.ok(userDetailsDto);
     }
 
