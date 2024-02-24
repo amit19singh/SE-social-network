@@ -17,7 +17,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", updatable = false, nullable = false)
-    private UUID commentId;
+    private Long commentId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

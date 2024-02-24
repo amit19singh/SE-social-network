@@ -22,7 +22,7 @@ public class UserPostService {
         return userPostRepository.save(post);
     }
 
-    public boolean deletePost(UUID postId, UUID userId) {
+    public boolean deletePost(Long postId, UUID userId) {
         Optional<UserPost> postOptional = userPostRepository.findById(postId);
         if (postOptional.isPresent() && postOptional.get().getUser().getId().equals(userId)) {
             userPostRepository.deleteById(postId);

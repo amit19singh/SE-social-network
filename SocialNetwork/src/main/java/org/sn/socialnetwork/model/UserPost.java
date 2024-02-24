@@ -17,7 +17,7 @@ public class UserPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", updatable = false, nullable = false)
-    private UUID postId;
+    private Long postId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

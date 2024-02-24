@@ -27,7 +27,7 @@ public class UserPostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> deletePost(@PathVariable UUID postId) {
+    public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         UUID userId = getUserFromAuth.getCurrentUserId();
         boolean isDeleted = userPostService.deletePost(postId, userId);
         if (isDeleted) {

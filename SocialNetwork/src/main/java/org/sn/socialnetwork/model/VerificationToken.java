@@ -15,7 +15,7 @@ import java.util.UUID;
 public class VerificationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
 
     private String token;
 
