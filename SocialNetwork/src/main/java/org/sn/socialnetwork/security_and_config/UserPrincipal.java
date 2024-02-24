@@ -1,5 +1,6 @@
 package org.sn.socialnetwork.security_and_config;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -18,6 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserPrincipal implements UserDetails {
+
+    private Collection<? extends GrantedAuthority> authorities;
+
     private UUID id;
     private String firstname;
     private String lastname;
@@ -26,14 +30,19 @@ public class UserPrincipal implements UserDetails {
     private String password;
     private LocalDate birthday;
     private String gender;
-    private String securityQuestion1;
-    private String securityAnswer1;
-    private String securityQuestion2;
-    private String securityAnswer2;
-    private LocalDateTime createdAt;
-    private boolean verified;
-    private String twoFactorSecret;
     private boolean isTwoFactorEnabled;
+    private boolean verified;
+    private String profilePicUrl;
+    private String livesIn;
+    private String userHometown;
+    private String relationshipStatus;
+//    private String securityQuestion1;
+//    private String securityAnswer1;
+//    private String securityQuestion2;
+//    private String securityAnswer2;
+//    private LocalDateTime createdAt;
+//    private String twoFactorSecret;
+
 
     public UserPrincipal(User user) {
         this.id = user.getId();
@@ -44,14 +53,19 @@ public class UserPrincipal implements UserDetails {
         this.password = user.getPassword();
         this.birthday = user.getBirthday();
         this.gender = user.getGender();
-        this.securityQuestion1 = user.getSecurityQuestion1();
-        this.securityAnswer1 = user.getSecurityAnswer1();
-        this.securityQuestion2 = user.getSecurityQuestion2();
-        this.securityAnswer2 = user.getSecurityAnswer2();
-        this.createdAt = user.getCreatedAt();
-        this.verified = user.isVerified();
-        this.twoFactorSecret = user.getTwoFactorSecret();
         this.isTwoFactorEnabled = user.isTwoFactorEnabled();
+        this.verified = user.isVerified();
+        this.profilePicUrl = user.getProfilePicUrl();
+        this.livesIn = user.getLivesIn();
+        this.userHometown = user.getUserHometown();
+        this.relationshipStatus = user.getRelationshipStatus();
+//        this.securityQuestion1 = user.getSecurityQuestion1();
+//        this.securityAnswer1 = user.getSecurityAnswer1();
+//        this.securityQuestion2 = user.getSecurityQuestion2();
+//        this.securityAnswer2 = user.getSecurityAnswer2();
+//        this.createdAt = user.getCreatedAt();
+//        this.twoFactorSecret = user.getTwoFactorSecret();
+
     }
 
     @Override
@@ -66,10 +80,10 @@ public class UserPrincipal implements UserDetails {
         return this.password;
     }
 
-//    @Override
-//    public String getUsername() {
-//        return this.username;
-//    }
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -26,20 +26,6 @@ public class FileUploadController {
             return ResponseEntity.internalServerError().body("Failed to upload file: " + e.getMessage());
         }
     }
-
-
-    @PostMapping("/createPost")
-    public ResponseEntity<String> createPost(@RequestParam("file") MultipartFile file) {
-        try {
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            String response = storageService.uploadFile(file, fileName);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Failed to upload file: " + e.getMessage());
-        }
-    }
-
-
-
-
 }
+
+

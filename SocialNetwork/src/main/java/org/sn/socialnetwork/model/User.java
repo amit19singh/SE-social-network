@@ -60,6 +60,7 @@ public class User {
     @Column
     private LocalDateTime createdAt;
 
+    @Column
     private boolean verified;  // For email verification while Registration
 
 //  Following 2 are for 2FA
@@ -70,7 +71,17 @@ public class User {
     private boolean isTwoFactorEnabled = false;
 
 //    If updating User --> then also update UserPrincipal
+    @Column
+    private String profilePicUrl;
 
+    @Column
+    private String livesIn;
+
+    @Column
+    private String userHometown;
+
+    @Column
+    private String relationshipStatus;
 
 }
 
