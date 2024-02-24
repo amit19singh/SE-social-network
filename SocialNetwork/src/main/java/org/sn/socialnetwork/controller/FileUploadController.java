@@ -27,6 +27,7 @@ public class FileUploadController {
         }
     }
 
+
     @PostMapping("/createPost")
     public ResponseEntity<String> createPost(@RequestParam("file") MultipartFile file) {
         try {
