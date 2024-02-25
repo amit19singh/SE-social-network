@@ -118,7 +118,7 @@ public class UserService {
 
         List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user)
                 .stream()
-                .map(this::convertToDisplayUserDto) // Assuming you have this method to convert UserPost to UserPostDTO
+                .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
 
         return UserDTO.builder()

@@ -42,8 +42,6 @@ public class UserController {
     final private AuthenticationManager authenticationManager;
     final private JwtTokenProvider jwtTokenProvider;
     final private SecurityUtils getUserFromAuth;
-    final private UserRepository userRepository;
-    final private UserPostRepository userPostRepository;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
@@ -100,24 +98,6 @@ public class UserController {
         UserDTO userDTO = userService.getUserDetailsWithPosts(userPrincipal.getId());
 
         return ResponseEntity.ok(userDTO);
-//        User user = userRepository.findById(userPrincipal.getId())
-//                .orElseThrow(() -> new UserNotFoundException("User not found with id : " + userPrincipal.getId()));
-//
-//        List<UserPostDTO> userPosts = userPostRepository.findPostsByUser(user)
-//                .stream()
-//                .map(userService::convertToDto) // Implement this method to convert UserPost to UserPostDTO
-//                .collect(Collectors.toList());
-//
-//        UserDTO userDetailsDto = UserDTO.builder()
-//                .firstname(userPrincipal.getFirstname())
-//                .lastname(userPrincipal.getLastname())
-//                .email(userPrincipal.getEmail())
-//                .username(userPrincipal.getUsername())
-//                .birthday(userPrincipal.getBirthday())
-//                .gender(userPrincipal.getGender())
-//                .isTwoFactorEnabled(userPrincipal.isTwoFactorEnabled())
-//                .posts(userPosts)
-//                .build();
 
     }
 
