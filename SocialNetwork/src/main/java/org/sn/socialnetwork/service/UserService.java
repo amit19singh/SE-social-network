@@ -91,7 +91,8 @@ public class UserService {
             user.setGender(userDTO.getGender());
         }
         if (userDTO.getProfilePicUrl() != null && !userDTO.getProfilePicUrl().isEmpty()) {
-            String profilePicUrl = storageService.uploadFile(userDTO.getProfilePicUrl(), userDTO.getProfilePicUrl().getOriginalFilename(), "profilePic");
+            String profilePicUrl = storageService.uploadFile(userDTO.getProfilePicUrl(),
+                    user.getUsername() + "_" + userDTO.getProfilePicUrl().getOriginalFilename(), "profilePic/");
             user.setProfilePicUrl(profilePicUrl);
         }
         if (userDTO.getLivesIn() != null && !userDTO.getLivesIn().trim().isEmpty()) {

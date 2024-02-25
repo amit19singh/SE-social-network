@@ -32,13 +32,15 @@ public class UserPostController {
         post.setCaption(userPostDTO.getCaption());
         post.setPost(userPostDTO.getPost());
 
-        // Handle file upload
+        // Handle file upload and set fileName: Username + OriginalFileName
         if (userPostDTO.getImage() != null && !userPostDTO.getImage().isEmpty()) {
-            String imageUrl = storageService.uploadFile(userPostDTO.getImage(), userPostDTO.getImage().getOriginalFilename(), "images");
+            String imageUrl = storageService.uploadFile(userPostDTO.getImage(),
+                    user.getUsername() + "_" + userPostDTO.getImage().getOriginalFilename(), "images/");
             post.setImageUrl(imageUrl);
         }
         if (userPostDTO.getVideo() != null && !userPostDTO.getVideo().isEmpty()) {
-            String videoUrl = storageService.uploadFile(userPostDTO.getVideo(), userPostDTO.getVideo().getOriginalFilename(), "videos");
+            String videoUrl = storageService.uploadFile(userPostDTO.getVideo(),
+                    user.getUsername() + "_" + userPostDTO.getVideo().getOriginalFilename(), "videos/");
             post.setVideoUrl(videoUrl);
         }
 
@@ -57,33 +59,6 @@ public class UserPostController {
         }
     }
 
-
-//    @PostMapping(value="/upload", consumes = {"multipart/form-data"})
-//    public ResponseEntity<UserPost> createPost(
-////            @RequestParam("caption") String caption,
-//            @RequestParam(value = "image", required = false) MultipartFile image,
-//            @RequestParam(value = "video", required = false) MultipartFile video) throws IOException {
-//        User user = getUserFromAuth.getCurrentUser();
-//        UserPost post = new UserPost();
-//        post.setUser(user);
-////        post.setCaption(caption);
-//        System.out.println("HERE");
-//
-//        // Handle file upload
-//        if (image != null && !image.isEmpty()) {
-//            System.out.println("Here 1");
-//            String imageUrl = storageService.uploadFile(image, image.getOriginalFilename());
-//            post.setImageUrl(imageUrl);
-//        }
-//        if (video != null && !video.isEmpty()) {
-//            System.out.println("Here 2");
-//            String videoUrl = storageService.uploadFile(video, video.getOriginalFilename());
-//            post.setVideoUrl(videoUrl);
-//        }
-//
-//        UserPost createdPost = userPostService.createPost(post);
-//        return ResponseEntity.ok(createdPost);
-//    }
 
 }
 
