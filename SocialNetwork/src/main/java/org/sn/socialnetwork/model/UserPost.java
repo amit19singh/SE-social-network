@@ -26,13 +26,13 @@ public class UserPost {
     @Column
     private String caption;
 
-    @Column
+    @Column(length = 3000)
     private String post;
 
-    @Column
+    @Column(length = 3000)
     private String imageUrl;
 
-    @Column
+    @Column(length = 3000)
     private String videoUrl;
 
     @Column(nullable = false)

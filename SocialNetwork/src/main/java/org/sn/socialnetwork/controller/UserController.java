@@ -2,9 +2,14 @@ package org.sn.socialnetwork.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
+import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
+import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.LoginRequest;
 import org.sn.socialnetwork.dto.UserDTO;
+import org.sn.socialnetwork.dto.UserPostDTO;
+import org.sn.socialnetwork.repository.UserPostRepository;
+import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
@@ -25,6 +30,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +42,8 @@ public class UserController {
     final private AuthenticationManager authenticationManager;
     final private JwtTokenProvider jwtTokenProvider;
     final private SecurityUtils getUserFromAuth;
+    final private UserRepository userRepository;
+    final private UserPostRepository userPostRepository;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
@@ -87,18 +97,28 @@ public class UserController {
         }
 
         UserPrincipal userPrincipal = (UserPrincipal) userDetails;
+        UserDTO userDTO = userService.getUserDetailsWithPosts(userPrincipal.getId());
 
-        UserDTO userDetailsDto = UserDTO.builder()
-                .firstname(userPrincipal.getFirstname())
-                .lastname(userPrincipal.getLastname())
-                .email(userPrincipal.getEmail())
-                .username(userPrincipal.getUsername())
-                .birthday(userPrincipal.getBirthday())
-                .gender(userPrincipal.getGender())
-                .isTwoFactorEnabled(userPrincipal.isTwoFactorEnabled())
-                .build();
+        return ResponseEntity.ok(userDTO);
+//        User user = userRepository.findById(userPrincipal.getId())
+//                .orElseThrow(() -> new UserNotFoundException("User not found with id : " + userPrincipal.getId()));
+//
+//        List<UserPostDTO> userPosts = userPostRepository.findPostsByUser(user)
+//                .stream()
+//                .map(userService::convertToDto) // Implement this method to convert UserPost to UserPostDTO
+//                .collect(Collectors.toList());
+//
+//        UserDTO userDetailsDto = UserDTO.builder()
+//                .firstname(userPrincipal.getFirstname())
+//                .lastname(userPrincipal.getLastname())
+//                .email(userPrincipal.getEmail())
+//                .username(userPrincipal.getUsername())
+//                .birthday(userPrincipal.getBirthday())
+//                .gender(userPrincipal.getGender())
+//                .isTwoFactorEnabled(userPrincipal.isTwoFactorEnabled())
+//                .posts(userPosts)
+//                .build();
 
-        return ResponseEntity.ok(userDetailsDto);
     }
 
     @PostMapping(value="/updateProfile", consumes = {"multipart/form-data"})

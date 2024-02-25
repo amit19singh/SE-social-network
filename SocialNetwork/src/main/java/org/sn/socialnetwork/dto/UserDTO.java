@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +25,7 @@ public class UserDTO {
     private String livesIn;
     private String userHometown;
     private String relationshipStatus;
+    private List<DisplayUserPostDTO> posts;
 }
 
 

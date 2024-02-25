@@ -5,10 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
+import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.model.User;
+import org.sn.socialnetwork.model.UserPost;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
+import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +31,7 @@ public class UserService {
     final private VerificationTokenRepository tokenRepository;
     final private EmailService emailService;
     private final StorageService storageService;
+    final private UserPostRepository userPostRepository;
 
     public User registerUser(User user){
 
@@ -92,7 +97,7 @@ public class UserService {
         }
         if (userDTO.getProfilePicUrl() != null && !userDTO.getProfilePicUrl().isEmpty()) {
             String profilePicUrl = storageService.uploadFile(userDTO.getProfilePicUrl(),
-                    user.getUsername() + "_" + userDTO.getProfilePicUrl().getOriginalFilename(), "profilePic/");
+                    user.getUsername() + "_" + userDTO.getProfilePicUrl().getOriginalFilename());
             user.setProfilePicUrl(profilePicUrl);
         }
         if (userDTO.getLivesIn() != null && !userDTO.getLivesIn().trim().isEmpty()) {
@@ -106,5 +111,40 @@ public class UserService {
         }
         return userRepository.save(user);
     }
+
+    public UserDTO getUserDetailsWithPosts(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user)
+                .stream()
+                .map(this::convertToDisplayUserDto) // Assuming you have this method to convert UserPost to UserPostDTO
+                .collect(Collectors.toList());
+
+        return UserDTO.builder()
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .birthday(user.getBirthday())
+                .gender(user.getGender())
+                .isTwoFactorEnabled(user.isTwoFactorEnabled())
+                .livesIn(user.getLivesIn())
+                .userHometown(user.getUserHometown())
+                .relationshipStatus(user.getRelationshipStatus())
+                .posts(displayUserPostDTOS)
+                .build();
+    }
+
+
+    private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
+        return DisplayUserPostDTO.builder()
+                .caption(displayUserPostDTO.getCaption())
+                .post(displayUserPostDTO.getPost())
+                .imageUrl(displayUserPostDTO.getImageUrl())
+                .videoUrl(displayUserPostDTO.getVideoUrl())
+                .build();
+    }
+
 }
 

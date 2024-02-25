@@ -35,12 +35,12 @@ public class UserPostController {
         // Handle file upload and set fileName: Username + OriginalFileName
         if (userPostDTO.getImage() != null && !userPostDTO.getImage().isEmpty()) {
             String imageUrl = storageService.uploadFile(userPostDTO.getImage(),
-                    user.getUsername() + "_" + userPostDTO.getImage().getOriginalFilename(), "images/");
+                    user.getUsername() + "_" + userPostDTO.getImage().getOriginalFilename());
             post.setImageUrl(imageUrl);
         }
         if (userPostDTO.getVideo() != null && !userPostDTO.getVideo().isEmpty()) {
             String videoUrl = storageService.uploadFile(userPostDTO.getVideo(),
-                    user.getUsername() + "_" + userPostDTO.getVideo().getOriginalFilename(), "videos/");
+                    user.getUsername() + "_" + userPostDTO.getVideo().getOriginalFilename());
             post.setVideoUrl(videoUrl);
         }
 
