@@ -25,7 +25,7 @@ public class StorageService {
         this.bucketName = bucketName;
     }
 
-    public String uploadFile(MultipartFile file, String fileName) throws IOException {
+    public String uploadFile(MultipartFile file, String fileName, String fileType) throws IOException {
         // Validate file type and size
         if (!isValidFileType(Objects.requireNonNull(file.getContentType()))) {
             throw new IllegalArgumentException("Invalid file type.");
@@ -33,23 +33,23 @@ public class StorageService {
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new IllegalArgumentException("File size exceeds the maximum limit.");
         }
-        String folderName = determineFolder(file.getContentType());
-        String fullFileName = folderName + "/" + fileName;
+//        String folderName = determineFolder(file.getContentType());
+        String fullFileName = fileType + "/" + fileName;
         BlobId blobId = BlobId.of(bucketName, fullFileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         storage.create(blobInfo, file.getBytes());
         return String.format("File %s uploaded to bucket %s as %s", file.getOriginalFilename(), bucketName, fileName);
     }
 
-    private String determineFolder(String contentType) {
-        if (contentType.startsWith("image/")) {
-            return "images";
-        } else if (contentType.startsWith("video/")) {
-            return "videos";
-        } else {
-            return "others";
-        }
-    }
+//    private String determineFolder(String contentType) {
+//        if (contentType.startsWith("image/")) {
+//            return "images";
+//        } else if (contentType.startsWith("video/")) {
+//            return "videos";
+//        } else {
+//            return "others";
+//        }
+//    }
 
     private boolean isValidFileType(String contentType) {
         return contentType.equals("image/jpeg") || contentType.equals("image/png")

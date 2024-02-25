@@ -7,10 +7,11 @@ import org.sn.socialnetwork.dto.LoginRequest;
 import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
 import org.sn.socialnetwork.model.User;
+import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.sn.socialnetwork.security_and_config.UserPrincipal;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.security_and_config.JwtTokenProvider;
-import org.sn.socialnetwork.service.RegisterUserService;
+import org.sn.socialnetwork.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 //@RequestMapping("/api/admission-access")
-public class LoginAndRegisterController {
-    final private RegisterUserService registerUserService;
+public class UserController {
+    final private UserService userService;
     final private AuthenticationManager authenticationManager;
     final private JwtTokenProvider jwtTokenProvider;
+    final private SecurityUtils getUserFromAuth;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
@@ -55,7 +59,7 @@ public class LoginAndRegisterController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
         try {
-            User registeredUser = registerUserService.registerUser(user);
+            User registeredUser = userService.registerUser(user);
             return ResponseEntity.ok(registeredUser);
         } catch (EmailAlreadyInUseException | UsernameAlreadyInUseException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -64,7 +68,7 @@ public class LoginAndRegisterController {
 
     @GetMapping("/verify")
     public RedirectView verifyAccount(@RequestParam("token") String token) {
-        String result = registerUserService.validateVerificationToken(token,
+        String result = userService.validateVerificationToken(token,
                 VerificationToken.TokenType.REGISTRATION_VERIFICATION);
 
         String frontENDUrl;
@@ -97,19 +101,9 @@ public class LoginAndRegisterController {
         return ResponseEntity.ok(userDetailsDto);
     }
 
+    @PostMapping(value="/updateProfile", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> updateProfile(@ModelAttribute UserDTO userDTO) throws IOException {
+        User updatedUser = userService.updateUser(getUserFromAuth.getCurrentUser().getId(), userDTO);
+        return ResponseEntity.ok(updatedUser);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

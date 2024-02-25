@@ -3,27 +3,30 @@ package org.sn.socialnetwork.service;
 
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
+import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
+import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterUserService {
+public class UserService {
 
     final private UserRepository userRepository ;
     final private PasswordEncoder passwordEncoder;
     final private VerificationTokenRepository tokenRepository;
     final private EmailService emailService;
+    private final StorageService storageService;
 
     public User registerUser(User user){
 
@@ -71,4 +74,36 @@ public class RegisterUserService {
         return "valid";
     }
 
+    public User updateUser(UUID id, UserDTO userDTO) throws IOException {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+
+        if (userDTO.getFirstname() != null && !userDTO.getFirstname().trim().isEmpty()) {
+            user.setFirstname(userDTO.getFirstname());
+        }
+        if (userDTO.getLastname() != null && !userDTO.getLastname().trim().isEmpty()) {
+            user.setLastname(userDTO.getLastname());
+        }
+        if (userDTO.getBirthday() != null) {
+            user.setBirthday(userDTO.getBirthday());
+        }
+        if (userDTO.getGender() != null && !userDTO.getGender().trim().isEmpty()) {
+            user.setGender(userDTO.getGender());
+        }
+        if (userDTO.getProfilePicUrl() != null && !userDTO.getProfilePicUrl().isEmpty()) {
+            String profilePicUrl = storageService.uploadFile(userDTO.getProfilePicUrl(), userDTO.getProfilePicUrl().getOriginalFilename(), "profilePic");
+            user.setProfilePicUrl(profilePicUrl);
+        }
+        if (userDTO.getLivesIn() != null && !userDTO.getLivesIn().trim().isEmpty()) {
+            user.setLivesIn(userDTO.getLivesIn());
+        }
+        if (userDTO.getUserHometown() != null && !userDTO.getUserHometown().trim().isEmpty()) {
+            user.setUserHometown(userDTO.getUserHometown());
+        }
+        if (userDTO.getRelationshipStatus() != null && !userDTO.getRelationshipStatus().trim().isEmpty()) {
+            user.setRelationshipStatus(userDTO.getRelationshipStatus());
+        }
+        return userRepository.save(user);
+    }
 }
+

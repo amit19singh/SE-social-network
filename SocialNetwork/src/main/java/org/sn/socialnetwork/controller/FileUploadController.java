@@ -20,7 +20,7 @@ public class FileUploadController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            String response = storageService.uploadFile(file, fileName);
+            String response = storageService.uploadFile(file, fileName, "Image");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Failed to upload file: " + e.getMessage());

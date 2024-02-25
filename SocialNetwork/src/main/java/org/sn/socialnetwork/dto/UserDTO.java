@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 @Data
@@ -18,6 +20,10 @@ public class UserDTO {
     private LocalDate birthday;
     private String gender;
     private boolean isTwoFactorEnabled;
+    private MultipartFile profilePicUrl;
+    private String livesIn;
+    private String userHometown;
+    private String relationshipStatus;
 }
 
 
