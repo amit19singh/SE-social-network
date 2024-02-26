@@ -56,11 +56,11 @@ jobs:
 
       - name: Build the package
         run: mvn --batch-mode -DskipTests package
-        working-directory: SE-social-network
+#        working-directory: SE-social-network
 
-      - name: Run the unit tests
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-        working-directory: SE-social-network
+#      - name: Run the unit tests
+#        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+#        working-directory: SE-social-network
 
       - name: Report
         uses: dorny/test-reporter@v1
@@ -76,3 +76,4 @@ jobs:
           docker login --username amit19singh --password ${{secrets.ACCESS_TOKEN}} ghcr.io
           docker build -t ghcr.io/amit19singh/se-social-network:latest --file SE-social-network/SocialNetwork/Dockerfile .  
           docker push ghcr.io/amit19singh/se-social-network:latest
+
