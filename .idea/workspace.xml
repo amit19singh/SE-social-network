@@ -4,21 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="User Can Post and Delete">
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="User-Profile: Search Added">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/FriendRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/FriendRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/FriendRequestRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/SocialNetworkApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/SocialNetworkApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/VerificationTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/VerificationTokenRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserPostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -28,6 +37,20 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "amit19singh"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e51a3e15-f166-4a21-9c28-b6a5eba5c00d" />
+        <option name="url" value="https://github.com/amit19singh/SE-social-network.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -173,7 +196,7 @@
       <workItem from="1708922451876" duration="108000" />
       <workItem from="1708922571340" duration="1375000" />
       <workItem from="1708923978170" duration="1766000" />
-      <workItem from="1708974602876" duration="10241000" />
+      <workItem from="1708974602876" duration="14579000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -327,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708977913405</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="User-Profile: Search Added">
+      <option name="closed" value="true" />
+      <created>1708986734192</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1708986734192</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,6 +378,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="workflow" />
     <MESSAGE value="User Can Post and Delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="User Can Post and Delete" />
+    <MESSAGE value="User-Profile: Search Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="User-Profile: Search Added" />
   </component>
 </project>

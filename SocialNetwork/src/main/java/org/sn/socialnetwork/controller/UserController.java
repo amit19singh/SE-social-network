@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
-import org.sn.socialnetwork.dto.DisplayUserPostDTO;
-import org.sn.socialnetwork.dto.LoginRequest;
-import org.sn.socialnetwork.dto.UserDTO;
-import org.sn.socialnetwork.dto.UserPostDTO;
+import org.sn.socialnetwork.dto.*;
 import org.sn.socialnetwork.model.UserPost;
 import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.repository.UserRepository;
@@ -49,6 +46,7 @@ public class UserController {
     @Value("${app.backend.url}")
     private String backendUrl;
 
+//    USER-LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -65,6 +63,7 @@ public class UserController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
+//    USER-REGISTRATION
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
         try {
@@ -75,6 +74,7 @@ public class UserController {
         }
     }
 
+//    EMAIL VERIFICATION AFTER REGISTRATION
     @GetMapping("/verify")
     public RedirectView verifyAccount(@RequestParam("token") String token) {
         String result = userService.validateVerificationToken(token,
@@ -89,6 +89,7 @@ public class UserController {
         return new RedirectView(frontENDUrl);
     }
 
+//    USER DETAILS FOR THE USER HOME PAGE
     @GetMapping("/userDetail")
     public ResponseEntity<UserDTO> userDetail(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null)
@@ -100,18 +101,14 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
+//    EDIT USER PROFILE
     @PostMapping(value="/updateProfile", consumes = {"multipart/form-data"})
     public ResponseEntity<?> updateProfile(@ModelAttribute UserDTO userDTO) throws IOException {
         User updatedUser = userService.updateUser(getUserFromAuth.getCurrentUser().getId(), userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
-//        List<UserDTO> userDTOs = userService.searchUsers(query);
-//        return ResponseEntity.ok(userDTOs);
-//    }
-
+//    SEARCH FOR PEOPLE/POSTS
     @GetMapping("/search")
     public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
         List<UserDTO> userDTOS = userService.searchUsersWithCriteriaAPI(query);
@@ -119,5 +116,4 @@ public class UserController {
     }
 
 }
-
 

@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT u FROM User u WHERE u.username = ?1 OR u.email = ?1")
     Optional<User> findByUsernameOrEmail(String usernameOrEmail);
 
-//    List<User> findByUsernameContainingOrNameContainingAllIgnoreCase(String query);
-    List<User> findByUsernameContainingOrFirstnameContainingOrLastnameContainingAllIgnoreCase(String username, String firstname, String lastname);
+//    List<User> findByUsernameContainingOrFirstnameContainingOrLastnameContainingAllIgnoreCase(String username, String firstname, String lastname);
 
 }
+
