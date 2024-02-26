@@ -8,6 +8,7 @@ import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.LoginRequest;
 import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.dto.UserPostDTO;
+import org.sn.socialnetwork.model.UserPost;
 import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
@@ -104,6 +105,19 @@ public class UserController {
         User updatedUser = userService.updateUser(getUserFromAuth.getCurrentUser().getId(), userDTO);
         return ResponseEntity.ok(updatedUser);
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
+//        List<UserDTO> userDTOs = userService.searchUsers(query);
+//        return ResponseEntity.ok(userDTOs);
+//    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
+        List<UserDTO> userDTOS = userService.searchUsersWithCriteriaAPI(query);
+        return ResponseEntity.ok(userDTOS);
+    }
+
 }
 
 

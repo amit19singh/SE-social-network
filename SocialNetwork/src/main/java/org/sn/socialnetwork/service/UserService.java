@@ -1,6 +1,12 @@
 package org.sn.socialnetwork.service;
 
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
@@ -33,6 +39,8 @@ public class UserService {
     final private EmailService emailService;
     private final StorageService storageService;
     final private UserPostRepository userPostRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public User registerUser(User user){
 
@@ -137,17 +145,63 @@ public class UserService {
                 .build();
     }
 
-
     private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
         return DisplayUserPostDTO.builder()
                 .postId(displayUserPostDTO.getPostId())
                 .caption(displayUserPostDTO.getCaption())
+                .createdAt(displayUserPostDTO.getCreatedAt())
                 .post(displayUserPostDTO.getPost())
                 .imageUrl(displayUserPostDTO.getImageUrl())
                 .videoUrl(displayUserPostDTO.getVideoUrl())
                 .build();
     }
 
-}
+    public List<UserDTO> searchUsersWithCriteriaAPI(String query) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> user = cq.from(User.class);
 
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (query != null && !query.isEmpty()) {
+            String[] terms = query.split("\\s+");
+            for (String term : terms) {
+                String pattern = "%" + term.toLowerCase() + "%";
+                Predicate usernamePredicate = cb.like(cb.lower(user.get("username")), pattern);
+                Predicate firstnamePredicate = cb.like(cb.lower(user.get("firstname")), pattern);
+                Predicate lastnamePredicate = cb.like(cb.lower(user.get("lastname")), pattern);
+                predicates.add(cb.or(usernamePredicate, firstnamePredicate, lastnamePredicate));
+            }
+        }
+
+        cq.where(cb.and(predicates.toArray(new Predicate[0])));
+        List<User> users = entityManager.createQuery(cq).getResultList();
+
+        return users.stream()
+                .map(this::convertToUserDTO)
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO convertToUserDTO(User user) {
+        return UserDTO.builder()
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .gender(user.getGender())
+                .livesIn(user.getLivesIn())
+                .userHometown(user.getUserHometown())
+                .relationshipStatus(user.getRelationshipStatus())
+                .build();
+    }
+
+//    public List<UserDTO> searchUsers(String query) {
+//        List<User> users = userRepository.findByUsernameContainingOrFirstnameContainingOrLastnameContainingAllIgnoreCase(query, query, query);
+//
+//        return users.stream()
+//                .map(this::convertToUserDTO)
+//                .collect(Collectors.toList());
+//    }
+
+}
 

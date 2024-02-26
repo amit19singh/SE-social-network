@@ -12,10 +12,7 @@ import java.util.UUID;
 @Repository
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
     Optional<VerificationToken> findByToken(String token);
-
     Optional<VerificationToken> findByUserAndType(User user, VerificationToken.TokenType tokenType);
-
     Optional<VerificationToken> findByTokenAndUserAndType(String verificationToken, User user, VerificationToken.TokenType tokenType);
-
     Optional<VerificationToken> findByUserId(UUID id);
 }
