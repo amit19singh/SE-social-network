@@ -1,3 +1,42 @@
+#name: Docker Image SE Project Backend
+#on:
+#  push
+#
+#jobs:
+#  build_and_publish:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Set up JDK 1.21
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '21'
+#          distribution: 'adopt'
+#
+#      - name: Build the package
+#        run: mvn --batch-mode -DskipTests package
+#
+#      - name: Run the unit tests
+#        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+#
+#      - name: Report
+#        uses: dorny/test-reporter@v1
+#        if: always()
+#        with:
+#          name: Maven Tests
+#          path: target/surefire-reports/*.xml
+#          reporter: java-junit
+#          fail-on-error: true
+#
+#      - name: Build and push the image
+#        run: |
+#          docker login --username amit19singh --password ${{secrets.ACCESS_TOKEN}} ghcr.io
+#          docker build -t ghcr.io/amit19singh/se-social-network:latest --file Dockerfile .
+#          docker push ghcr.io/amit19singh/se-social-network:latest
+
+
 name: Docker Image SE Project Backend
 on:
   push
@@ -17,21 +56,23 @@ jobs:
 
       - name: Build the package
         run: mvn --batch-mode -DskipTests package
+        working-directory: SE-social-network
 
       - name: Run the unit tests
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        working-directory: SE-social-network
 
       - name: Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maven Tests
-          path: target/surefire-reports/*.xml
+          path: SE-social-network/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
 
       - name: Build and push the image
         run: |
           docker login --username amit19singh --password ${{secrets.ACCESS_TOKEN}} ghcr.io
-          docker build -t ghcr.io/amit19singh/se-social-network:latest --file Dockerfile .  
+          docker build -t ghcr.io/amit19singh/se-social-network:latest --file SE-social-network/Dockerfile SE-social-network  
           docker push ghcr.io/amit19singh/se-social-network:latest
