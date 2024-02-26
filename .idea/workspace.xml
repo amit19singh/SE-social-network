@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="workflow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/.github/workflows/docker-image-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/.github/workflows/docker-image-ci.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +122,7 @@
       <updated>1708922448241</updated>
       <workItem from="1708922451876" duration="108000" />
       <workItem from="1708922571340" duration="1375000" />
-      <workItem from="1708923978170" duration="1668000" />
+      <workItem from="1708923978170" duration="1766000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -172,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708925313208</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="workflow">
+      <option name="closed" value="true" />
+      <created>1708925653144</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708925653144</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
