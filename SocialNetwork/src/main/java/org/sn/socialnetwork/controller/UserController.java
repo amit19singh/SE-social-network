@@ -90,15 +90,13 @@ public class UserController {
 
     @GetMapping("/userDetail")
     public ResponseEntity<UserDTO> userDetail(@AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails == null) {
+        if (userDetails == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
 
         UserPrincipal userPrincipal = (UserPrincipal) userDetails;
         UserDTO userDTO = userService.getUserDetailsWithPosts(userPrincipal.getId());
 
         return ResponseEntity.ok(userDTO);
-
     }
 
     @PostMapping(value="/updateProfile", consumes = {"multipart/form-data"})
