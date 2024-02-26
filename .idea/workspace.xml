@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="workflow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/.github/workflows/docker-image-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/.github/workflows/docker-image-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +16,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="User-Profile-1" />
+        <entry key="$PROJECT_DIR$" value="343e72c16cf752115c092ca628849c3192186604" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -95,10 +96,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="HTTP Request.generated-requests | #3" />
         <item itemvalue="HTTP Request.generated-requests | #2" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="Application.loginUser" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
       </list>
     </recent_temporary>
   </component>
@@ -120,7 +122,7 @@
       <updated>1708922448241</updated>
       <workItem from="1708922451876" duration="108000" />
       <workItem from="1708922571340" duration="1375000" />
-      <workItem from="1708923978170" duration="1329000" />
+      <workItem from="1708923978170" duration="1668000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -162,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708924933444</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="workflow">
+      <option name="closed" value="true" />
+      <created>1708925313208</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708925313208</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

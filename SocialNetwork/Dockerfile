@@ -1,6 +1,6 @@
 # Start with a base image that has JDK 21
-FROM openjdk:21-slim AS build
-
+FROM eclipse-temurin:21
+# openjdk:21-slim AS build
 # Install Maven
 RUN apt-get update && \
     apt-get install -y maven && \
