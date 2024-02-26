@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Builder
 public class DisplayUserPostDTO {
+    private Long postId;
     private String caption;
     private String post;
 //    private String profilePicUrl;

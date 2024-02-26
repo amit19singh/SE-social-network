@@ -14,6 +14,7 @@ import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -116,7 +117,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user)
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user, Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
@@ -139,6 +140,7 @@ public class UserService {
 
     private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
         return DisplayUserPostDTO.builder()
+                .postId(displayUserPostDTO.getPostId())
                 .caption(displayUserPostDTO.getCaption())
                 .post(displayUserPostDTO.getPost())
                 .imageUrl(displayUserPostDTO.getImageUrl())

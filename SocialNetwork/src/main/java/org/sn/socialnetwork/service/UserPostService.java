@@ -23,13 +23,13 @@ public class UserPostService {
     }
 
     public boolean deletePost(Long postId, UUID userId) {
-        Optional<UserPost> postOptional = userPostRepository.findById(postId);
-        if (postOptional.isPresent() && postOptional.get().getUser().getId().equals(userId)) {
-            userPostRepository.deleteById(postId);
-            return true;
-        }
-        return false;
+        return userPostRepository.findById(postId)
+                .filter(post -> post.getUser().getId().equals(userId))
+                .map(post -> {
+                    userPostRepository.deleteById(postId);
+                    return true;
+                })
+                .orElse(false);
     }
 }
-
 

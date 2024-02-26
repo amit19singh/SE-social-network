@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Builder
 public class UserPostDTO {
+    private Long postId;
     private String caption;
     private String post;
     private MultipartFile image;

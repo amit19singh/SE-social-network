@@ -8,6 +8,7 @@ import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.sn.socialnetwork.service.StorageService;
 import org.sn.socialnetwork.service.UserPostService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,15 +52,16 @@ public class UserPostController {
     @DeleteMapping("/delete/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         UUID userId = getUserFromAuth.getCurrentUserId();
-        boolean isDeleted = userPostService.deletePost(postId, userId);
-        if (isDeleted) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        try {
+            boolean isDeleted = userPostService.deletePost(postId, userId);
+            if (isDeleted) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this post.");
         }
     }
-
-
 }
-
 
