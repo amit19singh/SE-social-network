@@ -35,5 +35,3 @@ jobs:
           docker login --username amit19singh --password ${{secrets.ACCESS_TOKEN}} ghcr.io
           docker build -t ghcr.io/amit19singh/SE-social-network/SocialNetwork:latest --file Dockerfile .  
           docker push ghcr.io/amit19singh/SE-social-network/SocialNetwork:latest
-
-
