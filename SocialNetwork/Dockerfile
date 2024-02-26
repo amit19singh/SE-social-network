@@ -17,6 +17,7 @@ RUN mvn clean package
 
 # Use the JDK 21 image for running the application
 FROM openjdk:21-slim
-COPY --from=build /app/target/*.jar app.jar
+COPY ./target/SocialNetwork-0.0.1-SNAPSHOT.jar social-network.jar
+#--from=build /app/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
