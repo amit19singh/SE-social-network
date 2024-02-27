@@ -13,13 +13,16 @@ import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.UserDTO;
+import org.sn.socialnetwork.model.FriendRequest;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.UserPost;
 import org.sn.socialnetwork.model.VerificationToken;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
+import org.sn.socialnetwork.repository.FriendRequestRepository;
 import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.repository.VerificationTokenRepository;
+import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,8 @@ public class UserService {
     final private EmailService emailService;
     private final StorageService storageService;
     final private UserPostRepository userPostRepository;
+    final private FriendRequestRepository friendRequestRepository;
+    final private SecurityUtils securityUtils;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -183,12 +188,19 @@ public class UserService {
     }
 
     private UserDTO convertToUserDTO(User user) {
+        String requestStatus = "NONE";
+
+        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
+        if (friendRequest.isPresent()) {
+            requestStatus = friendRequest.get().getStatus().toString();
+        }
         return UserDTO.builder()
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .gender(user.getGender())
+                .requestSent(requestStatus)
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())

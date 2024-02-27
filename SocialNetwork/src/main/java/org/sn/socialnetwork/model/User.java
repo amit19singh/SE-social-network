@@ -70,7 +70,6 @@ public class User {
     @Column(name = "is_two_factor_enabled")
     private boolean isTwoFactorEnabled = false;
 
-//    If updating User --> then also update UserPrincipal
     @Column
     private String profilePicUrl;
 

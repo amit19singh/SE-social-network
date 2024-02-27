@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import org.sn.socialnetwork.dto.UserPostDTO;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.UserPost;
-import org.sn.socialnetwork.repository.UserPostRepository;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.sn.socialnetwork.service.StorageService;
 import org.sn.socialnetwork.service.UserPostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -22,12 +20,12 @@ import java.util.UUID;
 public class UserPostController {
 
     final private UserPostService userPostService;
-    final private SecurityUtils getUserFromAuth;
+    final private SecurityUtils securityUtils;
     private final StorageService storageService;
 
     @PostMapping(value="/upload", consumes = {"multipart/form-data"})
     public ResponseEntity<UserPost> createPost(@ModelAttribute UserPostDTO userPostDTO) throws IOException {
-        User user = getUserFromAuth.getCurrentUser();
+        User user = securityUtils.getCurrentUser();
         UserPost post = new UserPost();
         post.setUser(user);
         post.setCaption(userPostDTO.getCaption());
@@ -51,7 +49,7 @@ public class UserPostController {
 
     @DeleteMapping("/delete/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
-        UUID userId = getUserFromAuth.getCurrentUserId();
+        UUID userId = securityUtils.getCurrentUserId();
         try {
             boolean isDeleted = userPostService.deletePost(postId, userId);
             if (isDeleted) {
