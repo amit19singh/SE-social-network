@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="User-Profile: Search Added">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/FriendRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/FriendRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/FriendRequestRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" afterDir="false" />
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="User-Profile: Can send FriendRequest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +30,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "amit19singh"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;amit19singh&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -74,41 +66,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Maven.SocialNetwork [clean,verify].executor": "Run",
-    "Maven.SocialNetwork [clean].executor": "Run",
-    "Maven.SocialNetwork [package].executor": "Run",
-    "Maven.SocialNetwork [verify].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.SocialNetworkApplication.executor": "Run",
-    "git-widget-placeholder": "User-Profile",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/amit1/Dropbox/Classes/Spring 2024/Project/SE-social-network/SocialNetwork/.env",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Maven.SocialNetwork [clean,verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [verify].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.SocialNetworkApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;User-Profile&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/amit1/Dropbox/Classes/Spring 2024/Project/SE-social-network/SocialNetwork/.env&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\amit1\Dropbox\Classes\Spring 2024\Project\SE-social-network" />
@@ -196,7 +188,8 @@
       <workItem from="1708922451876" duration="108000" />
       <workItem from="1708922571340" duration="1375000" />
       <workItem from="1708923978170" duration="1766000" />
-      <workItem from="1708974602876" duration="14579000" />
+      <workItem from="1708974602876" duration="15768000" />
+      <workItem from="1709015111933" duration="39000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -358,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708986734192</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="User-Profile: Can send FriendRequest">
+      <option name="closed" value="true" />
+      <created>1708991029889</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1708991029889</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,6 +380,7 @@
     <MESSAGE value="workflow" />
     <MESSAGE value="User Can Post and Delete" />
     <MESSAGE value="User-Profile: Search Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="User-Profile: Search Added" />
+    <MESSAGE value="User-Profile: Can send FriendRequest" />
+    <option name="LAST_COMMIT_MESSAGE" value="User-Profile: Can send FriendRequest" />
   </component>
 </project>
