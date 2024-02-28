@@ -2,12 +2,8 @@ package org.sn.socialnetwork.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
-import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.*;
-import org.sn.socialnetwork.model.UserPost;
-import org.sn.socialnetwork.repository.UserPostRepository;
-import org.sn.socialnetwork.repository.UserRepository;
 import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
@@ -28,9 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -96,7 +90,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 
         UserPrincipal userPrincipal = (UserPrincipal) userDetails;
-        UserDTO userDTO = userService.getUserDetailsWithPosts(userPrincipal.getId());
+        UserDTO userDTO = userService.getUserDetailsWithPostsAndFriends(userPrincipal.getId());
 
         return ResponseEntity.ok(userDTO);
     }

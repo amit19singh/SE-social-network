@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sn.socialnetwork.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -27,6 +28,8 @@ public class UserDTO {
     private String userHometown;
     private String relationshipStatus;
     private List<DisplayUserPostDTO> posts;
+    private List<User> friendRequestsPending;
+    private List<User> friends;
 }
 
 

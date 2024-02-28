@@ -26,6 +26,13 @@ public class UserPostController {
     @PostMapping(value="/upload", consumes = {"multipart/form-data"})
     public ResponseEntity<UserPost> createPost(@ModelAttribute UserPostDTO userPostDTO) throws IOException {
         User user = securityUtils.getCurrentUser();
+
+        if (userPostDTO.getCaption().isEmpty() && userPostDTO.getPost().isEmpty()  &&
+                (userPostDTO.getVideo() == null || userPostDTO.getVideo().isEmpty()) &&
+                (userPostDTO.getImage() == null || userPostDTO.getImage().isEmpty())) {
+            throw new IllegalArgumentException("All fields are empty for UPLOAD");
+        }
+
         UserPost post = new UserPost();
         post.setUser(user);
         post.setCaption(userPostDTO.getCaption());

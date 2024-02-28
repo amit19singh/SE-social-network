@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -126,7 +127,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserDTO getUserDetailsWithPosts(UUID userId) {
+    public UserDTO getUserDetailsWithPostsAndFriends(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
@@ -134,6 +135,13 @@ public class UserService {
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
+
+        List<User> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
+                .stream()
+                .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
+                .collect(Collectors.toList());
+
+        List<User> friends = findFriendsOfUser(securityUtils.getCurrentUserId());
 
         return UserDTO.builder()
                 .firstname(user.getFirstname())
@@ -147,10 +155,26 @@ public class UserService {
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())
                 .posts(displayUserPostDTOS)
+                .friendRequestsPending(friendRequestsPending)
+                .friends(friends)
                 .build();
     }
 
-    private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
+    public List<User> findFriendsOfUser(UUID userId) {
+        String sql = "SELECT user_id FROM public.users WHERE user_id IN " +
+                "(SELECT recipient_id FROM friend_request WHERE requester_id = :userId AND status = 'ACCEPTED' " +
+                "UNION " +
+                "SELECT requester_id FROM friend_request WHERE recipient_id = :userId AND status = 'ACCEPTED')";
+
+        List<UUID> userIds = entityManager.createNativeQuery(sql)
+                .setParameter("userId", userId)
+                .getResultList();
+
+        return userIds.stream()
+                .map(id -> entityManager.find(User.class, id))
+                .collect(Collectors.toList());
+    }
+        private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
         return DisplayUserPostDTO.builder()
                 .postId(displayUserPostDTO.getPostId())
                 .caption(displayUserPostDTO.getCaption())
@@ -179,6 +203,9 @@ public class UserService {
             }
         }
 
+        Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), securityUtils.getCurrentUser().getId());
+        predicates.add(notCurrentUserPredicate);
+
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
         List<User> users = entityManager.createQuery(cq).getResultList();
 
@@ -189,11 +216,16 @@ public class UserService {
 
     private UserDTO convertToUserDTO(User user) {
         String requestStatus = "NONE";
-
         Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
-        if (friendRequest.isPresent()) {
+
+        if (friendRequest.isPresent())
             requestStatus = friendRequest.get().getStatus().toString();
-        }
+
+        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
+        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
+            requestStatus = receivedRequest.get().getStatus().toString();
+
+
         return UserDTO.builder()
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
@@ -206,14 +238,6 @@ public class UserService {
                 .relationshipStatus(user.getRelationshipStatus())
                 .build();
     }
-
-//    public List<UserDTO> searchUsers(String query) {
-//        List<User> users = userRepository.findByUsernameContainingOrFirstnameContainingOrLastnameContainingAllIgnoreCase(query, query, query);
-//
-//        return users.stream()
-//                .map(this::convertToUserDTO)
-//                .collect(Collectors.toList());
-//    }
 
 }
 
