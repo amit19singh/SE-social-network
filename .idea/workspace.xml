@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Users can remove friends or block people. Search updated accordingly.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/FriendRequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,6 +196,7 @@
       <workItem from="1709052728950" duration="9408000" />
       <workItem from="1709085750655" duration="10479000" />
       <workItem from="1709128920871" duration="1625000" />
+      <workItem from="1709231971420" duration="751000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -387,7 +390,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709189055371</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Users can remove friends or block people. Search updated accordingly.">
+      <option name="closed" value="true" />
+      <created>1709189383725</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1709189383725</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

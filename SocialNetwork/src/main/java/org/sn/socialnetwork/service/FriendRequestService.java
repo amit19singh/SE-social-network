@@ -85,10 +85,10 @@ public class FriendRequestService {
     }
 
     public void unblockUser(User requester, User userToUnblock) {
-        Optional<FriendRequest> blockRequest = friendRequestRepository.findByRequesterAndRecipient(requester, userToUnblock)
+        Optional<FriendRequest> unblockRequest = friendRequestRepository.findByRequesterAndRecipient(requester, userToUnblock)
                 .filter(request -> request.getStatus() == FriendRequest.RequestStatus.BLOCKED);
 
-        blockRequest.ifPresent(friendRequestRepository::delete);
+        unblockRequest.ifPresent(friendRequestRepository::delete);
     }
 }
 

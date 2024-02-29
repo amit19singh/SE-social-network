@@ -94,14 +94,11 @@ public class FriendRequestController {
         }
     }
 
-//    @PostMapping("/unblock/{userId}")
-//    public ResponseEntity<?> unblockUser(@PathVariable UUID userId) {
-@PostMapping("/unblock")
-    public ResponseEntity<?> unblockUser(@RequestParam UUID curr, @RequestParam UUID userId) {
+    @PostMapping("/unblock/{userId}")
+    public ResponseEntity<?> unblockUser(@PathVariable UUID userId) {
         try {
-            User userToBlock = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-            User requester = userRepository.findById(curr).orElseThrow(() -> new UserNotFoundException("User not found")); //getUserFromAuth.getCurrentUser();
-            friendRequestService.unblockUser(requester, userToBlock);
+            User userToUnblock = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+            friendRequestService.unblockUser(getUserFromAuth.getCurrentUser(), userToUnblock);
             return ResponseEntity.ok().body("User unblocked successfully");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

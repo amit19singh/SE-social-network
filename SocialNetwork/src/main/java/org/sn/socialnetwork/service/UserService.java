@@ -194,10 +194,10 @@ public class UserService {
 
         List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(securityUtils.getCurrentUser().getId());
 
-        if (!blockedUsersIds.isEmpty()) {
-            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
-            predicates.add(notBlockedPredicate);
-        }
+//        if (!blockedUsersIds.isEmpty()) {
+//            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
+//            predicates.add(notBlockedPredicate);
+//        }
 
         Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), securityUtils.getCurrentUser().getId());
         predicates.add(notCurrentUserPredicate);
