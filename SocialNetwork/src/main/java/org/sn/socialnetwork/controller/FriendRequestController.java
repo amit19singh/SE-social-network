@@ -64,6 +64,51 @@ public class FriendRequestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
         }
     }
+
+    @PostMapping("/remove/{friendId}")
+    public ResponseEntity<?> removeFriend(@PathVariable UUID friendId) {
+        System.out.println("friendId: " + friendId);
+        try {
+            User friend = userRepository.findById(friendId).orElseThrow(() -> new UserNotFoundException("User not found"));
+            User user = getUserFromAuth.getCurrentUser();
+            friendRequestService.removeFriend(user, friend);
+            return ResponseEntity.ok().body("Friend removed successfully");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
+        }
+    }
+
+    @PostMapping("/block/{userId}")
+    public ResponseEntity<?> blockUser(@PathVariable UUID userId) {
+        try {
+            User userToBlock = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+            User requester = getUserFromAuth.getCurrentUser();
+            friendRequestService.blockUser(requester, userToBlock);
+            return ResponseEntity.ok().body("User blocked successfully");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
+        }
+    }
+
+//    @PostMapping("/unblock/{userId}")
+//    public ResponseEntity<?> unblockUser(@PathVariable UUID userId) {
+@PostMapping("/unblock")
+    public ResponseEntity<?> unblockUser(@RequestParam UUID curr, @RequestParam UUID userId) {
+        try {
+            User userToBlock = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+            User requester = userRepository.findById(curr).orElseThrow(() -> new UserNotFoundException("User not found")); //getUserFromAuth.getCurrentUser();
+            friendRequestService.unblockUser(requester, userToBlock);
+            return ResponseEntity.ok().body("User unblocked successfully");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
+        }
+    }
 }
 
 

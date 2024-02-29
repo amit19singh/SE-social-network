@@ -141,9 +141,12 @@ public class UserService {
                 .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
                 .collect(Collectors.toList());
 
-        List<User> friends = findFriendsOfUser(securityUtils.getCurrentUserId());
+        List<User> friends = friendRequestRepository.findFriendsOfUser(securityUtils.getCurrentUser().getId()).stream()
+                .map(id -> entityManager.find(User.class, id))
+                .collect(Collectors.toList());
 
         return UserDTO.builder()
+                .id(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())
@@ -160,29 +163,15 @@ public class UserService {
                 .build();
     }
 
-    public List<User> findFriendsOfUser(UUID userId) {
-        String sql = "SELECT user_id FROM public.users WHERE user_id IN " +
-                "(SELECT recipient_id FROM friend_request WHERE requester_id = :userId AND status = 'ACCEPTED' " +
-                "UNION " +
-                "SELECT requester_id FROM friend_request WHERE recipient_id = :userId AND status = 'ACCEPTED')";
-
-        List<UUID> userIds = entityManager.createNativeQuery(sql)
-                .setParameter("userId", userId)
-                .getResultList();
-
-        return userIds.stream()
-                .map(id -> entityManager.find(User.class, id))
-                .collect(Collectors.toList());
-    }
-        private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
-        return DisplayUserPostDTO.builder()
-                .postId(displayUserPostDTO.getPostId())
-                .caption(displayUserPostDTO.getCaption())
-                .createdAt(displayUserPostDTO.getCreatedAt())
-                .post(displayUserPostDTO.getPost())
-                .imageUrl(displayUserPostDTO.getImageUrl())
-                .videoUrl(displayUserPostDTO.getVideoUrl())
-                .build();
+    private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
+    return DisplayUserPostDTO.builder()
+            .postId(displayUserPostDTO.getPostId())
+            .caption(displayUserPostDTO.getCaption())
+            .createdAt(displayUserPostDTO.getCreatedAt())
+            .post(displayUserPostDTO.getPost())
+            .imageUrl(displayUserPostDTO.getImageUrl())
+            .videoUrl(displayUserPostDTO.getVideoUrl())
+            .build();
     }
 
     public List<UserDTO> searchUsersWithCriteriaAPI(String query) {
@@ -201,6 +190,13 @@ public class UserService {
                 Predicate lastnamePredicate = cb.like(cb.lower(user.get("lastname")), pattern);
                 predicates.add(cb.or(usernamePredicate, firstnamePredicate, lastnamePredicate));
             }
+        }
+
+        List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(securityUtils.getCurrentUser().getId());
+
+        if (!blockedUsersIds.isEmpty()) {
+            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
+            predicates.add(notBlockedPredicate);
         }
 
         Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), securityUtils.getCurrentUser().getId());
@@ -227,6 +223,7 @@ public class UserService {
 
 
         return UserDTO.builder()
+                .id(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())

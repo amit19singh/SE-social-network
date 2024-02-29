@@ -36,7 +36,8 @@ public class FriendRequest {
     public enum RequestStatus {
         PENDING,
         ACCEPTED,
-        REJECTED
+        REJECTED,
+        BLOCKED
     }
 }
 

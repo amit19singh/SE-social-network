@@ -54,5 +54,41 @@ public class FriendRequestService {
             throw new EntityNotFoundException("Friend request not found");
         }
     }
+    public void removeFriend(User user, User friend) {
+        Optional<FriendRequest> friendRelation = friendRequestRepository.findByRequesterAndRecipient(user, friend)
+                .filter(request -> request.getStatus() == FriendRequest.RequestStatus.ACCEPTED);
+        friendRelation.ifPresent(friendRequestRepository::delete);
+
+        Optional<FriendRequest> inverseRelation = friendRequestRepository.findByRequesterAndRecipient(friend, user)
+                .filter(request -> request.getStatus() == FriendRequest.RequestStatus.ACCEPTED);
+        inverseRelation.ifPresent(friendRequestRepository::delete);
+    }
+
+
+    public void blockUser(User requester, User userToBlock) {
+        Optional<FriendRequest> existingRequest = friendRequestRepository.findByRequesterAndRecipient(requester, userToBlock);
+        if (existingRequest.isPresent()) {
+            // Update existing request to BLOCKED status
+            FriendRequest friendRequest = existingRequest.get();
+            friendRequest.setStatus(FriendRequest.RequestStatus.BLOCKED);
+            friendRequest.setUpdatedAt(LocalDateTime.now());
+            friendRequestRepository.save(friendRequest);
+        } else {
+            // Create a new block request
+            FriendRequest blockRequest = new FriendRequest();
+            blockRequest.setRequester(requester);
+            blockRequest.setRecipient(userToBlock);
+            blockRequest.setStatus(FriendRequest.RequestStatus.BLOCKED);
+            blockRequest.setCreatedAt(LocalDateTime.now());
+            friendRequestRepository.save(blockRequest);
+        }
+    }
+
+    public void unblockUser(User requester, User userToUnblock) {
+        Optional<FriendRequest> blockRequest = friendRequestRepository.findByRequesterAndRecipient(requester, userToUnblock)
+                .filter(request -> request.getStatus() == FriendRequest.RequestStatus.BLOCKED);
+
+        blockRequest.ifPresent(friendRequestRepository::delete);
+    }
 }
 

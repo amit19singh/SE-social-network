@@ -9,12 +9,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserDTO {
+    private UUID id;
     private String firstname;
     private String lastname;
     private String email;
