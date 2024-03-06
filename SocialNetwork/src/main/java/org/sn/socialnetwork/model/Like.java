@@ -30,3 +30,6 @@ public class Like {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 }
+
+
+

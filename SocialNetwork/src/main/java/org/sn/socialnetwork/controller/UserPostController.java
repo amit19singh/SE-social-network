@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
@@ -68,5 +69,41 @@ public class UserPostController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this post.");
         }
     }
+
+    @PostMapping("/like/{postId}")
+    public ResponseEntity<String> likePost(@PathVariable Long postId) {
+        System.out.println("LIKEPOST");
+        try {
+            boolean isLiked = userPostService.addLikeToPost(postId);
+            System.out.println("isLiked: " + isLiked);
+            if (isLiked)
+                return ResponseEntity.ok("Post liked successfully");
+            else
+                return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not like the post: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/unlike/{postId}")
+    public ResponseEntity<String> unlikePost(@PathVariable Long postId) {
+        System.out.println("UNLIKEPOST");
+        try {
+            boolean isRemoved = userPostService.removeLikeFromPost(postId);
+            System.out.println("isRemoved: " + isRemoved);
+            if (isRemoved)
+                return ResponseEntity.ok("Post unliked successfully");
+            else
+                return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not unlike the post: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
 }
 

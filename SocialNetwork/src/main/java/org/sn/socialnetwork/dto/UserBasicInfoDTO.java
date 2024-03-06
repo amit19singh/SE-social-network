@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class UserBasicInfoDTO {
     private UUID id;
     private String firstname;
     private String lastname;
@@ -23,17 +23,11 @@ public class UserDTO {
     private String username;
     private LocalDate birthday;
     private String gender;
-    private boolean isTwoFactorEnabled;
     private MultipartFile profilePicUrl;
     private String requestSent;
     private String livesIn;
     private String userHometown;
     private String relationshipStatus;
     private List<DisplayUserPostDTO> posts;
-//    private List<User> friendRequestsPending;
-//    private List<User> friends;
-    private List<UserBasicInfoDTO> friendRequestsPending;
     private List<UserBasicInfoDTO> friends;
 }
-
-

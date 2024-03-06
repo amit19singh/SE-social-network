@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Users can Block/Unblock people">
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/UserProfileDTO.java" afterDir="false" />
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Users can View other User's profile. And make their profile Public/Private">
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/CommentDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/LikeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserBasicInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/LikeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/FriendRequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserPostDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Like.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/UserPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/UserPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/UserProfileDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserProfileDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserPostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserPostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,7 +133,7 @@
       <module name="SocialNetwork" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.model.*" />
+          <option name="PATTERN" value="org.sn.socialnetwork.dto.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -206,7 +213,8 @@
       <workItem from="1709263432601" duration="4480000" />
       <workItem from="1709484265324" duration="705000" />
       <workItem from="1709577217612" duration="8732000" />
-      <workItem from="1709658384708" duration="14912000" />
+      <workItem from="1709658384708" duration="15162000" />
+      <workItem from="1709748501618" duration="13199000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -416,7 +424,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709232762103</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Users can View other User's profile. And make their profile Public/Private">
+      <option name="closed" value="true" />
+      <created>1709707398094</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1709707398094</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -442,6 +458,7 @@
     <MESSAGE value="squash! User-Profile: Can send FriendRequest and see Friends" />
     <MESSAGE value="Users can remove friends or block people. Search updated accordingly." />
     <MESSAGE value="Users can Block/Unblock people" />
-    <option name="LAST_COMMIT_MESSAGE" value="Users can Block/Unblock people" />
+    <MESSAGE value="Users can View other User's profile. And make their profile Public/Private" />
+    <option name="LAST_COMMIT_MESSAGE" value="Users can View other User's profile. And make their profile Public/Private" />
   </component>
 </project>

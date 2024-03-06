@@ -12,6 +12,7 @@ import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.DisplayUserPostDTO;
+import org.sn.socialnetwork.dto.UserBasicInfoDTO;
 import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.model.*;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
@@ -23,8 +24,10 @@ import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -132,13 +135,24 @@ public class UserService {
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
 
-        List<User> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
+//        List<User> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
+//                .stream()
+//                .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
+//                .collect(Collectors.toList());
+//
+//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+//                .map(id -> entityManager.find(User.class, id))
+//                .collect(Collectors.toList());
+
+        List<UserBasicInfoDTO> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
                 .stream()
-                .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
+                .map(FriendRequest::getRequester)
+                .map(this::convertToUserBasicInfoDto) // You'll need to implement this method
                 .collect(Collectors.toList());
 
-        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+        List<UserBasicInfoDTO> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
                 .map(id -> entityManager.find(User.class, id))
+                .map(this::convertToUserBasicInfoDto)
                 .collect(Collectors.toList());
 
         return UserDTO.builder()
@@ -192,10 +206,10 @@ public class UserService {
         UUID currentUserId = securityUtils.getCurrentUser().getId();
         List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
 
-        if (!blockedUsersIds.isEmpty()) {
-            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
-            predicates.add(notBlockedPredicate);
-        }
+//        if (!blockedUsersIds.isEmpty()) {
+//            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
+//            predicates.add(notBlockedPredicate);
+//        }
 
         Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), currentUserId);
         predicates.add(notCurrentUserPredicate);
@@ -262,10 +276,14 @@ public class UserService {
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
 
-        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
-                .map(id -> entityManager.find(User.class, id))
-                .collect(Collectors.toList());
+//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+//                .map(id -> entityManager.find(User.class, id))
+//                .collect(Collectors.toList());
 
+        List<UserBasicInfoDTO> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+                .map(id -> entityManager.find(User.class, id))
+                .map(this::convertToUserBasicInfoDto)
+                .collect(Collectors.toList());
 
         return UserDTO.builder()
                 .id(user.getId())
@@ -298,6 +316,22 @@ public class UserService {
                 .gender(user.getGender())
                 .build();
     }
+
+    private UserBasicInfoDTO convertToUserBasicInfoDto(User user) {
+        return UserBasicInfoDTO.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .birthday(user.getBirthday())
+                .gender(user.getGender())
+                .livesIn(user.getLivesIn())
+                .userHometown(user.getUserHometown())
+                .relationshipStatus(user.getRelationshipStatus())
+                .build();
+    }
+
 
 
 }

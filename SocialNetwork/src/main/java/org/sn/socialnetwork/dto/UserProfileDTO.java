@@ -1,4 +1,4 @@
-package org.sn.socialnetwork.model;
+package org.sn.socialnetwork.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
