@@ -39,7 +39,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/reset-password", "password-reset-security-check",
                         "/check-user", "/files/upload", "/search", "/request", "/api/friends/accept/",
                                 "api/friends/reject/", "/api/friends/remove/", "/api/friends/block/",
-                                "/api/friends/unblock/")
+                                "/api/friends/unblock/", "/api/user/profile/**", "/updateProfileVisibility")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

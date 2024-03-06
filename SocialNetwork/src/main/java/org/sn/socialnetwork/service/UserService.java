@@ -13,10 +13,7 @@ import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.UserDTO;
-import org.sn.socialnetwork.model.FriendRequest;
-import org.sn.socialnetwork.model.User;
-import org.sn.socialnetwork.model.UserPost;
-import org.sn.socialnetwork.model.VerificationToken;
+import org.sn.socialnetwork.model.*;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.FriendRequestRepository;
 import org.sn.socialnetwork.repository.UserPostRepository;
@@ -31,7 +28,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -141,7 +137,7 @@ public class UserService {
                 .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
                 .collect(Collectors.toList());
 
-        List<User> friends = friendRequestRepository.findFriendsOfUser(securityUtils.getCurrentUser().getId()).stream()
+        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
                 .map(id -> entityManager.find(User.class, id))
                 .collect(Collectors.toList());
 
@@ -192,14 +188,16 @@ public class UserService {
             }
         }
 
-        List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(securityUtils.getCurrentUser().getId());
 
-//        if (!blockedUsersIds.isEmpty()) {
-//            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
-//            predicates.add(notBlockedPredicate);
-//        }
+        UUID currentUserId = securityUtils.getCurrentUser().getId();
+        List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
 
-        Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), securityUtils.getCurrentUser().getId());
+        if (!blockedUsersIds.isEmpty()) {
+            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
+            predicates.add(notBlockedPredicate);
+        }
+
+        Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), currentUserId);
         predicates.add(notCurrentUserPredicate);
 
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
@@ -228,13 +226,79 @@ public class UserService {
                 .lastname(user.getLastname())
                 .email(user.getEmail())
                 .username(user.getUsername())
-                .gender(user.getGender())
                 .requestSent(requestStatus)
+                .build();
+    }
+
+    public void updateProfileVisibility(String username, boolean isProfilePublic) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
+        user.setProfilePublic(isProfilePublic);
+        userRepository.save(user);
+    }
+
+    public UserDTO getUserProfileForViewer(String ownerUserName) {
+        User owner = userRepository.findByUsername(ownerUserName)
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + ownerUserName));
+
+        UUID viewerId = securityUtils.getCurrentUser().getId();
+
+        boolean isFriend = friendRequestRepository.findFriendsOfUser(viewerId).stream()
+                .anyMatch(friendId -> friendId.equals(owner.getId()));
+
+        if (viewerId.equals(owner.getId()) || isFriend || owner.isProfilePublic()) {
+            return buildDetailedProfile(owner.getId());
+        } else {
+            return buildLimitedProfile(owner.getId());
+        }
+    }
+
+    private UserDTO buildDetailedProfile(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user, Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(this::convertToDisplayUserDto)
+                .collect(Collectors.toList());
+
+        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+                .map(id -> entityManager.find(User.class, id))
+                .collect(Collectors.toList());
+
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .birthday(user.getBirthday())
+                .gender(user.getGender())
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())
+                .posts(displayUserPostDTOS)
+                .friends(friends)
                 .build();
     }
+
+    private UserDTO buildLimitedProfile(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+
+        System.out.println("LIMITED PROFILE: " + user.getBirthday());
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .gender(user.getGender())
+                .build();
+    }
+
 
 }
 

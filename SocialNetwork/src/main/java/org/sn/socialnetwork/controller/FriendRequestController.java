@@ -55,7 +55,6 @@ public class FriendRequestController {
         try {
             User requestIdUser = userRepository.findById(requestId).orElseThrow(()
                     -> new UserNotFoundException("User not found"));;
-//            FriendRequest friendRequest = friendRequestService.rejectFriendRequest(getUserFromAuth.getCurrentUser(), requestIdUser);
             friendRequestService.rejectFriendRequest(getUserFromAuth.getCurrentUser(), requestIdUser);
             return ResponseEntity.ok().body("ok");
         } catch (EntityNotFoundException e) {

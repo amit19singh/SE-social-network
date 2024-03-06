@@ -2,6 +2,7 @@ package org.sn.socialnetwork.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
+import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
 import org.sn.socialnetwork.dto.*;
 import org.sn.socialnetwork.security_and_config.JwtAuthenticationResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -76,7 +78,7 @@ public class UserController {
 
         String frontENDUrl;
         if ("valid".equals(result)) {
-            frontENDUrl = frontendUrl + "/";
+            frontENDUrl = frontendUrl + "/account_verified";
         } else {
             frontENDUrl = frontendUrl + "/verification-failure";
         }
@@ -108,6 +110,30 @@ public class UserController {
         List<UserDTO> userDTOS = userService.searchUsersWithCriteriaAPI(query);
         return ResponseEntity.ok(userDTOS);
     }
+
+//    MAKE PROFILE PUBLIC/PRIVATE
+    @PostMapping("/updateProfileVisibility")
+    public ResponseEntity<?> updateProfileVisibility(@AuthenticationPrincipal UserDetails userDetails, @RequestBody boolean isProfilePublic) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        userService.updateProfileVisibility(userDetails.getUsername(), isProfilePublic);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/api/user/profile/{ownerUserName}")
+    public ResponseEntity<UserDTO> getUserProfileForViewer(@PathVariable String ownerUserName) {
+        System.out.println("YES in getUserProfileForViewer");
+        try {
+            UserDTO userDTO = userService.getUserProfileForViewer(ownerUserName);
+            return ResponseEntity.ok(userDTO);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
 

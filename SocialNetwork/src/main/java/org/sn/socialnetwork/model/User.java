@@ -82,6 +82,10 @@ public class User {
     @Column
     private String relationshipStatus;
 
+    @Column
+    private boolean isProfilePublic = true;
+
+
 }
 
 
