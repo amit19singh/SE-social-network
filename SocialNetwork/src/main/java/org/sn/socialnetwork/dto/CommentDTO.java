@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sn.socialnetwork.model.User;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class CommentDTO {
-    private Long commentId;
+    private Long postId;
+    private User user;
     private String commentText;
     private LocalDateTime createdAt;
 }

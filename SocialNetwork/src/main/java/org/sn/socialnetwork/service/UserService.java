@@ -11,15 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
+import org.sn.socialnetwork.dto.CommentDTO;
 import org.sn.socialnetwork.dto.DisplayUserPostDTO;
 import org.sn.socialnetwork.dto.UserBasicInfoDTO;
 import org.sn.socialnetwork.dto.UserDTO;
 import org.sn.socialnetwork.model.*;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
-import org.sn.socialnetwork.repository.FriendRequestRepository;
-import org.sn.socialnetwork.repository.UserPostRepository;
-import org.sn.socialnetwork.repository.UserRepository;
-import org.sn.socialnetwork.repository.VerificationTokenRepository;
+import org.sn.socialnetwork.repository.*;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +42,7 @@ public class UserService {
     final private UserPostRepository userPostRepository;
     final private FriendRequestRepository friendRequestRepository;
     final private SecurityUtils securityUtils;
+    final private CommentRepository commentRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -173,15 +172,32 @@ public class UserService {
                 .build();
     }
 
-    private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
-    return DisplayUserPostDTO.builder()
-            .postId(displayUserPostDTO.getPostId())
-            .caption(displayUserPostDTO.getCaption())
-            .createdAt(displayUserPostDTO.getCreatedAt())
-            .post(displayUserPostDTO.getPost())
-            .imageUrl(displayUserPostDTO.getImageUrl())
-            .videoUrl(displayUserPostDTO.getVideoUrl())
-            .build();
+    private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
+        List<Comment> comments = commentRepository.findByPost(userPost);
+
+        return DisplayUserPostDTO.builder()
+                .postId(userPost.getPostId())
+                .caption(userPost.getCaption())
+                .createdAt(userPost.getCreatedAt())
+                .post(userPost.getPost())
+                .imageUrl(userPost.getImageUrl())
+                .videoUrl(userPost.getVideoUrl())
+                .comments(convertToCommentDTO(comments))
+                .build();
+    }
+
+    private List<CommentDTO> convertToCommentDTO(List<Comment> comments){
+
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for (Comment comment: comments) {
+            commentDTOS.add(CommentDTO.builder()
+//                    .postId(comment.getCommentId())
+                    .commentText(comment.getCommentText())
+                    .createdAt(comment.getCreatedAt())
+                    .user(comment.getUser())
+                    .build());
+        }
+        return commentDTOS;
     }
 
     public List<UserDTO> searchUsersWithCriteriaAPI(String query) {

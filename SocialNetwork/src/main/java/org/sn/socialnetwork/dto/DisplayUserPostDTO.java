@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +22,7 @@ public class DisplayUserPostDTO {
 //    private String profilePicUrl;
     private String imageUrl;
     private String videoUrl;
+    private List<CommentDTO> comments;
+    private List<LikeDTO> likes;
 
 }
