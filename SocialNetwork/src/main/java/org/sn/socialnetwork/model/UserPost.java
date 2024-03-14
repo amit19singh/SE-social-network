@@ -19,7 +19,7 @@ public class UserPost {
     @Column(name = "post_id", updatable = false, nullable = false)
     private Long postId;
 
-    @ManyToOne
+    @ManyToOne //(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -40,14 +40,6 @@ public class UserPost {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
-//    @Column
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Comment> comments = new ArrayList<>();
-//
-////    @Column
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Like> likes = new ArrayList<>();
 
 }
 

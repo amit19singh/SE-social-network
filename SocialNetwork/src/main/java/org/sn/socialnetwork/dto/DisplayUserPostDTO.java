@@ -19,7 +19,6 @@ public class DisplayUserPostDTO {
     private String caption;
     private String post;
     private LocalDateTime createdAt;
-//    private String profilePicUrl;
     private String imageUrl;
     private String videoUrl;
     private List<CommentDTO> comments;

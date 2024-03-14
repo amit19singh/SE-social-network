@@ -25,6 +25,7 @@ public class UserDTO {
     private String gender;
     private boolean isTwoFactorEnabled;
     private MultipartFile profilePicUrl;
+    private String profilePicUrlDisplay;
     private String requestSent;
     private String livesIn;
     private String userHometown;

@@ -106,9 +106,9 @@ public class UserController {
 
 //    SEARCH FOR PEOPLE/POSTS
     @GetMapping("/search")
-    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
-        List<UserDTO> userDTOS = userService.searchUsersWithCriteriaAPI(query);
-        return ResponseEntity.ok(userDTOS);
+    public ResponseEntity<SearchResultDTO> searchUsers(@RequestParam String query) {
+        SearchResultDTO searchResultDTOS = userService.searchUsersWithCriteriaAPI(query);
+        return ResponseEntity.ok(searchResultDTOS);
     }
 
 //    MAKE PROFILE PUBLIC/PRIVATE

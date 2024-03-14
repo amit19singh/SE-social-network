@@ -62,6 +62,20 @@ public class UserPostService {
         if (!post.getUser().getId().equals(userId))
             throw new AccessDeniedException("User not authorized to delete this post.");
 
+        try {
+            List<Like> likes = likeRepository.findByPost(post);
+            likeRepository.deleteAll(likes);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        try {
+            List<Comment> comments = commentRepository.findByPost(post);
+            commentRepository.deleteAll(comments);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
         deleteFileFromCloudStorage(post.getImageUrl());
         deleteFileFromCloudStorage(post.getVideoUrl());
 
@@ -144,10 +158,22 @@ public class UserPostService {
 
     }
 
-    public boolean deleteComment(Long commentId, String username) {
-        return false;
-
-    }
+//    public boolean deleteComment(Long commentId, Long postId) {
+//        Comment comment = commentRepository.findById(commentId)
+//                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+//
+//        User user = securityUtils.getCurrentUser();
+//
+//        Optional<Comment> commentOptional = commentRepository.findByCommentAndUser(post, user);
+//        System.out.println("comment: " + commentOptional);
+//
+//        if (commentOptional.isPresent()) {
+//            commentRepository.delete(commentOptional.get());
+//            return true;
+//        } else {
+//            throw new IllegalArgumentException("Comment not found for the given post and user");
+//        }
+//    }
 
     public List<Comment> getComments(Long postId) {
         UserPost userPost = userPostRepository.findById(postId)

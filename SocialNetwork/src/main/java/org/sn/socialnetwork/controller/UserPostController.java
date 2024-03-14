@@ -120,17 +120,17 @@ public class UserPostController {
     }
 
     @PostMapping("/delete-comment/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long commentId, Principal principal) {
-        String username = principal.getName();
-        try {
-            boolean commentDeleted = userPostService.deleteComment(commentId, username);
-            if (commentDeleted)
-                return ResponseEntity.ok("Comment deleted successfully");
-            else
-                return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not delete comment: " + e.getMessage());
-        }
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
+//        try {
+//            boolean commentDeleted = userPostService.deleteComment(commentId);
+//            if (commentDeleted)
+//                return ResponseEntity.ok("Comment deleted successfully");
+//            else
+//                return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not delete comment: " + e.getMessage());
+//        }
+        return null;
     }
 
     @GetMapping("/get-comments/{postId}")

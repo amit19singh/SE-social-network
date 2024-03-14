@@ -14,4 +14,6 @@ import java.util.UUID;
 public interface UserPostRepository extends JpaRepository<UserPost, Long> {
 //    @Query("SELECT u FROM UserPost u WHERE u.user = ?1")
     List<UserPost> findPostsByUser(User user, Sort sort);
+
+    List<UserPost> findByPostContainingIgnoreCase(String query, Sort sort);
 }

@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
-import org.sn.socialnetwork.dto.CommentDTO;
-import org.sn.socialnetwork.dto.DisplayUserPostDTO;
-import org.sn.socialnetwork.dto.UserBasicInfoDTO;
-import org.sn.socialnetwork.dto.UserDTO;
+import org.sn.socialnetwork.dto.*;
 import org.sn.socialnetwork.model.*;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
 import org.sn.socialnetwork.repository.*;
@@ -129,19 +126,11 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user, Sort.by(Sort.Direction.DESC, "createdAt"))
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user,
+                                                            Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
-
-//        List<User> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
-//                .stream()
-//                .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
-//                .collect(Collectors.toList());
-//
-//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
-//                .map(id -> entityManager.find(User.class, id))
-//                .collect(Collectors.toList());
 
         List<UserBasicInfoDTO> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
                 .stream()
@@ -163,6 +152,7 @@ public class UserService {
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .isTwoFactorEnabled(user.isTwoFactorEnabled())
+                .profilePicUrlDisplay(user.getProfilePicUrl())
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())
@@ -172,35 +162,10 @@ public class UserService {
                 .build();
     }
 
-    private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
-        List<Comment> comments = commentRepository.findByPost(userPost);
+    public SearchResultDTO searchUsersWithCriteriaAPI(String query) {
+        SearchResultDTO result = new SearchResultDTO();
 
-        return DisplayUserPostDTO.builder()
-                .postId(userPost.getPostId())
-                .caption(userPost.getCaption())
-                .createdAt(userPost.getCreatedAt())
-                .post(userPost.getPost())
-                .imageUrl(userPost.getImageUrl())
-                .videoUrl(userPost.getVideoUrl())
-                .comments(convertToCommentDTO(comments))
-                .build();
-    }
-
-    private List<CommentDTO> convertToCommentDTO(List<Comment> comments){
-
-        List<CommentDTO> commentDTOS = new ArrayList<>();
-        for (Comment comment: comments) {
-            commentDTOS.add(CommentDTO.builder()
-//                    .postId(comment.getCommentId())
-                    .commentText(comment.getCommentText())
-                    .createdAt(comment.getCreatedAt())
-                    .user(comment.getUser())
-                    .build());
-        }
-        return commentDTOS;
-    }
-
-    public List<UserDTO> searchUsersWithCriteriaAPI(String query) {
+//        Search Names and Stuff
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(User.class);
         Root<User> user = cq.from(User.class);
@@ -218,46 +183,35 @@ public class UserService {
             }
         }
 
-
         UUID currentUserId = securityUtils.getCurrentUser().getId();
         List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
-
-//        if (!blockedUsersIds.isEmpty()) {
-//            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
-//            predicates.add(notBlockedPredicate);
-//        }
+        if (!blockedUsersIds.isEmpty()) {
+            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
+            predicates.add(notBlockedPredicate);
+        }
 
         Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), currentUserId);
         predicates.add(notCurrentUserPredicate);
 
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
         List<User> users = entityManager.createQuery(cq).getResultList();
-
-        return users.stream()
-                .map(this::convertToUserDTO)
-                .collect(Collectors.toList());
-    }
-
-    private UserDTO convertToUserDTO(User user) {
-        String requestStatus = "NONE";
-        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
-
-        if (friendRequest.isPresent())
-            requestStatus = friendRequest.get().getStatus().toString();
-
-        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
-        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
-            requestStatus = receivedRequest.get().getStatus().toString();
+        List<UserDTO> userDTOS = users.stream()
+                                    .map(this::convertToUserDTO)
+                                    .toList();
 
 
-        return UserDTO.builder()
-                .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .email(user.getEmail())
-                .username(user.getUsername())
-                .requestSent(requestStatus)
-                .build();
+
+        result.setUsers(userDTOS);
+
+//        Search Posts
+        List<UserPost> matchingPosts = userPostRepository.findByPostContainingIgnoreCase(query,
+                                                Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<DisplayUserPostDTO> displayUserPostDTOS = matchingPosts.stream()
+                                                        .map(this::convertToDisplayUserDto)
+                                                        .collect(Collectors.toList());
+        result.setPosts(displayUserPostDTOS);
+
+        return result;
     }
 
     public void updateProfileVisibility(String username, boolean isProfilePublic) {
@@ -291,10 +245,6 @@ public class UserService {
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
-
-//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
-//                .map(id -> entityManager.find(User.class, id))
-//                .collect(Collectors.toList());
 
         List<UserBasicInfoDTO> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
                 .map(id -> entityManager.find(User.class, id))
@@ -333,6 +283,67 @@ public class UserService {
                 .build();
     }
 
+    public List<UserDTO> getBlockedUsers() {
+        UUID currentUserId = securityUtils.getCurrentUser().getId();
+        List<UUID> blockedUserIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
+
+        List<User> blockedUsers = userRepository.findByIdIn(blockedUserIds);
+
+        return blockedUsers.stream()
+                .map(this::convertToUserDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
+        List<Comment> comments = commentRepository.findByPost(userPost);
+
+        return DisplayUserPostDTO.builder()
+                .postId(userPost.getPostId())
+                .caption(userPost.getCaption())
+                .createdAt(userPost.getCreatedAt())
+                .post(userPost.getPost())
+                .imageUrl(userPost.getImageUrl())
+                .videoUrl(userPost.getVideoUrl())
+                .comments(convertToCommentDTO(comments))
+                .build();
+    }
+
+    private List<CommentDTO> convertToCommentDTO(List<Comment> comments){
+
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for (Comment comment: comments) {
+            commentDTOS.add(CommentDTO.builder()
+//                    .postId(comment.getCommentId())
+                    .commentText(comment.getCommentText())
+                    .createdAt(comment.getCreatedAt())
+                    .user(comment.getUser())
+                    .build());
+        }
+        return commentDTOS;
+    }
+
+    private UserDTO convertToUserDTO(User user) {
+        String requestStatus = "NONE";
+        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
+
+        if (friendRequest.isPresent())
+            requestStatus = friendRequest.get().getStatus().toString();
+
+        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
+        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
+            requestStatus = receivedRequest.get().getStatus().toString();
+
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .requestSent(requestStatus)
+                .build();
+    }
     private UserBasicInfoDTO convertToUserBasicInfoDto(User user) {
         return UserBasicInfoDTO.builder()
                 .id(user.getId())

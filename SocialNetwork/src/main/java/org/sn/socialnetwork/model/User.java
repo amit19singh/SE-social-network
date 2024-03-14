@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.sn.socialnetwork.security_and_config.FieldEncryptor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -61,16 +63,15 @@ public class User {
     private LocalDateTime createdAt;
 
     @Column
-    private boolean verified;  // For email verification while Registration
+    private boolean verified;
 
-//  Following 2 are for 2FA
     @Column(name = "two_factor_secret")
     private String twoFactorSecret;
 
     @Column(name = "is_two_factor_enabled")
     private boolean isTwoFactorEnabled = false;
 
-    @Column
+    @Column(length = 3000)
     private String profilePicUrl;
 
     @Column
@@ -85,6 +86,11 @@ public class User {
     @Column
     private boolean isProfilePublic = true;
 
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<UserPost> userPosts = new HashSet<>();
+//
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private VerificationToken verificationToken;
 
 }
 
