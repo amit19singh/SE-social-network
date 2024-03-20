@@ -41,7 +41,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "api/friends/reject/", "/api/friends/remove/", "/api/friends/block/",
                                 "/api/friends/unblock/", "/api/user/profile/**", "/updateProfileVisibility",
                                 "/api/user-posts/like/**", "/api/user-posts/unlike/**", "/api/user-posts/delete-comment/",
-                                "/api/user-posts/comment", "/api/user-posts/get-comments/**")
+                                "/api/user-posts/comment", "/api/user-posts/get-comments/**", "/user-feed")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -58,6 +58,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 
         http.oauth2Login(oauth2 -> oauth2
+                        .successHandler(new CustomOAuth2AuthenticationSuccessHandler(jwtTokenProvider))
                         .loginPage("http://localhost:3000/login")
                         .defaultSuccessUrl("http://localhost:3000/home", true)
                         .failureUrl("http://localhost:3000")

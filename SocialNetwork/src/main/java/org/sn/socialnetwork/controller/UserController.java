@@ -106,9 +106,17 @@ public class UserController {
 
 //    SEARCH FOR PEOPLE/POSTS
     @GetMapping("/search")
-    public ResponseEntity<SearchResultDTO> searchUsers(@RequestParam String query) {
-        SearchResultDTO searchResultDTOS = userService.searchUsersWithCriteriaAPI(query);
+    public ResponseEntity<SearchResultDTO> searchUsers(@RequestParam String query,
+                                                       @RequestParam(required = false) String livesIn,
+                                                       @RequestParam(name = "mutualFriends", required = false) Boolean friendsOfFriends) {
+        SearchResultDTO searchResultDTOS = userService.searchUsersWithCriteriaAPI(query, livesIn, friendsOfFriends);
         return ResponseEntity.ok(searchResultDTOS);
+    }
+//    USER FEED
+    @GetMapping("/user-feed")
+    public ResponseEntity<List<DisplayUserPostDTO> > userFeed() {
+        List<DisplayUserPostDTO> displayUserPostDTOS = userService.generateUserFeed();
+        return ResponseEntity.ok(displayUserPostDTOS);
     }
 
 //    MAKE PROFILE PUBLIC/PRIVATE

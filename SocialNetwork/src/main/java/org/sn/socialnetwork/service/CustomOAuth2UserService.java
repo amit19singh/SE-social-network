@@ -26,6 +26,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("YASS");
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -49,6 +50,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setSecurityAnswer2(crypt());
             userRepository.save(newUser);
         }
+
+        System.out.println(oAuth2User);
 
         return oAuth2User;
     }
