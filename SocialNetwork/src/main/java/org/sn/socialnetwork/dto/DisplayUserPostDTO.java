@@ -24,6 +24,7 @@ public class DisplayUserPostDTO {
     private LocalDateTime createdAt;
     private String imageUrl;
     private String videoUrl;
+    private boolean isLikedByCurrentUser = false;
     private List<CommentDTO> comments;
     private List<LikeDTO> likes;
 

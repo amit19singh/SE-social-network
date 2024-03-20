@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Updated Search">
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="News Feed Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/LikeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/LikeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +229,7 @@
       <workItem from="1710732740563" duration="9513000" />
       <workItem from="1710879235070" duration="12810000" />
       <workItem from="1710939284296" duration="812000" />
-      <workItem from="1710970839498" duration="2182000" />
+      <workItem from="1710970839498" duration="3768000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -490,7 +487,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710912178962</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="News Feed Update">
+      <option name="closed" value="true" />
+      <created>1710973037400</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1710973037400</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,6 +525,7 @@
     <MESSAGE value="Users can View other User's profile. And make their profile Public/Private" />
     <MESSAGE value="Like/Unlike Functionality Done" />
     <MESSAGE value="Updated Search" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Search" />
+    <MESSAGE value="News Feed Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="News Feed Update" />
   </component>
 </project>

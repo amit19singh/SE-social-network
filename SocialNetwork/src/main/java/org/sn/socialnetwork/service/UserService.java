@@ -347,6 +347,9 @@ public class UserService {
     private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
         List<Comment> comments = commentRepository.findByPost(userPost);
         List<Like> likes = likeRepository.findByPost(userPost);
+        boolean userHasLikedPost = likes.stream()
+                .anyMatch(like -> like.getUser().getId().equals(securityUtils.getCurrentUserId()));
+
 
         return DisplayUserPostDTO.builder()
                 .postByUserName(userPost.getUser().getUsername())
@@ -355,6 +358,7 @@ public class UserService {
                 .caption(userPost.getCaption())
                 .createdAt(userPost.getCreatedAt())
                 .post(userPost.getPost())
+                .isLikedByCurrentUser(userHasLikedPost)
                 .imageUrl(userPost.getImageUrl())
                 .videoUrl(userPost.getVideoUrl())
                 .likes(convertToLikeDTO(likes))
