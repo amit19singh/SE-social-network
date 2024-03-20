@@ -9,12 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class DisplayUserPostDTO {
+    private String postByUserName;
+    private String postByUserProfilePic;
     private Long postId;
     private String caption;
     private String post;

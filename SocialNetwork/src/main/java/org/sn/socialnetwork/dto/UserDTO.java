@@ -31,6 +31,7 @@ public class UserDTO {
     private String userHometown;
     private String relationshipStatus;
     private List<DisplayUserPostDTO> posts;
+    private List<DisplayUserPostDTO> newsFeed;
 //    private List<User> friendRequestsPending;
 //    private List<User> friends;
     private List<UserBasicInfoDTO> friendRequestsPending;

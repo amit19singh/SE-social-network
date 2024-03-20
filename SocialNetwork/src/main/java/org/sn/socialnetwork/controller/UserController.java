@@ -125,7 +125,6 @@ public class UserController {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
         userService.updateProfileVisibility(userDetails.getUsername(), isProfilePublic);
 
         return ResponseEntity.ok().build();

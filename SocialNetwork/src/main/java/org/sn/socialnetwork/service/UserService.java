@@ -41,6 +41,7 @@ public class UserService {
     final private FriendRequestRepository friendRequestRepository;
     final private SecurityUtils securityUtils;
     final private CommentRepository commentRepository;
+    final private LikeRepository likeRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -154,6 +155,7 @@ public class UserService {
                 .gender(user.getGender())
                 .isTwoFactorEnabled(user.isTwoFactorEnabled())
                 .profilePicUrlDisplay(user.getProfilePicUrl())
+                .newsFeed(generateUserFeed())
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())
@@ -230,10 +232,7 @@ public class UserService {
 
 
     public List<DisplayUserPostDTO> generateUserFeed() {
-
-        Optional<User> user = userRepository.findByUsername("john");
-
-        List<UserDTO> myFriends = friendRequestRepository.findFriendsOfUser(user.get().getId())// securityUtils.getCurrentUser().getId())
+        List<UserDTO> myFriends = friendRequestRepository.findFriendsOfUser(securityUtils.getCurrentUser().getId())
                 .stream()
                 .map(id -> entityManager.find(User.class, id))
                 .map(this::convertToUserDTO)
@@ -347,16 +346,31 @@ public class UserService {
 
     private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
         List<Comment> comments = commentRepository.findByPost(userPost);
+        List<Like> likes = likeRepository.findByPost(userPost);
 
         return DisplayUserPostDTO.builder()
+                .postByUserName(userPost.getUser().getUsername())
+                .postByUserProfilePic(userPost.getUser().getProfilePicUrl())
                 .postId(userPost.getPostId())
                 .caption(userPost.getCaption())
                 .createdAt(userPost.getCreatedAt())
                 .post(userPost.getPost())
                 .imageUrl(userPost.getImageUrl())
                 .videoUrl(userPost.getVideoUrl())
+                .likes(convertToLikeDTO(likes))
                 .comments(convertToCommentDTO(comments))
                 .build();
+    }
+
+    private List<LikeDTO> convertToLikeDTO(List<Like> likes) {
+        List<LikeDTO> likeDTOS = new ArrayList<>();
+        for (Like like: likes) {
+            likeDTOS.add(LikeDTO.builder()
+                    .likedByUserName(like.getUser().getUsername())
+                    .profilePicUrl(like.getUser().getProfilePicUrl())
+                    .build());
+        }
+        return likeDTOS;
     }
 
     private List<CommentDTO> convertToCommentDTO(List<Comment> comments){

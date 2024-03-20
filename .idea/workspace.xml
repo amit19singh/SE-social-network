@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Updated Search">
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/CustomOAuth2AuthenticationSuccessHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/SearchResultDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/SearchResultDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/JwtTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/JwtTokenProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/TwoFactorAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/TwoFactorAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/CustomOAuth2UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/CustomOAuth2UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/DisplayUserPostDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/LikeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/LikeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -234,7 +230,9 @@
       <workItem from="1710697583148" duration="149000" />
       <workItem from="1710717205337" duration="694000" />
       <workItem from="1710732740563" duration="9513000" />
-      <workItem from="1710879235070" duration="12098000" />
+      <workItem from="1710879235070" duration="12810000" />
+      <workItem from="1710939284296" duration="812000" />
+      <workItem from="1710970839498" duration="2182000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -476,7 +474,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710391971529</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Updated Search">
+      <option name="closed" value="true" />
+      <created>1710912160211</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1710912160212</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Updated Search">
+      <option name="closed" value="true" />
+      <created>1710912178962</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1710912178962</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
