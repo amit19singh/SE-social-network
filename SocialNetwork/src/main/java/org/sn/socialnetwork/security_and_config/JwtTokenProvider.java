@@ -25,15 +25,11 @@ public class JwtTokenProvider {
     private int jwtExpirationInMs;
 
     public String generateToken(Authentication authentication) {
-//        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        System.out.println("YESS HERE");
-
         String username;
 
         if (authentication.getPrincipal() instanceof UserPrincipal userPrincipal) {
             username = userPrincipal.getUsername();
         } else if (authentication.getPrincipal() instanceof OAuth2User oAuth2User) {
-//            username = oAuth2User.getAttributes.get("email");
             Map<String, Object> attributes = oAuth2User.getAttributes();
             String email = (String) attributes.get("email");
             username = new ArrayList<>(List.of(email.split("@"))).get(0);

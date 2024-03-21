@@ -174,10 +174,4 @@ public class UserPostService {
 //            throw new IllegalArgumentException("Comment not found for the given post and user");
 //        }
 //    }
-
-    public List<Comment> getComments(Long postId) {
-        UserPost userPost = userPostRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
-        return commentRepository.findByPost(userPost);
-    }
 }

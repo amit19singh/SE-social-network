@@ -20,17 +20,9 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        // Generate JWT
-
-        System.out.println("HERE");
         String jwt = jwtTokenProvider.generateToken(authentication);
-
-        System.out.println(jwt);
-
-        // Option 1: Redirect user with JWT in query parameter
-        response.sendRedirect("/your-success-url?token=" + jwt);
-
-        // Option 2: Set JWT in HTTP Cookie (choose one approach)
-        // CookieUtils.createCookie(response, "JWT_COOKIE", jwt, COOKIE_EXPIRY);
+        response.sendRedirect("http://localhost:3000/oauth-redirect?token=" + jwt);
     }
 }
+
+

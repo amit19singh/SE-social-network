@@ -59,8 +59,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
         http.oauth2Login(oauth2 -> oauth2
                         .successHandler(new CustomOAuth2AuthenticationSuccessHandler(jwtTokenProvider))
-                        .loginPage("http://localhost:3000/login")
-                        .defaultSuccessUrl("http://localhost:3000/home", true)
+//                        .loginPage("http://localhost:3000")
                         .failureUrl("http://localhost:3000")
                 )
                 .logout(logout -> logout
@@ -76,7 +75,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .allowedHeaders("*")
-                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
+//                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
                 .allowCredentials(true);
     }
 

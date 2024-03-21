@@ -133,27 +133,5 @@ public class UserPostController {
         return null;
     }
 
-    @GetMapping("/get-comments/{postId}")
-    public ResponseEntity<List<Comment>> getComments(@PathVariable Long postId) {
-        try {
-            List<Comment> comments = userPostService.getComments(postId);
-            System.out.println(comments);
-//            if (commentDeleted)
-//                return ResponseEntity.ok("Comment deleted successfully");
-//            else
-//                return ResponseEntity.notFound().build();
-            return ResponseEntity.ok(comments);
-
-        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not delete comment: " + e.getMessage());
-            return null;
-        }
-    }
-
-
-
-
-
-
 }
 
