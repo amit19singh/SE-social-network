@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,12 +35,10 @@ public class UserController {
     final private UserService userService;
     final private AuthenticationManager authenticationManager;
     final private JwtTokenProvider jwtTokenProvider;
-    final private SecurityUtils getUserFromAuth;
+    final private SecurityUtils securityUtils;
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
-    @Value("${app.backend.url}")
-    private String backendUrl;
 
 //    USER-LOGIN
     @PostMapping("/login")
@@ -100,7 +98,7 @@ public class UserController {
 //    EDIT USER PROFILE
     @PostMapping(value="/updateProfile", consumes = {"multipart/form-data"})
     public ResponseEntity<?> updateProfile(@ModelAttribute UserDTO userDTO) throws IOException {
-        User updatedUser = userService.updateUser(getUserFromAuth.getCurrentUser().getId(), userDTO);
+        User updatedUser = userService.updateUser(securityUtils.getCurrentUser().getId(), userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -121,11 +119,12 @@ public class UserController {
 
 //    MAKE PROFILE PUBLIC/PRIVATE
     @PostMapping("/updateProfileVisibility")
-    public ResponseEntity<?> updateProfileVisibility(@AuthenticationPrincipal UserDetails userDetails, @RequestBody boolean isProfilePublic) {
-        if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    public ResponseEntity<?> updateProfileVisibility(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Boolean> request) {
+        Boolean isProfilePublic = request.get("isProfilePublic");
+        if (isProfilePublic == null) {
+            return ResponseEntity.badRequest().body("Missing 'isProfilePublic' parameter.");
         }
-        userService.updateProfileVisibility(userDetails.getUsername(), isProfilePublic);
+        userService.updateProfileVisibility(securityUtils.getCurrentUser().getUsername(), isProfilePublic);
 
         return ResponseEntity.ok().build();
     }
@@ -140,7 +139,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }
 

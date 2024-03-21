@@ -24,6 +24,7 @@ public class UserDTO {
     private LocalDate birthday;
     private String gender;
     private boolean isTwoFactorEnabled;
+    private boolean isProfilePublic;
     private MultipartFile profilePicUrl;
     private String profilePicUrlDisplay;
     private String requestSent;
@@ -36,6 +37,7 @@ public class UserDTO {
 //    private List<User> friends;
     private List<UserBasicInfoDTO> friendRequestsPending;
     private List<UserBasicInfoDTO> friends;
+    private List<UserBasicInfoDTO> blockedUsers;
 }
 
 

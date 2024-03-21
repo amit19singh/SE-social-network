@@ -145,6 +145,11 @@ public class UserService {
                 .map(this::convertToUserBasicInfoDto)
                 .collect(Collectors.toList());
 
+        List<UserBasicInfoDTO> blockedUsers = friendRequestRepository.findBlockedUsersIds(userId).stream()
+                .map(id -> entityManager.find(User.class, id))
+                .map(this::convertToUserBasicInfoDto)
+                .collect(Collectors.toList());
+
         return UserDTO.builder()
                 .id(user.getId())
                 .firstname(user.getFirstname())
@@ -158,15 +163,16 @@ public class UserService {
                 .newsFeed(generateUserFeed())
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
+                .isProfilePublic(user.isProfilePublic())
                 .relationshipStatus(user.getRelationshipStatus())
                 .posts(displayUserPostDTOS)
                 .friendRequestsPending(friendRequestsPending)
                 .friends(friends)
+                .blockedUsers(blockedUsers)
                 .build();
     }
 
     public SearchResultDTO searchUsersWithCriteriaAPI(String query, String livesIn, Boolean friendsOfFriends) {
-        System.out.println("friendsOfFriends: " + friendsOfFriends);
         SearchResultDTO result = new SearchResultDTO();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -333,17 +339,6 @@ public class UserService {
                 .build();
     }
 
-    public List<UserDTO> getBlockedUsers() {
-        UUID currentUserId = securityUtils.getCurrentUser().getId();
-        List<UUID> blockedUserIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
-
-        List<User> blockedUsers = userRepository.findByIdIn(blockedUserIds);
-
-        return blockedUsers.stream()
-                .map(this::convertToUserDTO)
-                .collect(Collectors.toList());
-    }
-
     private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
         List<Comment> comments = commentRepository.findByPost(userPost);
         List<Like> likes = likeRepository.findByPost(userPost);
@@ -382,7 +377,6 @@ public class UserService {
         List<CommentDTO> commentDTOS = new ArrayList<>();
         for (Comment comment: comments) {
             commentDTOS.add(CommentDTO.builder()
-//                    .postId(comment.getCommentId())
                     .commentText(comment.getCommentText())
                     .createdAt(comment.getCreatedAt())
                     .user(comment.getUser())

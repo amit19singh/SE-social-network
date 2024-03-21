@@ -48,7 +48,7 @@ public class StorageService {
         // Generate a signed URL for the uploaded file with a duration of validity
         URL signedUrl = storage.signUrl(
                 BlobInfo.newBuilder(bucketName, fullFileName).build(),
-                7, TimeUnit.DAYS, // URL will be valid for 7 days
+                7, TimeUnit.DAYS,
                 Storage.SignUrlOption.withV4Signature()
         );
 
