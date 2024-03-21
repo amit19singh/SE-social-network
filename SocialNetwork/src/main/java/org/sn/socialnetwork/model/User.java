@@ -45,7 +45,7 @@ public class User {
     @Convert(converter = FieldEncryptor.class)
     private String securityQuestion1;
 
-    @Column(name = "security_answer1", nullable = false)
+    @Column(name = "security_answer1")
     @Convert(converter = FieldEncryptor.class)
     private String securityAnswer1;
 
@@ -53,7 +53,7 @@ public class User {
     @Convert(converter = FieldEncryptor.class)
     private String securityQuestion2;
 
-    @Column(name = "security_answer2", nullable = false)
+    @Column(name = "security_answer2")
     @Convert(converter = FieldEncryptor.class)
     private String securityAnswer2;
 
