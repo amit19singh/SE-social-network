@@ -1,7 +1,9 @@
 package org.sn.socialnetwork.controller;
 
 import lombok.AllArgsConstructor;
+import org.sn.socialnetwork.dto.CommentDTO;
 import org.sn.socialnetwork.dto.UserPostDTO;
+import org.sn.socialnetwork.model.Comment;
 import org.sn.socialnetwork.model.User;
 import org.sn.socialnetwork.model.UserPost;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -101,9 +104,34 @@ public class UserPostController {
     }
 
 
+    @PostMapping("/comment")
+    public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO) {
+        System.out.println("Controller comment");
+        try {
+            System.out.println("Start");
+            boolean commentAdded = userPostService.addCommentToPost(commentDTO);
+            if (commentAdded)
+                return ResponseEntity.ok("Comment added successfully");
+            else
+                return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not add comment: " + e.getMessage());
+        }
+    }
 
-
-
+    @PostMapping("/delete-comment/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
+//        try {
+//            boolean commentDeleted = userPostService.deleteComment(commentId);
+//            if (commentDeleted)
+//                return ResponseEntity.ok("Comment deleted successfully");
+//            else
+//                return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not delete comment: " + e.getMessage());
+//        }
+        return null;
+    }
 
 }
 

@@ -40,7 +40,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "/check-user", "/files/upload", "/search", "/request", "/api/friends/accept/",
                                 "api/friends/reject/", "/api/friends/remove/", "/api/friends/block/",
                                 "/api/friends/unblock/", "/api/user/profile/**", "/updateProfileVisibility",
-                                "/api/user-posts/like/**", "/api/user-posts/unlike/**")
+                                "/api/user-posts/like/**", "/api/user-posts/unlike/**", "/api/user-posts/delete-comment/",
+                                "/api/user-posts/comment", "/api/user-posts/get-comments/**", "/user-feed")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -57,8 +58,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 
         http.oauth2Login(oauth2 -> oauth2
-                        .loginPage("http://localhost:3000/login")
-                        .defaultSuccessUrl("http://localhost:3000/home", true)
+                        .successHandler(new CustomOAuth2AuthenticationSuccessHandler(jwtTokenProvider))
+//                        .loginPage("http://localhost:3000")
                         .failureUrl("http://localhost:3000")
                 )
                 .logout(logout -> logout
@@ -73,8 +74,8 @@ public class SecurityConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
-//                .allowedHeaders("*")
-                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
+                .allowedHeaders("*")
+//                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
                 .allowCredentials(true);
     }
 

@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Users can View other User's profile. And make their profile Public/Private">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Public/Private Profile Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/SocialNetworkApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/SocialNetworkApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/ChatService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,18 +24,18 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="User-Profile-testing" />
+        <entry key="$PROJECT_DIR$" value="User-Profile" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
+    &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
     &quot;assignee&quot;: &quot;amit19singh&quot;
-  }
-}</component>
+    }
+    }</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -50,97 +45,74 @@
     </option>
   </component>
   <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
+    &quot;isMigrated&quot;: true
+    }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
-}</component>
+    &quot;customColor&quot;: &quot;&quot;,
+    &quot;associatedIndex&quot;: 4
+    }</component>
   <component name="ProjectId" id="2ctEOsRiArFweUd4jTHrjwYCpHO" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "JUnit.CustomOAuth2UserServiceTest.executor": "Run",
-    "JUnit.CustomOAuth2UserServiceTest.testLoadUser_ExistingUserReturned.executor": "Run",
-    "JUnit.CustomOAuth2UserServiceTest.testLoadUser_NewUserCreated.executor": "Run",
-    "JUnit.CustomUserDetailsServiceTest.executor": "Run",
-    "JUnit.EmailServiceTest.executor": "Run",
-    "JUnit.FriendRequestControllerTest.executor": "Run",
-    "JUnit.FriendRequestControllerTest.sendFriendRequest_Success.executor": "Run",
-    "JUnit.FriendRequestServiceTest.executor": "Run",
-    "JUnit.FriendRequestServiceTest.sendFriendRequest_AlreadyFriends.executor": "Run",
-    "JUnit.FriendRequestServiceTest.testSendFriendRequest_Successful.executor": "Run",
-    "JUnit.FriendRequestServiceTest.testUnblockUser_FailureNotFound.executor": "Run",
-    "JUnit.ResetPasswordControllerTest.executor": "Run",
-    "JUnit.ResetPasswordServiceTest.executor": "Run",
-    "JUnit.TwoFactorAuthControllerTest.executor": "Run",
-    "JUnit.TwoFactorAuthControllerTest.testDisableTwoFactorAuth_Success.executor": "Run",
-    "JUnit.TwoFactorAuthControllerTest.testSetupTwoFactorAuth_Success.executor": "Run",
-    "JUnit.TwoFactorAuthServiceTest.executor": "Run",
-    "JUnit.TwoFactorAuthServiceTest.testVerifyOtp_Success.executor": "Run",
-    "JUnit.TwoFactorAuthServiceTest.testVerifyOtp_UserNotFound.executor": "Run",
-    "JUnit.UserControllerTest.executor": "Run",
-    "JUnit.UserControllerTest.testAuthenticateUser.executor": "Run",
-    "JUnit.UserPostControllerTest.executor": "Run",
-    "JUnit.UserPostControllerTest.testCreatePost.executor": "Run",
-    "JUnit.UserPostControllerTest.testCreatePost_Success.executor": "Run",
-    "JUnit.UserPostControllerTest.testDeletePost_Success.executor": "Run",
-    "JUnit.UserPostControllerTest.testLikePost_Success.executor": "Run",
-    "JUnit.UserPostControllerTest.testUnlikePost_Success.executor": "Run",
-    "JUnit.UserServiceTest.executor": "Run",
-    "JUnit.UserServiceTest.testRegisterUser_EmailAlreadyInUse.executor": "Run",
-    "JUnit.UserServiceTest.testRegisterUser_Success.executor": "Run",
-    "Maven.SocialNetwork [clean,verify].executor": "Run",
-    "Maven.SocialNetwork [clean].executor": "Run",
-    "Maven.SocialNetwork [install].executor": "Run",
-    "Maven.SocialNetwork [package].executor": "Run",
-    "Maven.SocialNetwork [verify].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.SocialNetworkApplication.executor": "Run",
-    "git-widget-placeholder": "User-Profile-testing",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/amit1/Dropbox/Classes/Spring 2024/Project/SE-social-network/SocialNetwork/.env",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TwoFactorAuthControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [clean,verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SocialNetwork [verify].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.SocialNetworkApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;User-Profile&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/amit1/Dropbox/Classes/Spring 2024/Project/SE-social-network/SocialNetwork/src/main/java/org/sn/socialnetwork/dto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.sn.socialnetwork.model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\amit1\Dropbox\Classes\Spring 2024\Project\SE-social-network\SocialNetwork\src\main\java\org\sn\socialnetwork\dto" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\amit1\Dropbox\Classes\Spring 2024\Project\SE-social-network" />
@@ -151,38 +123,37 @@
       <command value="mvn clean verify" />
     </option>
   </component>
+  <component name="RunDashboard">
+    <option name="excludedTypes">
+      <set>
+        <option value="HttpClient.HttpRequestRunConfigurationType" />
+      </set>
+    </option>
+  </component>
   <component name="RunManager" selected="Spring Boot.SocialNetworkApplication">
-    <configuration name="CustomUserDetailsServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="loginUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.model.loginUser" />
       <module name="SocialNetwork" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.service.*" />
+          <option name="PATTERN" value="org.sn.socialnetwork.dto.UserBasicInfoDTO" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.sn.socialnetwork.service" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.service.CustomUserDetailsServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FriendRequestServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SocialNetwork" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.sn.socialnetwork.service" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.service.FriendRequestServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="generated-requests | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
     </configuration>
-    <configuration name="UserPostControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="generated-requests | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="2" requestIdentifier="#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="TwoFactorAuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SocialNetwork" />
       <extension name="coverage">
         <pattern>
@@ -191,40 +162,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.sn.socialnetwork.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.controller.UserPostControllerTest" />
+      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.controller.TwoFactorAuthControllerTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserPostControllerTest.testCreatePost" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SocialNetwork" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.sn.socialnetwork.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.controller.UserPostControllerTest" />
-      <option name="METHOD_NAME" value="testCreatePost" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserPostControllerTest.testDeletePost_Success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SocialNetwork" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.sn.socialnetwork.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.controller.UserPostControllerTest" />
-      <option name="METHOD_NAME" value="testDeletePost_Success" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -234,15 +173,13 @@
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.sn.socialnetwork.SocialNetworkApplication" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="true" />
-        <option name="IS_SUBST" value="true" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="true" />
-        <option name="IS_IGNORE_MISSING_FILES" value="true" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
         <ENTRIES>
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-          <ENTRY IS_ENABLED="false" PARSER="env" IS_EXECUTABLE="false" PATH="SocialNetwork/.env" />
-          <ENTRY IS_ENABLED="false" PARSER="env" IS_EXECUTABLE="true" PATH="$PROJECT_DIR$/../SE_UPT/SE-social-network/SocialNetwork/env" />
-          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="$USER_HOME$/Downloads/env" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH="SocialNetwork/.env" />
         </ENTRIES>
       </extension>
       <method v="2">
@@ -250,27 +187,28 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.CustomUserDetailsServiceTest" />
-      <item itemvalue="JUnit.FriendRequestServiceTest" />
-      <item itemvalue="JUnit.UserPostControllerTest.testDeletePost_Success" />
-      <item itemvalue="JUnit.UserPostControllerTest" />
-      <item itemvalue="JUnit.UserPostControllerTest.testCreatePost" />
+      <item itemvalue="Application.loginUser" />
+      <item itemvalue="HTTP Request.generated-requests | #1" />
+      <item itemvalue="HTTP Request.generated-requests | #2" />
+      <item itemvalue="HTTP Request.generated-requests | #3" />
+      <item itemvalue="JUnit.TwoFactorAuthControllerTest" />
       <item itemvalue="Spring Boot.SocialNetworkApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomUserDetailsServiceTest" />
-        <item itemvalue="JUnit.FriendRequestServiceTest" />
-        <item itemvalue="JUnit.UserPostControllerTest" />
-        <item itemvalue="JUnit.UserPostControllerTest.testCreatePost" />
-        <item itemvalue="JUnit.UserPostControllerTest.testDeletePost_Success" />
+        <item itemvalue="JUnit.TwoFactorAuthControllerTest" />
+        <item itemvalue="HTTP Request.generated-requests | #1" />
+        <item itemvalue="HTTP Request.generated-requests | #3" />
+        <item itemvalue="HTTP Request.generated-requests | #2" />
+        <item itemvalue="Application.loginUser" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>
@@ -295,13 +233,31 @@
       <workItem from="1709484265324" duration="705000" />
       <workItem from="1709577217612" duration="8732000" />
       <workItem from="1709658384708" duration="15162000" />
-      <workItem from="1709748501618" duration="13199000" />
-      <workItem from="1710620945977" duration="596000" />
-      <workItem from="1710699935771" duration="3083000" />
-      <workItem from="1710772373863" duration="15178000" />
-      <workItem from="1710939741725" duration="545000" />
-      <workItem from="1710941148822" duration="598000" />
-      <workItem from="1710986302400" duration="7119000" />
+      <workItem from="1709748501618" duration="13398000" />
+      <workItem from="1709786186765" duration="5511000" />
+      <workItem from="1709834178013" duration="5834000" />
+      <workItem from="1709868705547" duration="3773000" />
+      <workItem from="1709966166160" duration="1473000" />
+      <workItem from="1710006991358" duration="2054000" />
+      <workItem from="1710093213945" duration="12195000" />
+      <workItem from="1710179264138" duration="7531000" />
+      <workItem from="1710302831021" duration="3865000" />
+      <workItem from="1710349853759" duration="129000" />
+      <workItem from="1710350008675" duration="7477000" />
+      <workItem from="1710386602243" duration="5046000" />
+      <workItem from="1710536871291" duration="601000" />
+      <workItem from="1710549963056" duration="633000" />
+      <workItem from="1710552009063" duration="600000" />
+      <workItem from="1710697583148" duration="149000" />
+      <workItem from="1710717205337" duration="694000" />
+      <workItem from="1710732740563" duration="9513000" />
+      <workItem from="1710879235070" duration="12810000" />
+      <workItem from="1710939284296" duration="812000" />
+      <workItem from="1710970839498" duration="13240000" />
+      <workItem from="1711025707218" duration="965000" />
+      <workItem from="1711035370103" duration="3988000" />
+      <workItem from="1711211845127" duration="367000" />
+      <workItem from="1711212292260" duration="824000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -519,7 +475,79 @@
       <option name="project" value="LOCAL" />
       <updated>1709707398094</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Like/Unlike Functionality Done">
+      <option name="closed" value="true" />
+      <created>1709762795313</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1709762795313</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Like/Unlike Functionality Done">
+      <option name="closed" value="true" />
+      <created>1709869235178</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1709869235178</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Updated Search">
+      <option name="closed" value="true" />
+      <created>1710391971529</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1710391971529</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Updated Search">
+      <option name="closed" value="true" />
+      <created>1710912160211</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1710912160212</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Updated Search">
+      <option name="closed" value="true" />
+      <created>1710912178962</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1710912178962</updated>
+    </task>
+    <task id="LOCAL-00033" summary="News Feed Update">
+      <option name="closed" value="true" />
+      <created>1710973037400</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1710973037400</updated>
+    </task>
+    <task id="LOCAL-00034" summary="News Feed Update">
+      <option name="closed" value="true" />
+      <created>1710974959742</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1710974959742</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Public/Private Profile Update">
+      <option name="closed" value="true" />
+      <created>1711025819314</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1711025819314</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Public/Private Profile Update">
+      <option name="closed" value="true" />
+      <created>1711214563944</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1711214563944</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -537,6 +565,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="workflow" />
     <MESSAGE value="User Can Post and Delete" />
     <MESSAGE value="User-Profile: Search Added" />
@@ -546,16 +575,10 @@
     <MESSAGE value="Users can remove friends or block people. Search updated accordingly." />
     <MESSAGE value="Users can Block/Unblock people" />
     <MESSAGE value="Users can View other User's profile. And make their profile Public/Private" />
-    <option name="LAST_COMMIT_MESSAGE" value="Users can View other User's profile. And make their profile Public/Private" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="org.hibernate.tool.schema.spi.CommandAcceptanceException" package="org.hibernate.tool.schema.spi" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Like/Unlike Functionality Done" />
+    <MESSAGE value="Updated Search" />
+    <MESSAGE value="News Feed Update" />
+    <MESSAGE value="Public/Private Profile Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Public/Private Profile Update" />
   </component>
 </project>

@@ -19,7 +19,7 @@ public class VerificationToken {
 
     private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER) //, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
@@ -37,7 +37,7 @@ public class VerificationToken {
         super();
         this.user = user;
         this.token = token;
-        this.expiryDate = LocalDateTime.now().plusMinutes(1440); // Token expires in 24 hours
+        this.expiryDate = LocalDateTime.now().plusMinutes(60); // Token expires in 1 hours
         this.type = type;
     }
 

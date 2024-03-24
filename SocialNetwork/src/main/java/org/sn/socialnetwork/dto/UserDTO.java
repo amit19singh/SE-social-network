@@ -24,16 +24,20 @@ public class UserDTO {
     private LocalDate birthday;
     private String gender;
     private boolean isTwoFactorEnabled;
+    private boolean isProfilePublic;
     private MultipartFile profilePicUrl;
+    private String profilePicUrlDisplay;
     private String requestSent;
     private String livesIn;
     private String userHometown;
     private String relationshipStatus;
     private List<DisplayUserPostDTO> posts;
+    private List<DisplayUserPostDTO> newsFeed;
 //    private List<User> friendRequestsPending;
 //    private List<User> friends;
     private List<UserBasicInfoDTO> friendRequestsPending;
     private List<UserBasicInfoDTO> friends;
+    private List<UserBasicInfoDTO> blockedUsers;
 }
 
 

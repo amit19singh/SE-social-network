@@ -33,14 +33,13 @@ public class TwoFactorAuthenticationFilter extends OncePerRequestFilter {
             String otp = request.getParameter("otp");
 
             if (username != null && otp != null && twoFactorAuthService.verifyOtp(username, otp)) {
-                // Assuming the OTP is valid, authenticate the user
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                response.sendRedirect("/home"); // Redirect to home or another secured page
+                response.sendRedirect("/home");
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("2FA verification failed");

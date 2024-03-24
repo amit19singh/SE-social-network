@@ -11,15 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.sn.socialnetwork.ExceptionHandler.EmailAlreadyInUseException;
 import org.sn.socialnetwork.ExceptionHandler.UserNotFoundException;
 import org.sn.socialnetwork.ExceptionHandler.UsernameAlreadyInUseException;
-import org.sn.socialnetwork.dto.DisplayUserPostDTO;
-import org.sn.socialnetwork.dto.UserBasicInfoDTO;
-import org.sn.socialnetwork.dto.UserDTO;
+import org.sn.socialnetwork.dto.*;
 import org.sn.socialnetwork.model.*;
 import org.sn.socialnetwork.model.VerificationToken.TokenType;
-import org.sn.socialnetwork.repository.FriendRequestRepository;
-import org.sn.socialnetwork.repository.UserPostRepository;
-import org.sn.socialnetwork.repository.UserRepository;
-import org.sn.socialnetwork.repository.VerificationTokenRepository;
+import org.sn.socialnetwork.repository.*;
 import org.sn.socialnetwork.security_and_config.SecurityUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +26,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +40,8 @@ public class UserService {
     final private UserPostRepository userPostRepository;
     final private FriendRequestRepository friendRequestRepository;
     final private SecurityUtils securityUtils;
+    final private CommentRepository commentRepository;
+    final private LikeRepository likeRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -130,27 +128,24 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
-        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user, Sort.by(Sort.Direction.DESC, "createdAt"))
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user,
+                                                            Sort.by(Sort.Direction.DESC, "createdAt"))
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
 
-//        List<User> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
-//                .stream()
-//                .map(FriendRequest::getRequester) // Convert FriendRequest to User (the requester)
-//                .collect(Collectors.toList());
-//
-//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
-//                .map(id -> entityManager.find(User.class, id))
-//                .collect(Collectors.toList());
-
         List<UserBasicInfoDTO> friendRequestsPending = friendRequestRepository.findByRecipientAndStatus(user, FriendRequest.RequestStatus.PENDING)
                 .stream()
                 .map(FriendRequest::getRequester)
-                .map(this::convertToUserBasicInfoDto) // You'll need to implement this method
+                .map(this::convertToUserBasicInfoDto)
                 .collect(Collectors.toList());
 
         List<UserBasicInfoDTO> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
+                .map(id -> entityManager.find(User.class, id))
+                .map(this::convertToUserBasicInfoDto)
+                .collect(Collectors.toList());
+
+        List<UserBasicInfoDTO> blockedUsers = friendRequestRepository.findBlockedUsersIds(userId).stream()
                 .map(id -> entityManager.find(User.class, id))
                 .map(this::convertToUserBasicInfoDto)
                 .collect(Collectors.toList());
@@ -164,84 +159,115 @@ public class UserService {
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .isTwoFactorEnabled(user.isTwoFactorEnabled())
+                .profilePicUrlDisplay(user.getProfilePicUrl())
+                .newsFeed(generateUserFeed())
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
+                .isProfilePublic(user.isProfilePublic())
                 .relationshipStatus(user.getRelationshipStatus())
                 .posts(displayUserPostDTOS)
                 .friendRequestsPending(friendRequestsPending)
                 .friends(friends)
+                .blockedUsers(blockedUsers)
                 .build();
     }
 
-    private DisplayUserPostDTO convertToDisplayUserDto(UserPost displayUserPostDTO) {
-    return DisplayUserPostDTO.builder()
-            .postId(displayUserPostDTO.getPostId())
-            .caption(displayUserPostDTO.getCaption())
-            .createdAt(displayUserPostDTO.getCreatedAt())
-            .post(displayUserPostDTO.getPost())
-            .imageUrl(displayUserPostDTO.getImageUrl())
-            .videoUrl(displayUserPostDTO.getVideoUrl())
-            .build();
-    }
+    public SearchResultDTO searchUsersWithCriteriaAPI(String query, String livesIn, Boolean friendsOfFriends) {
+        SearchResultDTO result = new SearchResultDTO();
 
-    public List<UserDTO> searchUsersWithCriteriaAPI(String query) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(User.class);
         Root<User> user = cq.from(User.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
+        // Search criteria for 'query'
         if (query != null && !query.isEmpty()) {
             String[] terms = query.split("\\s+");
             for (String term : terms) {
                 String pattern = "%" + term.toLowerCase() + "%";
-                Predicate usernamePredicate = cb.like(cb.lower(user.get("username")), pattern);
-                Predicate firstnamePredicate = cb.like(cb.lower(user.get("firstname")), pattern);
-                Predicate lastnamePredicate = cb.like(cb.lower(user.get("lastname")), pattern);
-                predicates.add(cb.or(usernamePredicate, firstnamePredicate, lastnamePredicate));
+                Predicate searchPredicate = cb.or(
+                        cb.like(cb.lower(user.get("username")), pattern),
+                        cb.like(cb.lower(user.get("firstname")), pattern),
+                        cb.like(cb.lower(user.get("lastname")), pattern)
+                );
+                predicates.add(searchPredicate);
             }
         }
 
-
         UUID currentUserId = securityUtils.getCurrentUser().getId();
         List<UUID> blockedUsersIds = friendRequestRepository.findBlockedUsersIds(currentUserId);
-
-//        if (!blockedUsersIds.isEmpty()) {
-//            Predicate notBlockedPredicate = cb.not(user.get("id").in(blockedUsersIds));
-//            predicates.add(notBlockedPredicate);
-//        }
-
-        Predicate notCurrentUserPredicate = cb.notEqual(user.get("id"), currentUserId);
-        predicates.add(notCurrentUserPredicate);
+        if (!blockedUsersIds.isEmpty()) {
+            predicates.add(cb.not(user.get("id").in(blockedUsersIds)));
+        }
+        predicates.add(cb.notEqual(user.get("id"), currentUserId));
 
         cq.where(cb.and(predicates.toArray(new Predicate[0])));
         List<User> users = entityManager.createQuery(cq).getResultList();
 
-        return users.stream()
+        Stream<User> userStream = users.stream();
+        if (livesIn != null && !livesIn.isEmpty()) {
+            userStream = userStream.filter(u -> u.getLivesIn() != null && u.getLivesIn().equalsIgnoreCase(livesIn));
+        }
+
+        List<UserBasicInfoDTO> userDTOS;
+        if (Boolean.TRUE.equals(friendsOfFriends)) {
+            Set<UUID> friendsOfFriendsIds = findFriendsOfFriendsIds(currentUserId);
+            userDTOS = userStream.filter(u -> friendsOfFriendsIds.contains(u.getId()))
+                    .map(this::convertToUserBasicInfoDto)
+                    .collect(Collectors.toList());
+        } else {
+            userDTOS = userStream.map(this::convertToUserBasicInfoDto)
+                    .collect(Collectors.toList());
+        }
+
+        System.out.println("userDTOS: " + userDTOS);
+        result.setUsers(userDTOS);
+
+        // Search Posts
+        List<UserPost> matchingPosts = userPostRepository.findByPostContainingIgnoreCase(query, Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<DisplayUserPostDTO> displayUserPostDTOS = matchingPosts.stream()
+                .map(this::convertToDisplayUserDto)
+                .collect(Collectors.toList());
+        result.setPosts(displayUserPostDTOS);
+
+        System.out.println("HERE:" + result.getUsers());
+
+        return result;
+    }
+
+
+    public List<DisplayUserPostDTO> generateUserFeed() {
+        List<UserDTO> myFriends = friendRequestRepository.findFriendsOfUser(securityUtils.getCurrentUser().getId())
+                .stream()
+                .map(id -> entityManager.find(User.class, id))
                 .map(this::convertToUserDTO)
+                .toList();
+
+        List<DisplayUserPostDTO> userFeed = new ArrayList<>();
+
+        for (UserDTO friend: myFriends) {
+            userFeed.addAll(friend.getPosts());
+        }
+
+        return userFeed.stream()
+                .sorted(Comparator.comparing(DisplayUserPostDTO::getCreatedAt).reversed())
                 .collect(Collectors.toList());
     }
 
-    private UserDTO convertToUserDTO(User user) {
-        String requestStatus = "NONE";
-        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
+    private Set<UUID> findFriendsOfFriendsIds(UUID userId) {
+        List<UUID> directFriends = friendRequestRepository.findFriendsOfUser(userId);
 
-        if (friendRequest.isPresent())
-            requestStatus = friendRequest.get().getStatus().toString();
+        Set<UUID> friendsOfFriends = new HashSet<>(directFriends);
 
-        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
-        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
-            requestStatus = receivedRequest.get().getStatus().toString();
+        for (UUID friendId : directFriends) {
+            List<UUID> theirFriends = friendRequestRepository.findFriendsOfUser(friendId);
 
+            friendsOfFriends.addAll(theirFriends);
+        }
 
-        return UserDTO.builder()
-                .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .email(user.getEmail())
-                .username(user.getUsername())
-                .requestSent(requestStatus)
-                .build();
+        // Convert to DTO
+        return friendsOfFriends;
     }
 
     public void updateProfileVisibility(String username, boolean isProfilePublic) {
@@ -275,10 +301,6 @@ public class UserService {
                 .stream()
                 .map(this::convertToDisplayUserDto)
                 .collect(Collectors.toList());
-
-//        List<User> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
-//                .map(id -> entityManager.find(User.class, id))
-//                .collect(Collectors.toList());
 
         List<UserBasicInfoDTO> friends = friendRequestRepository.findFriendsOfUser(userId).stream()
                 .map(id -> entityManager.find(User.class, id))
@@ -317,7 +339,92 @@ public class UserService {
                 .build();
     }
 
+    private DisplayUserPostDTO convertToDisplayUserDto(UserPost userPost) {
+        List<Comment> comments = commentRepository.findByPost(userPost);
+        List<Like> likes = likeRepository.findByPost(userPost);
+        boolean userHasLikedPost = likes.stream()
+                .anyMatch(like -> like.getUser().getId().equals(securityUtils.getCurrentUserId()));
+
+
+        return DisplayUserPostDTO.builder()
+                .postByUserName(userPost.getUser().getUsername())
+                .postByUserProfilePic(userPost.getUser().getProfilePicUrl())
+                .postId(userPost.getPostId())
+                .caption(userPost.getCaption())
+                .createdAt(userPost.getCreatedAt())
+                .post(userPost.getPost())
+                .isLikedByCurrentUser(userHasLikedPost)
+                .imageUrl(userPost.getImageUrl())
+                .videoUrl(userPost.getVideoUrl())
+                .likes(convertToLikeDTO(likes))
+                .comments(convertToCommentDTO(comments))
+                .build();
+    }
+
+    private List<LikeDTO> convertToLikeDTO(List<Like> likes) {
+        List<LikeDTO> likeDTOS = new ArrayList<>();
+        for (Like like: likes) {
+            likeDTOS.add(LikeDTO.builder()
+                    .likedByUserName(like.getUser().getUsername())
+                    .profilePicUrl(like.getUser().getProfilePicUrl())
+                    .build());
+        }
+        return likeDTOS;
+    }
+
+    private List<CommentDTO> convertToCommentDTO(List<Comment> comments){
+
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for (Comment comment: comments) {
+            commentDTOS.add(CommentDTO.builder()
+                    .commentText(comment.getCommentText())
+                    .createdAt(comment.getCreatedAt())
+                    .user(comment.getUser())
+                    .build());
+        }
+        return commentDTOS;
+    }
+
+    private UserDTO convertToUserDTO(User user) {
+        String requestStatus = "NONE";
+        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
+
+        if (friendRequest.isPresent())
+            requestStatus = friendRequest.get().getStatus().toString();
+
+        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
+        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
+            requestStatus = receivedRequest.get().getStatus().toString();
+
+        List<DisplayUserPostDTO> displayUserPostDTOS = userPostRepository.findPostsByUser(user)
+                .stream()
+                .map(this::convertToDisplayUserDto)
+                .toList();
+
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .livesIn(user.getLivesIn())
+                .posts(displayUserPostDTOS)
+                .requestSent(requestStatus)
+                .build();
+    }
+
     private UserBasicInfoDTO convertToUserBasicInfoDto(User user) {
+        String requestStatus = "NONE";
+        Optional<FriendRequest> friendRequest = friendRequestRepository.findByRequesterAndRecipient(securityUtils.getCurrentUser(), user);
+
+        if (friendRequest.isPresent())
+            requestStatus = friendRequest.get().getStatus().toString();
+
+        Optional<FriendRequest> receivedRequest = friendRequestRepository.findByRequesterAndRecipient(user, securityUtils.getCurrentUser());
+        if (receivedRequest.isPresent() && receivedRequest.get().getStatus() == FriendRequest.RequestStatus.ACCEPTED)
+            requestStatus = receivedRequest.get().getStatus().toString();
+
         return UserBasicInfoDTO.builder()
                 .id(user.getId())
                 .firstname(user.getFirstname())
@@ -326,6 +433,7 @@ public class UserService {
                 .username(user.getUsername())
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
+                .requestSent(requestStatus)
                 .livesIn(user.getLivesIn())
                 .userHometown(user.getUserHometown())
                 .relationshipStatus(user.getRelationshipStatus())

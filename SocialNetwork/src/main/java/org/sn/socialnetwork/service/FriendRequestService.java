@@ -64,17 +64,21 @@ public class FriendRequestService {
         inverseRelation.ifPresent(friendRequestRepository::delete);
     }
 
-
     public void blockUser(User requester, User userToBlock) {
-        Optional<FriendRequest> existingRequest = friendRequestRepository.findByRequesterAndRecipient(requester, userToBlock);
-        if (existingRequest.isPresent()) {
-            // Update existing request to BLOCKED status
-            FriendRequest friendRequest = existingRequest.get();
+        Optional<FriendRequest> existingRequestFromRequester = friendRequestRepository.findByRequesterAndRecipient(requester, userToBlock);
+        Optional<FriendRequest> existingRequestFromUserToBlock = friendRequestRepository.findByRequesterAndRecipient(userToBlock, requester);
+
+        if (existingRequestFromRequester.isPresent()) {
+            FriendRequest friendRequest = existingRequestFromRequester.get();
+            friendRequest.setStatus(FriendRequest.RequestStatus.BLOCKED);
+            friendRequest.setUpdatedAt(LocalDateTime.now());
+            friendRequestRepository.save(friendRequest);
+        } else if (existingRequestFromUserToBlock.isPresent()) {
+            FriendRequest friendRequest = existingRequestFromUserToBlock.get();
             friendRequest.setStatus(FriendRequest.RequestStatus.BLOCKED);
             friendRequest.setUpdatedAt(LocalDateTime.now());
             friendRequestRepository.save(friendRequest);
         } else {
-            // Create a new block request
             FriendRequest blockRequest = new FriendRequest();
             blockRequest.setRequester(requester);
             blockRequest.setRecipient(userToBlock);
