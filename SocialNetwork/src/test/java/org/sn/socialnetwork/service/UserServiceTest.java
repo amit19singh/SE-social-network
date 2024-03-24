@@ -1,4 +1,4 @@
-//this is wrong
+
 package org.sn.socialnetwork.service;
 
 import org.junit.jupiter.api.BeforeEach;
