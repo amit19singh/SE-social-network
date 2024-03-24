@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Public/Private Profile Update">
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/AnswerDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/CandidateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/OfferDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Offer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/OfferRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/ChatService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/ChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Comment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +118,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.sn.socialnetwork.dto" />
+      <recent name="org.sn.socialnetwork.service" />
       <recent name="org.sn.socialnetwork.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -257,7 +268,9 @@
       <workItem from="1711025707218" duration="965000" />
       <workItem from="1711035370103" duration="3988000" />
       <workItem from="1711211845127" duration="367000" />
-      <workItem from="1711212292260" duration="824000" />
+      <workItem from="1711212292260" duration="4539000" />
+      <workItem from="1711252385876" duration="278000" />
+      <workItem from="1711299386743" duration="18000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -547,7 +560,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711214563944</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Public/Private Profile Update">
+      <option name="closed" value="true" />
+      <created>1711214639758</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1711214639758</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
