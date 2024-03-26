@@ -257,16 +257,11 @@ public class UserService {
 
     private Set<UUID> findFriendsOfFriendsIds(UUID userId) {
         List<UUID> directFriends = friendRequestRepository.findFriendsOfUser(userId);
-
         Set<UUID> friendsOfFriends = new HashSet<>(directFriends);
-
         for (UUID friendId : directFriends) {
             List<UUID> theirFriends = friendRequestRepository.findFriendsOfUser(friendId);
-
             friendsOfFriends.addAll(theirFriends);
         }
-
-        // Convert to DTO
         return friendsOfFriends;
     }
 

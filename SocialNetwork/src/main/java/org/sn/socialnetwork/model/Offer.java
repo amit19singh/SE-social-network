@@ -10,13 +10,18 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Offer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long offerId;
 
-    private String fromUserId;
-    private String toUserId;
+    @ManyToOne
+//    @JoinColumn(name = "from_user", referencedColumnName = "id")
+    private User fromUser;
+
+    @ManyToOne
+//    @JoinColumn(name = "to_user", referencedColumnName = "id")
+    private User toUser;
+
     private String sdp;
 }
 

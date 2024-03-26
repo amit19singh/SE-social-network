@@ -1,11 +1,9 @@
 package org.sn.socialnetwork.repository;
 
-import org.sn.socialnetwork.model.Offer;
+import org.sn.socialnetwork.model.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, Long> {
-
+public interface AnswerRepository extends JpaRepository<Answer, Long> {
 }
-
