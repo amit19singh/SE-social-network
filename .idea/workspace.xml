@@ -4,24 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Public/Private Profile Update">
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Answer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Candidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/ChatMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/AnswerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/CandidateRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/ChatMessageRepository.java" afterDir="false" />
+    <list default="true" id="8048249a-ff3e-427a-b1fe-4fc25265ebeb" name="Changes" comment="Updated Search">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/AnswerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/AnswerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/CandidateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/CandidateDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/OfferDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/dto/OfferDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Offer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Offer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/OfferRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/OfferRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Answer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Candidate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/model/Offer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/AnswerRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/CandidateRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/repository/OfferRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/security_and_config/WebSocketConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/ChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SocialNetwork/src/main/java/org/sn/socialnetwork/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,11 +44,11 @@
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-    &quot;lastFilter&quot;: {
+  &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
     &quot;assignee&quot;: &quot;amit19singh&quot;
-    }
-    }</component>
+  }
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -60,8 +58,8 @@
     </option>
   </component>
   <component name="KubernetesApiProvider">{
-    &quot;isMigrated&quot;: true
-    }</component>
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -73,9 +71,9 @@
     </option>
   </component>
   <component name="ProjectColorInfo">{
-    &quot;customColor&quot;: &quot;&quot;,
-    &quot;associatedIndex&quot;: 4
-    }</component>
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ctEOsRiArFweUd4jTHrjwYCpHO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -88,8 +86,6 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TwoFactorAuthControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;Maven.SocialNetwork [clean,verify].executor&quot;: &quot;Run&quot;,
     &quot;Maven.SocialNetwork [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.SocialNetwork [package].executor&quot;: &quot;Run&quot;,
@@ -103,6 +99,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.SocialNetworkApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Chat&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/amit1/Dropbox/Classes/Spring 2024/Project/SE-social-network/SocialNetwork/src/main/java/org/sn/socialnetwork/dto&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -124,9 +121,6 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="org.sn.socialnetwork.repository" />
-      <recent name="org.sn.socialnetwork.dto" />
-      <recent name="org.sn.socialnetwork.service" />
       <recent name="org.sn.socialnetwork.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -141,20 +135,13 @@
       <command value="mvn clean verify" />
     </option>
   </component>
-  <component name="RunDashboard">
-    <option name="excludedTypes">
-      <set>
-        <option value="HttpClient.HttpRequestRunConfigurationType" />
-      </set>
-    </option>
-  </component>
   <component name="RunManager" selected="Spring Boot.SocialNetworkApplication">
     <configuration name="loginUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.model.loginUser" />
       <module name="SocialNetwork" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.dto.UserBasicInfoDTO" />
+          <option name="PATTERN" value="org.sn.socialnetwork.dto.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -170,21 +157,6 @@
     </configuration>
     <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
       <method v="2" />
-    </configuration>
-    <configuration name="TwoFactorAuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SocialNetwork" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.sn.socialnetwork.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.sn.socialnetwork.controller" />
-      <option name="MAIN_CLASS_NAME" value="org.sn.socialnetwork.controller.TwoFactorAuthControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="SocialNetworkApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="SocialNetwork" />
@@ -209,16 +181,15 @@
       <item itemvalue="HTTP Request.generated-requests | #1" />
       <item itemvalue="HTTP Request.generated-requests | #2" />
       <item itemvalue="HTTP Request.generated-requests | #3" />
-      <item itemvalue="JUnit.TwoFactorAuthControllerTest" />
       <item itemvalue="Spring Boot.SocialNetworkApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TwoFactorAuthControllerTest" />
         <item itemvalue="HTTP Request.generated-requests | #3" />
         <item itemvalue="HTTP Request.generated-requests | #2" />
         <item itemvalue="HTTP Request.generated-requests | #1" />
         <item itemvalue="Application.loginUser" />
+        <item itemvalue="HTTP Request.generated-requests | #3" />
       </list>
     </recent_temporary>
   </component>
@@ -263,22 +234,9 @@
       <workItem from="1710349853759" duration="129000" />
       <workItem from="1710350008675" duration="7477000" />
       <workItem from="1710386602243" duration="5046000" />
-      <workItem from="1710536871291" duration="601000" />
-      <workItem from="1710549963056" duration="633000" />
-      <workItem from="1710552009063" duration="600000" />
-      <workItem from="1710697583148" duration="149000" />
-      <workItem from="1710717205337" duration="694000" />
-      <workItem from="1710732740563" duration="9513000" />
-      <workItem from="1710879235070" duration="12810000" />
-      <workItem from="1710939284296" duration="812000" />
-      <workItem from="1710970839498" duration="13240000" />
-      <workItem from="1711025707218" duration="965000" />
-      <workItem from="1711035370103" duration="3988000" />
-      <workItem from="1711211845127" duration="367000" />
-      <workItem from="1711212292260" duration="4539000" />
-      <workItem from="1711252385876" duration="278000" />
-      <workItem from="1711299386743" duration="18000" />
-      <workItem from="1711421758927" duration="816000" />
+      <workItem from="1711480348622" duration="1362000" />
+      <workItem from="1711482823188" duration="840000" />
+      <workItem from="1711595915850" duration="6694000" />
     </task>
     <task id="LOCAL-00001" summary="workflow">
       <option name="closed" value="true" />
@@ -520,63 +478,7 @@
       <option name="project" value="LOCAL" />
       <updated>1710391971529</updated>
     </task>
-    <task id="LOCAL-00031" summary="Updated Search">
-      <option name="closed" value="true" />
-      <created>1710912160211</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1710912160212</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Updated Search">
-      <option name="closed" value="true" />
-      <created>1710912178962</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1710912178962</updated>
-    </task>
-    <task id="LOCAL-00033" summary="News Feed Update">
-      <option name="closed" value="true" />
-      <created>1710973037400</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1710973037400</updated>
-    </task>
-    <task id="LOCAL-00034" summary="News Feed Update">
-      <option name="closed" value="true" />
-      <created>1710974959742</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1710974959742</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Public/Private Profile Update">
-      <option name="closed" value="true" />
-      <created>1711025819314</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1711025819314</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Public/Private Profile Update">
-      <option name="closed" value="true" />
-      <created>1711214563944</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1711214563944</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Public/Private Profile Update">
-      <option name="closed" value="true" />
-      <created>1711214639758</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1711214639758</updated>
-    </task>
-    <option name="localTasksCounter" value="38" />
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -606,8 +508,6 @@
     <MESSAGE value="Users can View other User's profile. And make their profile Public/Private" />
     <MESSAGE value="Like/Unlike Functionality Done" />
     <MESSAGE value="Updated Search" />
-    <MESSAGE value="News Feed Update" />
-    <MESSAGE value="Public/Private Profile Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Public/Private Profile Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Search" />
   </component>
 </project>

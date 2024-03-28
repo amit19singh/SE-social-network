@@ -7,47 +7,39 @@ import org.sn.socialnetwork.dto.OfferDTO;
 import org.sn.socialnetwork.model.ChatMessage;
 import org.sn.socialnetwork.service.ChatService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/chat")
+//@RequestMapping("/api/chat")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
 
     final private ChatService chatService;
 
-    @PostMapping("/messages/send")
-    public void sendMessage(@RequestBody ChatMessage chatMessage) {
-        chatService.sendMessage(chatMessage);
+    @MessageMapping("/private-message")
+    public ChatMessage receivePrivateMessage(@Payload ChatMessage chatMessage) {
+        chatService.receiveMessage(chatMessage);
+        System.out.println("Message: " + chatMessage.toString());
+        return chatMessage;
     }
 
-    @MessageMapping("/messages/send")
-    public void receiveMessage(@Payload ChatMessage chatMessage) {
-        // Handle the received message here
-        // For example, save it to the database and/or forward it to the recipient
+    @GetMapping("/chat/history/{senderUsername}/{receiverUsername}")
+    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable String senderUsername, @PathVariable String receiverUsername) {
+        List<ChatMessage> chatHistory = chatService.fetchChatHistory(senderUsername, receiverUsername);
+        return ResponseEntity.ok(chatHistory);
     }
 
-//    @PostMapping("/offer")
-//    public ResponseEntity<?> handleOffer(@RequestBody OfferDTO offerDTO) {
-//        chatService.processOffer(offerDTO);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/answer")
-//    public ResponseEntity<?> handleAnswer(@RequestBody AnswerDTO answerDTO) {
-//        chatService.processAnswer(answerDTO);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/candidate")
-//    public ResponseEntity<?> handleIceCandidate(@RequestBody CandidateDTO candidateDTO) {
-//        chatService.addIceCandidate(candidateDTO);
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping("/chat/history/all")
+    public ResponseEntity<List<String>> getAllChatHistory() {
+        List<String> chatHistory = chatService.fetchAllChatHistory();
+        return ResponseEntity.ok(chatHistory);
+    }
+
 
 }

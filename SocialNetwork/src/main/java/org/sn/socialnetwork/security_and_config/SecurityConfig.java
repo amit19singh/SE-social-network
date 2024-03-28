@@ -41,7 +41,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "api/friends/reject/", "/api/friends/remove/", "/api/friends/block/",
                                 "/api/friends/unblock/", "/api/user/profile/**", "/updateProfileVisibility",
                                 "/api/user-posts/like/**", "/api/user-posts/unlike/**", "/api/user-posts/delete-comment/",
-                                "/api/user-posts/comment", "/api/user-posts/get-comments/**", "/user-feed")
+                                "/api/user-posts/comment", "/api/user-posts/get-comments/**", "/user-feed",
+                                "/ws/**", "/chat/history/all", "/chat/history/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(twoFactorAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

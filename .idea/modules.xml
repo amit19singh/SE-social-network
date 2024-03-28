@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SE-social-network.iml" filepath="$PROJECT_DIR$/.idea/SE-social-network.iml" />
       <module fileurl="file://$PROJECT_DIR$/SocialNetwork/SocialNetwork.iml" filepath="$PROJECT_DIR$/SocialNetwork/SocialNetwork.iml" />
     </modules>
   </component>

@@ -16,16 +16,18 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long senderId;
-    private Long recipientId;
-    private String content;
+    private String senderUsername;
+    private String receiverUsername;
+    private String message;
     private LocalDateTime timestamp;
     private MessageStatus status;
 
     enum MessageStatus {
         SENT,
         DELIVERED,
-        READ
+        READ,
+        JOIN
     }
-
 }
+
+
