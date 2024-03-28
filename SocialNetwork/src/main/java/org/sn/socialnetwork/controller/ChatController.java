@@ -29,9 +29,10 @@ public class ChatController {
         return chatMessage;
     }
 
-    @GetMapping("/chat/history/{senderUsername}/{receiverUsername}")
-    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable String senderUsername, @PathVariable String receiverUsername) {
-        List<ChatMessage> chatHistory = chatService.fetchChatHistory(senderUsername, receiverUsername);
+    @GetMapping("/chat/history/{userChat}")
+    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable String userChat) {
+        System.out.println("In Controller");
+        List<ChatMessage> chatHistory = chatService.fetchChatHistory(userChat);
         return ResponseEntity.ok(chatHistory);
     }
 

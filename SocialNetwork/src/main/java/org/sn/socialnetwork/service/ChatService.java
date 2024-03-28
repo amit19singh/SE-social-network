@@ -32,19 +32,22 @@ public class ChatService {
                 chatMessage);
     }
 
-    public List<ChatMessage> fetchChatHistory(String senderUsername, String receiverUsername) {
-        return chatMessageRepository.findChatHistory(senderUsername, receiverUsername);
+    public List<ChatMessage> fetchChatHistory(String userChat) {
+        System.out.println("Here");
+        List<ChatMessage> list = chatMessageRepository.findChatHistory(userChat, securityUtils.getCurrentUser().getUsername());
+//        list.stream()
+//                .map(result -> (String) list[0])
+//                .filter(username -> !username.equals(securityUtils.getCurrentUser().getUsername()))
+        System.out.println("Message List: " + list);
+        return list;
     }
 
 
     public List<String> fetchAllChatHistory() {
         List<Object[]> results = chatMessageRepository.findAllUniqueUsernamesOrderedByLatestMessage();
-        List<String> list = results.stream()
+        return results.stream()
                 .map(result -> (String) result[0])
                 .filter(username -> !username.equals(securityUtils.getCurrentUser().getUsername()))
-                .toList();
-//                .collect(Collectors.toList());
-        System.out.println("list: " + list);
-        return list;
+                .collect(Collectors.toList());
     }
 }
